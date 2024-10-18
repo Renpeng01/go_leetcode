@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"sort"
 )
 
@@ -26,15 +25,4 @@ func groupAnagrams(strs []string) [][]string {
 		res = append(res, v)
 	}
 	return res
-}
-
-func main() {
-	words := []string{"eat", "tea", "tan", "ate", "nat", "bat"}
-	for _, w := range words {
-		key := []byte(w)
-		sort.SliceStable(key, func(i, j int) bool {
-			return key[i] < key[j]
-		})
-		fmt.Println(string(key), w)
-	}
 }
