@@ -34,7 +34,7 @@ func trap1(height []int) int {
 	return total
 }
 
-func trap(height []int) int {
+func trap2(height []int) int {
 	leftMax := make([]int, len(height))
 	rightMax := make([]int, len(height))
 
@@ -56,5 +56,25 @@ func trap(height []int) int {
 		res += c
 	}
 
+	return res
+}
+
+func trap(height []int) int {
+	stack := make([]int, 0, len(height))
+	res := 0
+	for i, v := range height {
+		for len(stack) > 0 && height[i] >= height[stack[len(stack)-1]] {
+			l := stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+			if len(stack) > 0 {
+				h := int(math.Min(float64(v), float64(height[stack[len(stack)-1]])))
+				c := (h - l) * (i - stack[len(stack)-1] - 1)
+				res += c
+
+			}
+
+		}
+		stack = append(stack, i)
+	}
 	return res
 }
