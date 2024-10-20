@@ -59,7 +59,7 @@ func trap2(height []int) int {
 	return res
 }
 
-func trap(height []int) int {
+func trap3(height []int) int {
 	stack := make([]int, 0, len(height))
 	res := 0
 	for i, v := range height {
@@ -77,4 +77,29 @@ func trap(height []int) int {
 		stack = append(stack, i)
 	}
 	return res
+}
+
+func trap(height []int) int {
+	left := 0
+	right := len(height) - 1
+
+	leftMax := height[0]
+	rightMax := 0
+
+	res := 0
+	for left < right {
+		leftMax = int(math.Max(float64(leftMax), float64(height[left])))
+		rightMax = int(math.Max(float64(rightMax), float64(height[right])))
+		if leftMax < rightMax {
+			res += leftMax - height[left]
+			left++
+		} else {
+			res += rightMax - height[right]
+			right--
+		}
+
+	}
+
+	return res
+
 }
