@@ -64,7 +64,7 @@ func trap(height []int) int {
 	res := 0
 	for i, v := range height {
 		for len(stack) > 0 && height[i] >= height[stack[len(stack)-1]] {
-			l := stack[len(stack)-1]
+			l := height[stack[len(stack)-1]]
 			stack = stack[:len(stack)-1]
 			if len(stack) > 0 {
 				h := int(math.Min(float64(v), float64(height[stack[len(stack)-1]])))
