@@ -2,7 +2,8 @@ package main
 
 import "fmt"
 
-func lengthOfLongestSubstring(s string) int {
+// 超过限制
+func lengthOfLongestSubstring1(s string) int {
 	if len(s) <= 1 {
 		return len(s)
 	}
@@ -37,6 +38,31 @@ func lengthOfLongestSubstring(s string) int {
 				set[string(s[i])] = i
 			}
 		}
+	}
+	return max
+}
+
+func lengthOfLongestSubstring(s string) int {
+
+	set := make(map[string]int)
+
+	max := 0
+	l := -1
+
+	for i := 0; i < len(s); i++ {
+		if i > 0 {
+			delete(set, string(s[i-1]))
+		}
+
+		for l+1 < len(s) && set[string(s[l+1])] == 0 {
+			set[string(s[l+1])]++
+			l++
+		}
+
+		if l-i+1 > max {
+			max = l - i + 1
+		}
+
 	}
 	return max
 }
