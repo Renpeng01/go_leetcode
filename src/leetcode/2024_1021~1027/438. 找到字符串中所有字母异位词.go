@@ -30,13 +30,10 @@ func findAnagrams1(s string, p string) []int {
 			continue
 		}
 		temp := []byte(s[i-(len(p)-1) : i+1])
-		// fmt.Println("temp before sort: ", string(temp))
 		sort.SliceStable(temp, func(i, j int) bool {
 			return string(temp[i]) < string(temp[j])
 		})
-		// fmt.Println("temp after sort: ", string(temp), " pp: ", string(pp))
 		if string(temp) == string(pp) {
-			// fmt.Println("111111111111111111")
 			res = append(res, i-(len(p)-1))
 		}
 		i++
