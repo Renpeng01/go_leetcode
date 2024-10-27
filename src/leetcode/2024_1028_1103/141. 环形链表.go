@@ -1,6 +1,9 @@
 package main
 
 func hasCycle(head *ListNode) bool {
+	if head == nil {
+		return false
+	}
 
 	fast := head
 	slow := head
