@@ -1,17 +1,5 @@
 package main
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
-
-/**
- * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * }
- */
 func reverseList1(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
