@@ -25,16 +25,25 @@ func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
 		}
 		newList = newList.Next
 	}
-	for curList1 != nil {
+
+	// for curList1 != nil {
+	// 	newList.Next = curList1
+	// 	newList = newList.Next
+	// 	curList1 = curList1.Next
+	// }
+
+	// for curList2 != nil {
+	// 	newList.Next = curList2
+	// 	newList = newList.Next
+	// 	curList2 = curList2.Next
+	// }
+
+	if curList1 != nil {
 		newList.Next = curList1
-		newList = newList.Next
-		curList1 = curList1.Next
 	}
 
-	for curList2 != nil {
+	if curList2 != nil {
 		newList.Next = curList2
-		newList = newList.Next
-		curList2 = curList2.Next
 	}
 
 	return head.Next.Next
