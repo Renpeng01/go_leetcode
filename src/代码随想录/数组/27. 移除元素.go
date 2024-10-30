@@ -5,7 +5,7 @@ import (
 	"sort"
 )
 
-func removeElement(nums []int, val int) int {
+func removeElement1(nums []int, val int) int {
 	sort.Ints(nums)
 	cnt := 0
 
@@ -39,9 +39,48 @@ func removeElement(nums []int, val int) int {
 	return len(nums) - cnt
 }
 
+func removeElement(nums []int, val int) int {
+	cnt := 0
+
+	head := 0
+	tail := len(nums) - 1
+
+	if len(nums) == 1 && nums[0] == val {
+		return 0
+	}
+
+	for {
+		for i := head; i < tail; i++ {
+			if nums[i] == val {
+				cnt++
+				head = i
+				break
+			}
+
+		}
+
+		for i := tail; i > head; i-- {
+			if nums[i] != val {
+				tail = i
+				break
+			}
+			cnt++
+		}
+		if tail <= head {
+			break
+		}
+
+		nums[head], nums[tail] = nums[tail], nums[head]
+		head++
+		tail--
+	}
+
+	return len(nums) - cnt
+}
+
 func main() {
-	nums := []int{2, 3, 3}
-	res := removeElement(nums, 2)
+	nums := []int{4, 4, 4}
+	res := removeElement(nums, 4)
 
 	fmt.Println(res)
 	fmt.Println(nums)
