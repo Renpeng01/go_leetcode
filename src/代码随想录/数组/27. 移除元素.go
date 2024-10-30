@@ -39,7 +39,7 @@ func removeElement1(nums []int, val int) int {
 	return len(nums) - cnt
 }
 
-func removeElement(nums []int, val int) int {
+func removeElement2(nums []int, val int) int {
 	cnt := 0
 
 	head := 0
@@ -82,6 +82,21 @@ func removeElement(nums []int, val int) int {
 	return len(nums) - cnt
 }
 
+func removeElement(nums []int, val int) int {
+
+	head := 0
+	tail := len(nums)
+
+	for head < tail {
+		if nums[head] == val {
+			nums[head] = nums[tail-1]
+			tail--
+		} else {
+			head++
+		}
+	}
+	return head
+}
 func main() {
 	nums := []int{4, 4, 4}
 	res := removeElement(nums, 4)
