@@ -50,21 +50,20 @@ func removeElement(nums []int, val int) int {
 	}
 
 	for {
-		for i := head; i < tail; i++ {
+		for i := head; i < len(nums); i++ {
 			if nums[i] == val {
-				cnt++
 				head = i
 				break
 			}
 
 		}
 
-		for i := tail; i > head; i-- {
+		for i := tail; i >= 0; i-- {
 			if nums[i] != val {
 				tail = i
 				break
 			}
-			cnt++
+
 		}
 		if tail <= head {
 			break
@@ -75,6 +74,11 @@ func removeElement(nums []int, val int) int {
 		tail--
 	}
 
+	for _, v := range nums {
+		if v == val {
+			cnt++
+		}
+	}
 	return len(nums) - cnt
 }
 
