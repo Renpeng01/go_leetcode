@@ -13,8 +13,6 @@ func minSubArrayLen(target int, nums []int) int {
 		sumNums = append(sumNums, sum)
 	}
 
-	fmt.Println("sums: ", sumNums)
-
 	cnt := len(sumNums)
 	for i, v := range sumNums {
 		for j := i - 1; j >= 0; j-- {
