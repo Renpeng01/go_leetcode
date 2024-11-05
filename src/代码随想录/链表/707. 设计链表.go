@@ -7,9 +7,9 @@ import (
 )
 
 type ListNode struct {
-	Val  int
-	Next *ListNode
-	Pre  *ListNode
+	val  int
+	next *ListNode
+	prev *ListNode
 }
 
 type MyLinkedList struct {
@@ -22,8 +22,8 @@ func Constructor() MyLinkedList {
 	list := MyLinkedList{}
 	list.head = &ListNode{}
 	list.tail = &ListNode{}
-	list.head.Next = list.tail
-	list.tail.Pre = list.head
+	list.head.next = list.tail
+	list.tail.prev = list.head
 	return list
 }
 
@@ -32,25 +32,25 @@ func (this *MyLinkedList) Get(index int) int {
 		return -1
 	}
 	i := 0
-	cur := this.head.Next
+	cur := this.head.next
 	for cur != this.tail {
 		if i == index {
-			return cur.Val
+			return cur.val
 		}
 		i++
-		cur = cur.Next
+		cur = cur.next
 	}
 	return -1
 }
 
 func (this *MyLinkedList) AddAtHead(val int) {
 	newHead := &ListNode{
-		Val:  val,
-		Next: this.head.Next,
-		Pre:  this.head,
+		val:  val,
+		next: this.head.next,
+		prev: this.head,
 	}
-	this.head.Next = newHead
-	this.tail.Pre = newHead
+	this.head.next = newHead
+	this.tail.prev = newHead
 	this.len++
 }
 
@@ -58,12 +58,12 @@ func (this *MyLinkedList) AddAtTail(val int) {
 	tail := this.tail
 
 	node := &ListNode{
-		Val:  val,
-		Next: tail,
-		Pre:  this.tail.Pre,
+		val:  val,
+		next: tail,
+		prev: this.tail.prev,
 	}
-	this.tail.Pre.Next = node
-	this.tail.Pre = node
+	this.tail.prev.next = node
+	this.tail.prev = node
 	this.len++
 }
 
@@ -74,21 +74,21 @@ func (this *MyLinkedList) AddAtIndex(index int, val int) {
 	}
 
 	newNode := &ListNode{
-		Val: val,
+		val: val,
 	}
 	i := 0
-	cur := this.head.Next
+	cur := this.head.next
 	for cur != this.tail {
 		if i == index {
-			cur.Pre.Next = newNode
-			newNode.Pre = cur.Pre
-			newNode.Next = cur
-			cur.Pre = newNode
+			cur.prev.next = newNode
+			newNode.prev = cur.prev
+			newNode.next = cur
+			cur.prev = newNode
 			this.len++
 			break
 		}
 		i++
-		cur = cur.Next
+		cur = cur.next
 	}
 
 }
@@ -98,18 +98,18 @@ func (this *MyLinkedList) DeleteAtIndex(index int) {
 		return
 	}
 	i := 0
-	cur := this.head.Next
+	cur := this.head.next
 	for cur != this.tail {
 		if i == index {
-			cur.Pre.Next = cur.Next
-			cur.Next.Pre = cur.Pre
-			cur.Next = nil
-			cur.Pre = nil
+			cur.prev.next = cur.next
+			cur.next.prev = cur.prev
+			cur.next = nil
+			cur.prev = nil
 			this.len--
 			break
 		}
 		i++
-		cur = cur.Next
+		cur = cur.next
 	}
 }
 
@@ -142,11 +142,11 @@ func main() {
 }
 
 func printList(list *MyLinkedList) {
-	cur := list.head.Next
+	cur := list.head.next
 	res := make([]string, 0, 16)
 	for cur != list.tail {
-		res = append(res, strconv.Itoa(cur.Val))
-		cur = cur.Next
+		res = append(res, strconv.Itoa(cur.val))
+		cur = cur.next
 	}
 	strs := strings.Join(res, ",")
 	fmt.Println(strs)
