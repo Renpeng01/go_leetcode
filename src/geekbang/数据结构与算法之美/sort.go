@@ -70,8 +70,21 @@ func InsertSortV1(data []int) []int {
 	return data
 }
 
+func SelectSort(data []int) []int {
+	for i := 0; i < len(data); i++ {
+		minIndex := i
+		for j := i + 1; j < len(data); j++ {
+			if data[j] < data[i] {
+				minIndex = j
+			}
+		}
+		data[i], data[minIndex] = data[minIndex], data[i]
+	}
+	return data
+}
+
 func main() {
 	data := []int{1, 3, 5, 3, 8, 9, 5, 6, 7}
-	res := InsertSortV1(data)
+	res := SelectSort(data)
 	fmt.Println("sorted: ", res)
 }
