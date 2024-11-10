@@ -34,6 +34,9 @@ func BubbleSort(data []int) []int {
 // 将数组分为两个区间，已排序区间和未排序区间，初始已排序区间只有一个元素，取未排序区间中的元素，在已排序区间中找到合适的插入位置将其插入，并保证已排序区间数据一直有序
 // 原地排序 稳定排序
 // 时间复杂度
+// 最坏时间复杂度 O(n²)
+// 最好时间复杂度 O(n)
+// 平均时间复杂度 O(n²) 向数组插入的平均复杂度为O(n),则对于插入排序来说，每次插入操作相当于数组中插入一个数据，循环执行n次，故平均时间复杂度为O(n²)
 func InsertSort(data []int) []int {
 	if len(data) <= 1 {
 		return data
@@ -57,9 +60,9 @@ func InsertSortV1(data []int) []int {
 		j := i - 1
 		for ; j >= 0; j-- {
 			if val < data[j] {
-				data[j+1] = data[j] // 与InsertSort相比，少了一次赋值
+				data[j+1] = data[j] // 优化点：与InsertSort相比，少了一次赋值
 			} else {
-				break
+				break // 优化点：如果有序，可以提前break
 			}
 		}
 		data[j+1] = val
