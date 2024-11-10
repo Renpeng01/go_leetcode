@@ -30,8 +30,22 @@ func BubbleSort(data []int) []int {
 	return data
 }
 
+func InsertSort(data []int) []int {
+	if len(data) <= 1 {
+		return data
+	}
+	for i := 1; i < len(data); i++ {
+		for j := i - 1; j >= 0; j-- {
+			if data[i] < data[j] {
+				data[j], data[i] = data[i], data[j]
+			}
+		}
+	}
+	return data
+}
+
 func main() {
 	data := []int{1, 3, 5, 3, 8, 9, 5, 6, 7}
-	res := BubbleSort(data)
-	fmt.Println("BubbleSort: %+v", res)
+	res := InsertSort(data)
+	fmt.Println("sorted: %+v", res)
 }
