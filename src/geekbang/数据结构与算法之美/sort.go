@@ -70,6 +70,8 @@ func InsertSortV1(data []int) []int {
 	return data
 }
 
+// 原地排序，不稳定排序
+// 时间复杂度 最好，最坏，平均都是O(n²)
 func SelectSort(data []int) []int {
 	for i := 0; i < len(data); i++ {
 		minIndex := i
@@ -82,6 +84,9 @@ func SelectSort(data []int) []int {
 	}
 	return data
 }
+
+// 冒泡排序和插入排序的时间复杂度都是O(n)²,都是原地稳定排序，为什么插入排序比冒泡更受欢迎
+// 冒泡排序不管怎么优化，元素交换的次数是一个固定值，是原始数据的逆序度，插入排序也是，从代码实现上看，冒泡排序的赋值操作多余插入排序
 
 func main() {
 	data := []int{1, 3, 5, 3, 8, 9, 5, 6, 7}
