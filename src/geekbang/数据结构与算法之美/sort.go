@@ -134,9 +134,10 @@ func merge(source *[]int, data1, data2 []int, start, end int) {
 	}
 }
 
-// 快速排序
+// 快速排序  原地 不稳定排序
 // 原理：如果要排序数组中下标从p到r之间的一组数据，选择p到r之间任意一个数据作为pivot（分区点）
 // 遍历p到r之间的数据，将小于pivot的放在左边，大于pivot的放在右边，将pivot放在中间。经过这一步之后，数组p到r之间的数据就被分成了3份，前面p到q-1之间都是小于pivot的，中间是pivot，后面q+1到r是大于pivot的
+// 时间复杂度  如果每次分区，都正好把数组分成大小接近的两个小分区，则时间复杂度为O(nlogn)。在大部分情况下是O(nlogn)，在极端情况先是O(n²)
 func QuickSort(data []int) {
 	qSort(data, 0, len(data)-1)
 }
