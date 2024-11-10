@@ -137,11 +137,35 @@ func merge(source *[]int, data1, data2 []int, start, end int) {
 // 快速排序
 // 原理：如果要排序数组中下标从p到r之间的一组数据，选择p到r之间任意一个数据作为pivot（分区点）
 // 遍历p到r之间的数据，将小于pivot的放在左边，大于pivot的放在右边，将pivot放在中间。经过这一步之后，数组p到r之间的数据就被分成了3份，前面p到q-1之间都是小于pivot的，中间是pivot，后面q+1到r是大于pivot的
-func QuickSort(data []int) {}
+func QuickSort(data []int) {
+	qSort(data, 0, len(data)-1)
+}
+
+func qSort(data []int, p, r int) {
+	if p >= r {
+		return
+	}
+	q := partation(data, 0, r)
+	qSort(data, p, q-1)
+	qSort(data, q+1, r)
+}
+
+func partation(data []int, p, r int) int {
+	pivot := data[r]
+	i := p
+	for j := p; j <= r-1; j++ {
+		if data[j] < pivot {
+			data[i], data[j] = data[j], data[i]
+			i++
+		}
+	}
+	data[i], data[r] = data[r], data[i]
+	return i
+}
 
 func main() {
 	// sorted 1,3,3,5,5,6,7,8,9
 	data := []int{1, 3, 5, 3, 8, 9, 5, 6, 7}
-	MergeSort(data)
+	QuickSort(data)
 	fmt.Println("sorted: ", data)
 }
