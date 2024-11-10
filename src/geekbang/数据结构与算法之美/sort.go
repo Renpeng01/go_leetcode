@@ -88,6 +88,9 @@ func SelectSort(data []int) []int {
 // 冒泡排序和插入排序的时间复杂度都是O(n)²,都是原地稳定排序，为什么插入排序比冒泡更受欢迎
 // 冒泡排序不管怎么优化，元素交换的次数是一个固定值，是原始数据的逆序度，插入排序也是，从代码实现上看，冒泡排序的赋值操作多余插入排序
 
+// 稳定排序，非原地排序
+// 时间复杂度 O(nlogn)
+// 空间复杂度 O(n) 在merge后，临时开辟的空间会释放
 func MergeSort(data []int) {
 	mSort(&data, 0, len(data)-1)
 	return
@@ -130,6 +133,11 @@ func merge(source *[]int, data1, data2 []int, start, end int) {
 		(*source)[i+start] = v
 	}
 }
+
+// 快速排序
+// 原理：如果要排序数组中下标从p到r之间的一组数据，选择p到r之间任意一个数据作为pivot（分区点）
+// 遍历p到r之间的数据，将小于pivot的放在左边，大于pivot的放在右边，将pivot放在中间。经过这一步之后，数组p到r之间的数据就被分成了3份，前面p到q-1之间都是小于pivot的，中间是pivot，后面q+1到r是大于pivot的
+func QuickSort(data []int) {}
 
 func main() {
 	// sorted 1,3,3,5,5,6,7,8,9
