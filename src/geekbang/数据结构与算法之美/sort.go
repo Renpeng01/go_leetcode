@@ -30,6 +30,10 @@ func BubbleSort(data []int) []int {
 	return data
 }
 
+// 核心思想：动态的往有序集合中添加数据
+// 将数组分为两个区间，已排序区间和未排序区间，初始已排序区间只有一个元素，取未排序区间中的元素，在已排序区间中找到合适的插入位置将其插入，并保证已排序区间数据一直有序
+// 原地排序 稳定排序
+// 时间复杂度
 func InsertSort(data []int) []int {
 	if len(data) <= 1 {
 		return data
@@ -37,15 +41,34 @@ func InsertSort(data []int) []int {
 	for i := 1; i < len(data); i++ {
 		for j := i - 1; j >= 0; j-- {
 			if data[i] < data[j] {
-				data[j], data[i] = data[i], data[j]
+				data[j], data[i] = data[i], data[j] // TODO 这里可以优化 见InsertSortV1
 			}
 		}
 	}
 	return data
 }
 
+func InsertSortV1(data []int) []int {
+	if len(data) <= 1 {
+		return data
+	}
+	for i := 1; i < len(data); i++ {
+		val := data[i]
+		j := i - 1
+		for ; j >= 0; j-- {
+			if val < data[j] {
+				data[j+1] = data[j] // 与InsertSort相比，少了一次赋值
+			} else {
+				break
+			}
+		}
+		data[j+1] = val
+	}
+	return data
+}
+
 func main() {
 	data := []int{1, 3, 5, 3, 8, 9, 5, 6, 7}
-	res := InsertSort(data)
-	fmt.Println("sorted: %+v", res)
+	res := InsertSortV1(data)
+	fmt.Println("sorted: ", res)
 }
