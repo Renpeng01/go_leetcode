@@ -88,8 +88,53 @@ func SelectSort(data []int) []int {
 // 冒泡排序和插入排序的时间复杂度都是O(n)²,都是原地稳定排序，为什么插入排序比冒泡更受欢迎
 // 冒泡排序不管怎么优化，元素交换的次数是一个固定值，是原始数据的逆序度，插入排序也是，从代码实现上看，冒泡排序的赋值操作多余插入排序
 
+func MergeSort(data []int) {
+	mSort(data, 0, len(data)-1)
+	return
+}
+
+func mSort(data []int, start, end int) {
+	if end <= start {
+		return
+	}
+	mid := start + (end-start)/2
+	mSort(data, start, mid)
+	mSort(data, mid+1, end)
+	merge(data, data[start:mid+1], data[mid+1:end], start, end)
+}
+
+func merge(source, data1, data2 []int, start, end int) {
+	i := 0
+	j := 0
+	res := make([]int, 0, len(data1)+len(data2))
+	for i < len(data1) && j < len(data2) {
+		if data1[i] < data2[j] {
+			res = append(res, data1[i])
+			i++
+		} else {
+			res = append(res, data2[j])
+			j++
+		}
+	}
+
+	for i < len(data1) {
+		res = append(res, data1[i])
+		i++
+	}
+	for j < len(data2) {
+		res = append(res, data2[j])
+		j++
+	}
+
+	fmt.Println("res: ", res)
+
+	for i, v := range res {
+		source[i+start] = v
+	}
+}
+
 func main() {
 	data := []int{1, 3, 5, 3, 8, 9, 5, 6, 7}
-	res := SelectSort(data)
-	fmt.Println("sorted: ", res)
+	MergeSort(data)
+	fmt.Println("sorted: ", data)
 }
