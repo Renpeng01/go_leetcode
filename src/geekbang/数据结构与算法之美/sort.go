@@ -89,21 +89,21 @@ func SelectSort(data []int) []int {
 // 冒泡排序不管怎么优化，元素交换的次数是一个固定值，是原始数据的逆序度，插入排序也是，从代码实现上看，冒泡排序的赋值操作多余插入排序
 
 func MergeSort(data []int) {
-	mSort(data, 0, len(data)-1)
+	mSort(&data, 0, len(data)-1)
 	return
 }
 
-func mSort(data []int, start, end int) {
+func mSort(data *[]int, start, end int) {
 	if end <= start {
 		return
 	}
 	mid := start + (end-start)/2
 	mSort(data, start, mid)
 	mSort(data, mid+1, end)
-	merge(data, data[start:mid+1], data[mid+1:end], start, end)
+	merge(data, (*data)[start:mid+1], (*data)[mid+1:end+1], start, end)
 }
 
-func merge(source, data1, data2 []int, start, end int) {
+func merge(source *[]int, data1, data2 []int, start, end int) {
 	i := 0
 	j := 0
 	res := make([]int, 0, len(data1)+len(data2))
@@ -129,7 +129,7 @@ func merge(source, data1, data2 []int, start, end int) {
 	fmt.Println("res: ", res)
 
 	for i, v := range res {
-		source[i+start] = v
+		(*source)[i+start] = v
 	}
 }
 
