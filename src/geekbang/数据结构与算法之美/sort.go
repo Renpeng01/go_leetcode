@@ -126,14 +126,13 @@ func merge(source *[]int, data1, data2 []int, start, end int) {
 		j++
 	}
 
-	fmt.Println("res: ", res)
-
 	for i, v := range res {
 		(*source)[i+start] = v
 	}
 }
 
 func main() {
+	// sorted 1,3,3,5,5,6,7,8,9
 	data := []int{1, 3, 5, 3, 8, 9, 5, 6, 7}
 	MergeSort(data)
 	fmt.Println("sorted: ", data)
