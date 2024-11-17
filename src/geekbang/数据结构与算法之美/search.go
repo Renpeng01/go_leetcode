@@ -74,3 +74,44 @@ func bsearch2(a []int, value int) int {
 	}
 	return -1
 }
+
+// 3. 查找第一个大于等于给定值的元素
+func bsearch3(a []int, value int) int {
+	low := 0
+	high := len(a) - 1
+
+	for low <= high {
+		mid := low + (high-low)>>1
+		if a[mid] >= value {
+			if mid == 0 && a[mid-1] < value {
+				return mid
+			} else {
+				high = mid - 1
+			}
+		} else {
+			low = mid + 1
+		}
+	}
+	return -1
+}
+
+// 4. 查找最后一个小于等于给定值的元素
+func bsearch4(a []int, value int) int {
+	low := 0
+	high := len(a) - 1
+
+	for low <= high {
+		mid := low + (high-low)>>1
+		if a[mid] <= value {
+			if mid == len(a)-1 || a[mid+1] > value {
+				return mid
+			} else {
+				low = mid + 1
+			}
+		} else {
+			high = mid - 1
+		}
+
+	}
+	return -1
+}
