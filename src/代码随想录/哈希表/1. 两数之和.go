@@ -1,6 +1,6 @@
 package main
 
-func twoSum(nums []int, target int) []int {
+func twoSum1(nums []int, target int) []int {
 	posSet := make(map[int][]int, len(nums))
 
 	for i, v := range nums {
@@ -23,6 +23,23 @@ func twoSum(nums []int, target int) []int {
 			}
 
 		}
+	}
+	return res
+}
+
+// 优化，不需要提前把全部的位置都存在set中，可以在遍历的同时查找结果，也能同时避免使用同一个位置元素的问题
+func twoSum(nums []int, target int) []int {
+	res := make([]int, 2)
+	posSet := make(map[int]int, len(nums))
+	for i, v := range nums {
+		index, ok := posSet[target-v]
+		if !ok {
+			posSet[v] = i
+			continue
+		}
+		res[0] = i
+		res[1] = index
+		return res
 	}
 	return res
 }
