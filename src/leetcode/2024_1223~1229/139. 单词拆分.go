@@ -13,8 +13,6 @@ func wordBreak(s string, wordDict []string) bool {
 			}
 		}
 	}
-
-	// fmt.Println(dp)
 	return dp[len(s)]
 }
 
