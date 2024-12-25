@@ -14,13 +14,13 @@ func lengthOfLIS(nums []int) int {
 		for j := 0; j < i; j++ {
 			if nums[i] > nums[j] {
 				dp[i] = int(math.Max(float64(dp[j]+1), float64(dp[i])))
-				if dp[i] > max {
-					max = dp[i]
-				}
+
 			}
 		}
+		if dp[i] > max {
+			max = dp[i]
+		}
 	}
-
 	return max
 }
 
