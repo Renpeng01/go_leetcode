@@ -22,7 +22,7 @@ func integerBreak(n int) int {
 	dp[2] = 1
 
 	for i := 3; i <= n; i++ {
-		for j := 1; j < i; j++ {
+		for j := 1; j <= i/2; /*这里也可以用 j<i, 此处的 j <= i/2 是个优化，因为乘积最大往往是几个比较接近的数相乘得到的  */ j++ {
 			dp[i] = max(j*dp[i-j], max(dp[i], j*(i-j)))
 		}
 	}
