@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 // 给你一个 只包含正整数 的 非空 数组 nums 。请你判断是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。
 
 func canPartition(nums []int) bool {
@@ -15,17 +13,18 @@ func canPartition(nums []int) bool {
 		return false
 	}
 
-	dp := make([]int, sum/2+1)
+	target := sum / 2
+
+	dp := make([]int, target+1)
 	for i := 0; i < len(nums); i++ {
-		for j := sum / 2; j >= nums[i]; j-- {
+		for j := target; j >= nums[i]; j-- {
 			dp[j] = Max(dp[j], dp[j-nums[i]]+nums[i])
+			if dp[j] == target {
+				return true
+			}
 		}
 	}
-
-	fmt.Println(dp)
-
-	return dp[sum/2] == sum/2
-
+	return false
 }
 
 func Max(a, b int) int {
