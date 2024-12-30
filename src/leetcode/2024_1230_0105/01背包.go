@@ -43,27 +43,22 @@ func bag2(bagV int, weight []int, value []int) int {
 // 一维数组
 func bag1(bagV int, weight []int, value []int) int {
 
-	dp := make([]int, bagV+1)
+	dp := make([]int, bagV+1) // dp[i] 容量为i的背包最大值为dp[i]
+	// for i := 0; i <= bagV; i++ {
+	// 	if i >= weight[0] {
+	// 		dp[i] = value[0]
+	// 	}
+	// }
+	// fmt.Println(dp)
 
-	for i := 0; i <= bagV; i++ {
-		if i >= weight[0] {
-			dp[i] = value[0]
-		}
-	}
-
-	fmt.Println(dp)
-
-	for i := 1; i < len(weight); i++ { // 遍历物品
-		for j := bagV; j >= 0; j-- {
-			if j >= weight[i] {
-				dp[j] = max(dp[j], dp[j-weight[i]]+value[i])
-			}
+	for i := 0; i < len(weight); i++ { // 遍历物品
+		for j := bagV; j > weight[i]; j-- {
+			dp[j] = max(dp[j], dp[j-weight[i]]+value[i])
 		}
 		fmt.Println(dp)
 	}
 
 	return dp[bagV]
-
 }
 
 func max(a, b int) int {
