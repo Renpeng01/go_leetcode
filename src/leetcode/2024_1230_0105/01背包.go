@@ -52,7 +52,7 @@ func bag1(bagV int, weight []int, value []int) int {
 	// fmt.Println(dp)
 
 	for i := 0; i < len(weight); i++ { // 遍历物品
-		for j := bagV; j > weight[i]; j-- {
+		for j := bagV; j > weight[i]; j-- { // 从后往前遍历，如果从先往后遍历，则会用到再本次修改后的值
 			dp[j] = max(dp[j], dp[j-weight[i]]+value[i])
 		}
 		fmt.Println(dp)
