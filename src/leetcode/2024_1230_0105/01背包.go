@@ -11,7 +11,7 @@ import "fmt"
 // dp[i][j] = max(dp[i-1][j],dp[i-1][j-weight[i]] + value[i])
 
 // 二维数组
-func bag(bagV int, weight []int, value []int) int {
+func bag2(bagV int, weight []int, value []int) int {
 	dp := make([][]int, len(weight)) // dp[i][j]  0~i之间的物品，任取放进容量为j的背包里
 
 	for i := 0; i < len(weight); i++ {
@@ -40,6 +40,32 @@ func bag(bagV int, weight []int, value []int) int {
 	return dp[len(weight)-1][bagV]
 }
 
+// 一维数组
+func bag1(bagV int, weight []int, value []int) int {
+
+	dp := make([]int, bagV+1)
+
+	for i := 0; i <= bagV; i++ {
+		if i >= weight[0] {
+			dp[i] = value[0]
+		}
+	}
+
+	fmt.Println(dp)
+
+	for i := 1; i < len(weight); i++ { // 遍历物品
+		for j := bagV; j >= 0; j-- {
+			if j >= weight[i] {
+				dp[j] = max(dp[j], dp[j-weight[i]]+value[i])
+			}
+		}
+		fmt.Println(dp)
+	}
+
+	return dp[bagV]
+
+}
+
 func max(a, b int) int {
 	if a > b {
 		return a
@@ -51,6 +77,6 @@ func main() {
 	weight := []int{1, 3, 4}
 	value := []int{15, 20, 30}
 
-	res := bag(4, weight, value)
+	res := bag2(4, weight, value)
 	fmt.Println("res: ", res)
 }
