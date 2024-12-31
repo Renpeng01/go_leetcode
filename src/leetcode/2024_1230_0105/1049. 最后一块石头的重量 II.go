@@ -1,7 +1,6 @@
 package main
 
 func lastStoneWeightII(stones []int) int {
-
 	sum := 0
 	for _, v := range stones {
 		sum += v
