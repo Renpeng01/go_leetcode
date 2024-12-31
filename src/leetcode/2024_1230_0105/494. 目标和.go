@@ -13,7 +13,7 @@ func findTargetSumWays(nums []int, target int) int {
 	}
 	bagSize := (sum + target) / 2
 	dp := make([]int, bagSize+1) // dp[j] 装满背包容量i有dp[j]中方法
-	dp[0] = 1
+	dp[0] = 1                    // 如果不是1，则无法计算
 	for i := 0; i < len(nums); i++ {
 		for j := bagSize; j >= nums[i]; j-- {
 			dp[j] += dp[j-nums[i]]
