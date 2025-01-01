@@ -67,11 +67,3 @@ func max(a, b int) int {
 	}
 	return b
 }
-
-func main() {
-	weight := []int{1, 3, 4}
-	value := []int{15, 20, 30}
-
-	res := bag2(4, weight, value)
-	fmt.Println("res: ", res)
-}

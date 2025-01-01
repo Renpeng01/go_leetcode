@@ -29,7 +29,3 @@ func Max(a, b int) int {
 
 	return b
 }
-
-func main() {
-	canPartition([]int{1, 5, 11, 5})
-}
