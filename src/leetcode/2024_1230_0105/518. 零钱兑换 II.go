@@ -24,6 +24,6 @@ func change(amount int, coins []int) int {
 }
 
 func main() {
-	fmt.Println(change(3, []int{2}))
+	fmt.Println(change(4, []int{1, 2, 3}))
 
 }
