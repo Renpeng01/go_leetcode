@@ -1,7 +1,6 @@
 package main
 
 func rob(nums []int) int {
-
 	if len(nums) == 0 {
 		return 0
 	}
