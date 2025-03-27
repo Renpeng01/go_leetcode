@@ -4,27 +4,28 @@ import "fmt"
 
 func searchInsert(nums []int, target int) int {
 
-	if target <= nums[0] {
-		return 0
-	}
-
 	h := 0
 	t := len(nums) - 1
 
 	mid := 0
-	for h < t {
+	// f := false
+	ans := len(nums)
+	for h <= t {
 		mid = h + (t-h)/2
 		if nums[mid] == target {
 			return mid
 		}
 
-		if nums[mid] > target {
+		if nums[mid] >= target {
 			t = mid - 1
+			ans = mid
+
 		} else {
 			h = mid + 1
 		}
 	}
-	return mid
+
+	return ans
 }
 
 func main() {
