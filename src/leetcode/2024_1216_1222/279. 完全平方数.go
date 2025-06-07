@@ -1,15 +1,14 @@
-package main
+package aa
 
-import "math"
+import "fmt"
 
-func numSquares(n int) int {
-	dp := make([]int, n+1)
-	for i := 1; i <= n; i++ {
-		min := math.MaxInt
-		for j := 1; j*j <= i; j++ {
-			min = int(math.Min(float64(min), float64(dp[i-j*j])))
-		}
-		dp[i] = min + 1
+func main() {
+	arr := []int{1, 2, 3}
+	newArr := []*int{}
+	for i, _ := range arr {
+		newArr = append(newArr, &arr[i])
 	}
-	return dp[n]
+	for _, v := range newArr {
+		fmt.Println(*v)
+	}
 }
