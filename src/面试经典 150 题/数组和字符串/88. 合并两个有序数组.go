@@ -1,5 +1,7 @@
 package main
 
+import "gthub.com/Renpeng01/go_leetcode/src/utils"
+
 func merge(nums1 []int, m int, nums2 []int, n int) {
 	copy1 := make([]int, len(nums1))
 	for i, v := range nums1 {
@@ -9,10 +11,7 @@ func merge(nums1 []int, m int, nums2 []int, n int) {
 	nums1Idx := 0
 	nums2Idx := 0
 	i := 0
-	for {
-		if nums1Idx >= m || nums2Idx >= n {
-			break
-		}
+	for nums1Idx < m && nums2Idx < n {
 		if copy1[nums1Idx] < nums2[nums2Idx] {
 			nums1[i] = copy1[nums1Idx]
 			nums1Idx++
@@ -31,8 +30,9 @@ func merge(nums1 []int, m int, nums2 []int, n int) {
 	for k := nums2Idx; k < n; k++ {
 		nums1[i] = nums2[k]
 		i++
-
 	}
+
+	utils.PrintIntSlice(nums1)
 }
 
 func main() {
