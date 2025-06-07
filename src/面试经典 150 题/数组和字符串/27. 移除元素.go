@@ -34,6 +34,25 @@ func findTail(nums []int, head, tail, val int) int {
 	return res
 }
 
+func removeElement1(nums []int, val int) int {
+
+	tail := len(nums) - 1
+	head := 0
+	for head < tail {
+
+		if nums[head] == val {
+			nums[head] = nums[tail]
+			tail--
+		} else {
+			head++
+		}
+
+	}
+
+	return head
+
+}
+
 func main() {
 	nums := []int{5, 5}
 	res := removeElement(nums, 5)
