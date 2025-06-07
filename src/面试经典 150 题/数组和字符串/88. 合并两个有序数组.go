@@ -1,4 +1,4 @@
-package main
+package leetcode
 
 import "gthub.com/Renpeng01/go_leetcode/src/utils"
 
@@ -61,10 +61,4 @@ func merge1(nums1 []int, m int, nums2 []int, n int) {
 		nums1[tail] = nums2[k]
 		tail--
 	}
-}
-
-func main() {
-	num1 := []int{4, 5, 6, 0, 0, 0}
-	num2 := []int{1, 2, 3}
-	merge1(num1, 3, num2, 3)
 }
