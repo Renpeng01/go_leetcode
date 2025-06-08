@@ -1,4 +1,4 @@
-package leetcode
+package main
 
 import (
 	"fmt"
@@ -35,7 +35,6 @@ func findTail(nums []int, head, tail, val int) int {
 }
 
 func removeElement1(nums []int, val int) int {
-
 	tail := len(nums) - 1
 	head := 0
 	for head < tail {
@@ -46,7 +45,6 @@ func removeElement1(nums []int, val int) int {
 		} else {
 			head++
 		}
-
 	}
 
 	return head

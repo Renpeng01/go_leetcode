@@ -1,4 +1,4 @@
-package leetcode
+package main
 
 import "gthub.com/Renpeng01/go_leetcode/src/utils"
 
