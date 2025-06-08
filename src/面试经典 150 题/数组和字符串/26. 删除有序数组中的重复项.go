@@ -40,6 +40,24 @@ func findUniqueIdx(nums []int, start, end, val int) int {
 	return res
 }
 
+func removeDuplicates1(nums []int) int {
+	slow := 1
+	fast := 1
+
+	for fast < len(nums) {
+
+		if nums[fast] != nums[fast-1] {
+			nums[slow] = nums[fast]
+			slow++
+		}
+		fast++
+
+	}
+
+	return slow
+
+}
+
 func main() {
 	nums := []int{1, 2, 3}
 
