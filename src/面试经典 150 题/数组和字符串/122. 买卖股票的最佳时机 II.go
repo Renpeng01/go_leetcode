@@ -31,19 +31,26 @@ func max(a, b int) int {
 
 func maxProfit1(prices []int) int {
 	min := prices[0]
-
 	maxProfit := 0
-
 	for i := 1; i < len(prices); i++ {
 		if prices[i] < min {
 			min = prices[i]
 		} else {
-			if prices[i]-min > maxProfit {
-				maxProfit = prices[i] - min
+			if prices[i]-min > 0 {
+				maxProfit += prices[i] - min
+				if i < len(prices)-1 {
+					min = prices[i]
+				}
 			}
 		}
 	}
-
 	return maxProfit
+}
 
+func maxProfit2(prices []int) int {
+	maxProfit := 0
+	for i := 1; i < len(prices); i++ {
+		maxProfit = max(0, prices[i]-prices[i-1])
+	}
+	return maxProfit
 }
