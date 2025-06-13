@@ -37,6 +37,8 @@ func canCompleteCircuit1(gas []int, cost []int) int {
 				}
 				continue
 			}
+
+			// x走不到y，则x和y中间的任意一点都走不到y，所有从y+1开始
 			i = i + j + 1 // 如果i不到i，则从i + j + 1开始继续往后走
 			break
 		}
