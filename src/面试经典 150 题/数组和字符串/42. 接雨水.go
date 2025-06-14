@@ -37,7 +37,7 @@ func main() {
 	fmt.Println(res)
 }
 
-func trap(height []int) int {
+func trap1(height []int) int {
 
 	stack := make([]int, 0, len(height))
 	res := 0
