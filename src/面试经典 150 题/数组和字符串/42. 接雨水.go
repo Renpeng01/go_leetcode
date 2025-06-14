@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
 // 超时
@@ -10,17 +9,7 @@ func trap(height []int) int {
 	base := 1
 	total := 0
 
-	min := math.MaxInt
-	for _, v := range height {
-		if v < min {
-			v = min
-		}
-
-	}
 	for {
-		if min <= base {
-			break
-		}
 		b := -1
 		heighterCnt := 0
 		for i := 0; i < len(height); i++ {
@@ -33,9 +22,7 @@ func trap(height []int) int {
 				}
 				heighterCnt++
 			}
-			// fmt.Println("b: ", b)
 		}
-		// fmt.Println("currTotal: ", total, " b: ", b)
 		if heighterCnt <= 1 {
 			break
 		}
