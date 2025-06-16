@@ -12,7 +12,7 @@ func fullJustify(words []string, maxWidth int) []string {
 	tmp := make([]string, 0, 8)
 	tmp = append(tmp, words[0])
 	for i := 1; i < len(words); i++ {
-		if totalLen+len(words[i])+1 > 16 {
+		if totalLen+len(words[i])+1 > maxWidth {
 			splitStrs = append(splitStrs, tmp)
 			tmp = make([]string, 0, 8)
 			tmp = append(tmp, words[i])
@@ -56,8 +56,9 @@ func fullJustify(words []string, maxWidth int) []string {
 
 func main() {
 	// words := []string{"This", "is", "an", "example", "of", "text", "justification."}
-	words := []string{"What", "must", "be", "acknowledgment", "shall", "be"}
-	res := fullJustify(words, 16)
+	// words := []string{"What", "must", "be", "acknowledgment", "shall", "be"}
+	words := []string{"Science", "is", "what", "we", "understand", "well", "enough", "to", "explain", "to", "a", "computer.", "Art", "is", "everything", "else", "we", "do"}
+	res := fullJustify(words, 20)
 	// fmt.Println(strings.Join(res, ","))
 
 	for _, v := range res {
