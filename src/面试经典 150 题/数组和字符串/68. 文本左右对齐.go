@@ -73,8 +73,9 @@ func main() {
 	// words := []string{"example", "of", "text"}
 	// words := []string{"What", "must", "be", "acknowledgment", "shall", "be"}
 	// words := []string{"Science", "is", "what", "we", "understand", "well", "enough", "to", "explain", "to", "a", "computer.", "Art", "is", "everything", "else", "we", "do"}
-	words := []string{"Science", "is", "what", "we"}
-	res := fullJustify(words, 20)
+	// words := []string{"Science", "is", "what", "we"}
+	words := []string{"Listen", "to", "many,", "speak", "to", "a", "few."}
+	res := fullJustify(words, 6)
 	// fmt.Println(strings.Join(res, ","))
 
 	for _, v := range res {
