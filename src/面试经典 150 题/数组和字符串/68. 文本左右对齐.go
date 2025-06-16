@@ -10,17 +10,21 @@ func fullJustify(words []string, maxWidth int) []string {
 
 	totalLen := len(words[0])
 	tmp := make([]string, 0, 8)
-	tmp = append(tmp, words[0])
-	for i := 1; i < len(words); i++ {
-		if totalLen+len(words[i])+1 > maxWidth {
-			splitStrs = append(splitStrs, tmp)
-			tmp = make([]string, 0, 8)
-			tmp = append(tmp, words[i])
-			totalLen = len(words[i])
+	for i := 0; i < len(words); i++ {
+		if i == 0 {
+			tmp = append(tmp, words[0])
 		} else {
-			tmp = append(tmp, words[i])
-			totalLen += len(words[i]) + 1
+			if totalLen+len(words[i])+1 > maxWidth {
+				splitStrs = append(splitStrs, tmp)
+				tmp = make([]string, 0, 8)
+				tmp = append(tmp, words[i])
+				totalLen = len(words[i])
+			} else {
+				tmp = append(tmp, words[i])
+				totalLen += len(words[i]) + 1
+			}
 		}
+
 		if i == len(words)-1 {
 			splitStrs = append(splitStrs, tmp)
 		}
