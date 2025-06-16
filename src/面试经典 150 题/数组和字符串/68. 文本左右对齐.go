@@ -26,14 +26,12 @@ func fullJustify(words []string, maxWidth int) []string {
 		}
 	}
 
-	isLeft := false
 	res := make([]string, 0, len(splitStrs))
-	for _, strs := range splitStrs {
+	for i, strs := range splitStrs {
 		str := ""
 
 		if len(strs) == 1 {
 			str += strs[0] + strings.Repeat(" ", maxWidth-len(strs[0]))
-			isLeft = true
 		} else {
 			wordsTotalLen := 0
 			for _, clildStr := range strs {
@@ -41,25 +39,23 @@ func fullJustify(words []string, maxWidth int) []string {
 			}
 			paddingCnt := maxWidth - wordsTotalLen
 			moreCnt := paddingCnt % (len(strs) - 1)
-			if moreCnt == 0 && !isLeft {
+
+			if i == (len(splitStrs) - 1) {
+				str = strings.Join(strs, " ") + strings.Repeat(" ", maxWidth-(len(strs)-1)-wordsTotalLen-moreCnt)
+				res = append(res, str)
+				continue
+			}
+			if moreCnt == 0 {
 				str = strings.Join(strs, strings.Repeat(" ", paddingCnt/(len(strs)-1)))
 			} else {
-				if isLeft {
-					strs[0] += strings.Repeat(" ", moreCnt)
-					str = strings.Join(strs, " ") + strings.Repeat(" ", maxWidth-(len(strs)-1)-wordsTotalLen-moreCnt)
-				} else {
-
-					// fmt.Println("paddingCnt: ", paddingCnt)
-					i := 0
-					for paddingCnt > 0 {
-						// fmt.Println("i: ", i, " paddingCnt: ", paddingCnt, " len(strs): ", len(strs))
-						strs[i%(len(strs)-1)] += " "
-						paddingCnt--
-						i++
-					}
-					str = strings.Join(strs, "")
+				i := 0
+				for paddingCnt > 0 {
+					// fmt.Println("i: ", i, " paddingCnt: ", paddingCnt, " len(strs): ", len(strs))
+					strs[i%(len(strs)-1)] += " "
+					paddingCnt--
+					i++
 				}
-
+				str = strings.Join(strs, "")
 			}
 		}
 		res = append(res, str)
