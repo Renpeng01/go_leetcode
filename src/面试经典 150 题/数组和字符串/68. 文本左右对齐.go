@@ -46,10 +46,14 @@ func fullJustify(words []string, maxWidth int) []string {
 			} else {
 				strs[0] += strings.Repeat(" ", moreCnt)
 				str = strings.Join(strs, " ") + strings.Repeat(" ", maxWidth-(len(strs)-1)-wordsTotalLen-moreCnt)
-				isLeft = true
+				if maxWidth-(len(strs)-1)-wordsTotalLen-moreCnt > 0 {
+					isLeft = true
+				}
+
 			}
 		}
 		res = append(res, str)
+		// fmt.Println(isLeft)
 	}
 	return res
 }
