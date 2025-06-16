@@ -44,10 +44,20 @@ func fullJustify(words []string, maxWidth int) []string {
 			if moreCnt == 0 && !isLeft {
 				str = strings.Join(strs, strings.Repeat(" ", paddingCnt/(len(strs)-1)))
 			} else {
-				strs[0] += strings.Repeat(" ", moreCnt)
-				str = strings.Join(strs, " ") + strings.Repeat(" ", maxWidth-(len(strs)-1)-wordsTotalLen-moreCnt)
-				if maxWidth-(len(strs)-1)-wordsTotalLen-moreCnt > 0 {
-					isLeft = true
+				if isLeft {
+					strs[0] += strings.Repeat(" ", moreCnt)
+					str = strings.Join(strs, " ") + strings.Repeat(" ", maxWidth-(len(strs)-1)-wordsTotalLen-moreCnt)
+				} else {
+
+					// fmt.Println("paddingCnt: ", paddingCnt)
+					i := 0
+					for paddingCnt > 0 && i <= len(strs)-1 {
+						// fmt.Println("i: ", i, " paddingCnt: ", paddingCnt, " len(strs): ", len(strs))
+						strs[i%(len(strs)-1)] += " "
+						paddingCnt--
+						i++
+					}
+					str = strings.Join(strs, "")
 				}
 
 			}
@@ -60,9 +70,10 @@ func fullJustify(words []string, maxWidth int) []string {
 
 func main() {
 	// words := []string{"This", "is", "an", "example", "of", "text", "justification."}
+	words := []string{"example", "of", "text"}
 	// words := []string{"What", "must", "be", "acknowledgment", "shall", "be"}
-	words := []string{"Science", "is", "what", "we", "understand", "well", "enough", "to", "explain", "to", "a", "computer.", "Art", "is", "everything", "else", "we", "do"}
-	res := fullJustify(words, 20)
+	// words := []string{"Science", "is", "what", "we", "understand", "well", "enough", "to", "explain", "to", "a", "computer.", "Art", "is", "everything", "else", "we", "do"}
+	res := fullJustify(words, 16)
 	// fmt.Println(strings.Join(res, ","))
 
 	for _, v := range res {
