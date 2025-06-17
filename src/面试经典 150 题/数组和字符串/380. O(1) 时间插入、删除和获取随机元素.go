@@ -26,11 +26,10 @@ func (this *RandomizedSet) Insert(val int) bool {
 	if _, ok := this.dataMap[val]; ok {
 		return false
 	}
-	n := &node{
-		val: val,
-		pre: this.currentNode,
-	}
+	n := &node{val: val}
+	n.pre = this.currentNode
 	this.currentNode.next = n
+	this.currentNode = n
 	this.dataMap[val] = n
 	return true
 
@@ -40,8 +39,16 @@ func (this *RandomizedSet) Remove(val int) bool {
 	if _, ok := this.dataMap[val]; ok {
 		deleteNode := this.dataMap[val]
 		delete(this.dataMap, val)
+		if deleteNode == this.currentNode {
+			this.currentNode = deleteNode.pre
+		}
+
 		deleteNode.pre.next = deleteNode.next
-		deleteNode.next.pre = deleteNode.pre
+
+		if deleteNode.next != nil {
+			deleteNode.next.pre = deleteNode.pre
+		}
+
 		return true
 	}
 	return false
