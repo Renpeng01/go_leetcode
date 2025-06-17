@@ -1,24 +1,16 @@
 package main
 
-type RandomizedSet struct {
-	dataMap           map[int]*node
-	head              *node
-	currentNode       *node
-	returnCurrentNode *node
-}
+import "math/rand"
 
-type node struct {
-	val  int
-	next *node
-	pre  *node
+type RandomizedSet struct {
+	dataMap map[int]int
+	data    []int
 }
 
 func Constructor() RandomizedSet {
 	e := RandomizedSet{}
-	e.dataMap = make(map[int]*node, 128)
-	e.head = new(node)
-	e.currentNode = e.head
-	e.returnCurrentNode = e.head
+	e.dataMap = make(map[int]int, 128)
+	e.data = make([]int, 0, 128)
 	return e
 }
 
@@ -26,40 +18,24 @@ func (this *RandomizedSet) Insert(val int) bool {
 	if _, ok := this.dataMap[val]; ok {
 		return false
 	}
-	n := &node{val: val}
-	n.pre = this.currentNode
-	this.currentNode.next = n
-	this.currentNode = n
-	this.dataMap[val] = n
+	this.dataMap[val] = len(this.data)
+	this.data = append(this.data, val)
 	return true
 
 }
 
 func (this *RandomizedSet) Remove(val int) bool {
 	if _, ok := this.dataMap[val]; ok {
-		deleteNode := this.dataMap[val]
+		last := len(this.data) - 1
+		this.dataMap[this.data[last]] = this.dataMap[val]
+		this.data[this.dataMap[val]] = this.data[last]
+		this.data = this.data[:last]
 		delete(this.dataMap, val)
-		if deleteNode == this.currentNode {
-			this.currentNode = deleteNode.pre
-		}
-
-		deleteNode.pre.next = deleteNode.next
-
-		if deleteNode.next != nil {
-			deleteNode.next.pre = deleteNode.pre
-		}
-
 		return true
 	}
 	return false
 }
 
 func (this *RandomizedSet) GetRandom() int {
-	if this.returnCurrentNode.next != nil {
-		this.returnCurrentNode = this.returnCurrentNode.next
-	} else {
-		this.returnCurrentNode = this.head.next
-	}
-
-	return this.returnCurrentNode.val
+	return this.data[rand.Intn(len(this.data))]
 }
