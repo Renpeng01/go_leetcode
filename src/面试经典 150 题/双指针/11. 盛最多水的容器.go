@@ -3,31 +3,18 @@ package main
 func maxArea(height []int) int {
 	left := 0
 	right := len(height) - 1
-	maxArea := min(height[left], height[right]) * (right - left)
-
+	maxArea := 0
 	for left < right {
-		nextLeft := left + 1
-		nextRigth := right - 1
-		if nextLeft < right && height[left] < height[right] && height[nextLeft] > height[left] {
-			if min(height[nextLeft], height[right])*(right-nextLeft) > maxArea {
-				maxArea = min(height[nextLeft], height[right]) * (right - nextLeft)
-			}
+		if min(height[left], height[right])*(right-left) > maxArea {
+			maxArea = min(height[left], height[right]) * (right - left)
+		}
+
+		if height[left] < height[right] {
 			left++
-			continue
-		}
-
-		if nextRigth > left && height[right] < height[left] && height[nextRigth] > height[right] {
-			if min(height[nextRigth], height[left])*(nextRigth-left) > maxArea {
-				maxArea = min(height[nextRigth], height[left]) * (nextRigth - left)
-
-			}
+		} else {
 			right--
-			continue
 		}
-		left++
-		right--
 	}
-
 	return maxArea
 }
 
