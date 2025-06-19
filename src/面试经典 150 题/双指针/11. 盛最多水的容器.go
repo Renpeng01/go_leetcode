@@ -11,17 +11,18 @@ func maxArea(height []int) int {
 		if nextLeft < right && height[left] < height[right] && height[nextLeft] > height[left] {
 			if min(height[nextLeft], height[right])*(right-nextLeft) > maxArea {
 				maxArea = min(height[nextLeft], height[right]) * (right - nextLeft)
-				left = nextLeft
-				continue
 			}
+			left++
+			continue
 		}
 
 		if nextRigth > left && height[right] < height[left] && height[nextRigth] > height[right] {
 			if min(height[nextRigth], height[left])*(nextRigth-left) > maxArea {
 				maxArea = min(height[nextRigth], height[left]) * (nextRigth - left)
-				right = nextRigth
-				continue
+
 			}
+			right--
+			continue
 		}
 		left++
 		right--
