@@ -17,23 +17,17 @@ func minSubArrayLen(target int, nums []int) int {
 				minLen = right - left + 1
 			}
 			for left < right {
-				if (sum - nums[left]) >= target {
-
-					if right-(left+1)+1 < minLen {
-						minLen = right - (left + 1) + 1
-					}
-					sum -= nums[left]
-					left++
-					minLen--
-					continue
+				if (sum - nums[left]) < target {
+					break
 				}
-				break
+				if right-(left+1)+1 < minLen {
+					minLen = right - (left + 1) + 1
+				}
+				sum -= nums[left]
+				left++
 			}
-			left++
-			right++
-		} else {
-			right++
 		}
+		right++
 	}
 
 	if minLen == math.MaxInt {
