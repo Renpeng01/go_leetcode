@@ -9,28 +9,26 @@ func lengthOfLongestSubstring(s string) int {
 	max := 1
 	set := make(map[byte]int)
 	set[s[0]] = 0
-
 	begin := 0
 	i := 1
 	for i < len(s) {
 		v, ok := set[s[i]]
 		if ok {
-			if i-begin > max {
+			if (i - begin) > max {
 				max = i - begin
 			}
-			for j := 0; j <= i; j++ {
+			for j := 0; j <= v; j++ {
 				delete(set, s[j])
 			}
 			set[s[i]] = i
-			i++
 			begin = v + 1
-
+			i++
 		} else {
+			if i == len(s)-1 && (i-begin+1) > max {
+				max = i - begin + 1
+			}
 			set[s[i]] = i
 			i++
-		}
-		if i == len(s)-1 && i-begin > max {
-			max = i - begin
 		}
 
 	}
