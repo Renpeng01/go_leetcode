@@ -20,17 +20,14 @@ func lengthOfLongestSubstring(s string) int {
 			for j := 0; j <= v; j++ {
 				delete(set, s[j])
 			}
-			set[s[i]] = i
 			begin = v + 1
-			i++
 		} else {
 			if i == len(s)-1 && (i-begin+1) > max {
 				max = i - begin + 1
 			}
-			set[s[i]] = i
-			i++
 		}
-
+		set[s[i]] = i
+		i++
 	}
 	return max
 }
