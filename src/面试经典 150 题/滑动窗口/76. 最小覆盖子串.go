@@ -29,8 +29,10 @@ func minWindow(s string, t string) string {
 	}
 
 	right := left
+	path := make(map[byte]int, 8)
 	for i := left + 1; i < len(s); i++ {
 		if set[s[i]] > 0 {
+			path[s[i]]++
 			set[s[i]]--
 			if set[s[i]] == 0 {
 				delete(set, s[i])
@@ -42,7 +44,19 @@ func minWindow(s string, t string) string {
 		}
 	}
 
-	// fmt.Printf("left: %+v, right: %+v\n", left, right)
+	for left <= right {
+		if path[s[left]] > 0 {
+			path[s[left]]--
+			if path[s[left]] == 0 {
+				delete(path, s[left])
+			}
+			left++
+		} else {
+			break
+		}
+	}
+
+	fmt.Printf("left: %+v, right: %+v\n", left, right)
 
 	if right-left+1 <= 0 {
 		return ""
@@ -88,8 +102,8 @@ func minWindow(s string, t string) string {
 }
 
 func main() {
-	s := "ADOBECODEBANC"
-	t := "ABC"
+	s := "bba"
+	t := "ab"
 
 	res := minWindow(s, t)
 	fmt.Println(res)
