@@ -43,9 +43,10 @@ func minWindow(s string, t string) string {
 			}
 		}
 	}
+	fmt.Printf("left: %+v, right: %+v\n", left, right)
 
 	for left <= right {
-		if path[s[left]] > 0 {
+		if path[s[left]]-set[s[left]] > 0 {
 			path[s[left]]--
 			if path[s[left]] == 0 {
 				delete(path, s[left])
@@ -102,8 +103,8 @@ func minWindow(s string, t string) string {
 }
 
 func main() {
-	s := "bba"
-	t := "ab"
+	s := "aa"
+	t := "aa"
 
 	res := minWindow(s, t)
 	fmt.Println(res)
