@@ -13,8 +13,21 @@ func findSubstring(s string, words []string) []int {
 	}
 
 	wordSet := make(map[string]int, len(words))
+
+	tempStr := ""
 	for _, v := range words {
 		wordSet[v]++
+		tempStr += v
+	}
+
+	if len(wordSet) == 1 {
+
+		for i := 0; i <= len(s)-subStrLen; i++ {
+			if s[i:i+subStrLen] == tempStr {
+				res = append(res, i)
+			}
+		}
+		return res
 	}
 	// fmt.Printf("wordSet: %+v, subStrLen: %+v\n", wordSet, subStrLen)
 
@@ -24,7 +37,7 @@ func findSubstring(s string, words []string) []int {
 		revertWords := make([]string, 0, len(words))
 		for b := 0; b <= subStrLen-step; b += step {
 			k := s[i+b : i+b+step]
-			fmt.Printf("i: %+v b: %+v, step: %+v, (i+b): %+v,(i+b+step): %+v, key: %+v\n", i, b, step, i+b, i+b+step, k)
+			// fmt.Printf("i: %+v b: %+v, step: %+v, (i+b): %+v,(i+b+step): %+v, key: %+v\n", i, b, step, i+b, i+b+step, k)
 			if wordSet[k] > 0 {
 				wordSet[k]--
 				revertWords = append(revertWords, k)
@@ -45,8 +58,8 @@ func findSubstring(s string, words []string) []int {
 func main() {
 	// s := "barfoothefoobarman"
 	// words := []string{"foo", "bar"}
-	s := "wordgoodgoodgoodbestword"
-	words := []string{"word", "good", "best", "good"}
+	s := "aaa"
+	words := []string{"a", "a"}
 
 	res := findSubstring(s, words)
 	fmt.Printf("res: %+v\n", res)
