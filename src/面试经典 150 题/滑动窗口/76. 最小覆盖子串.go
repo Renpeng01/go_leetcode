@@ -1,12 +1,18 @@
 package main
 
+import "fmt"
+
 func minWindow(s string, t string) string {
+
+	if len(t) > len(s) {
+		return ""
+	}
 	set := make(map[byte]int, len(s))
 	for i := 0; i < len(t); i++ {
 		set[t[i]]++
 	}
 
-	left := 0
+	left := -1
 	for i := 0; i < len(s); i++ {
 		if set[s[i]] > 0 {
 			set[s[i]]--
@@ -17,6 +23,11 @@ func minWindow(s string, t string) string {
 			break
 		}
 	}
+
+	if left < 0 {
+		return ""
+	}
+
 	right := left
 	for i := left + 1; i < len(s); i++ {
 		if set[s[i]] > 0 {
@@ -30,6 +41,8 @@ func minWindow(s string, t string) string {
 			}
 		}
 	}
+
+	// fmt.Printf("left: %+v, right: %+v\n", left, right)
 
 	if right-left+1 <= 0 {
 		return ""
@@ -74,5 +87,10 @@ func minWindow(s string, t string) string {
 	return res
 }
 
-// ADOBECODEBANC
-// ADOBEC
+func main() {
+	s := "ADOBECODEBANC"
+	t := "ABC"
+
+	res := minWindow(s, t)
+	fmt.Println(res)
+}
