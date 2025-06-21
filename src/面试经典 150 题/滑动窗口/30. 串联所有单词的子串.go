@@ -2,8 +2,6 @@ package main
 
 import "fmt"
 
-// 超时
-// 179 / 182 个通过的测试用例
 func findSubstring(s string, words []string) []int {
 	res := make([]int, 0, 8)
 	step := len(words[0])
