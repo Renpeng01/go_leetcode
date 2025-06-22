@@ -8,8 +8,10 @@ func minWindow(s string, t string) string {
 		return ""
 	}
 	set := make(map[byte]int, len(s))
+	keys := make(map[byte]struct{}, len(s))
 	for i := 0; i < len(t); i++ {
 		set[t[i]]++
+		keys[t[i]] = struct{}{}
 	}
 
 	left := -1
@@ -31,8 +33,11 @@ func minWindow(s string, t string) string {
 	right := left
 	path := make(map[byte]int, 8)
 	for i := left + 1; i < len(s); i++ {
-		if set[s[i]] > 0 {
+		if _, ok := keys[s[i]]; ok && set[s[i]] == 0 {
 			path[s[i]]++
+		}
+		if set[s[i]] > 0 {
+
 			set[s[i]]--
 			if set[s[i]] == 0 {
 				delete(set, s[i])
@@ -76,7 +81,6 @@ func minWindow(s string, t string) string {
 		right++
 		if s[right] == s[left] {
 			for i := left + 1; i < right; i++ {
-
 				if set[s[i]] > 0 {
 					if pathHas[s[i]] > 0 {
 						pathHas[s[i]]--
@@ -95,7 +99,8 @@ func minWindow(s string, t string) string {
 				res = s[left : right+1]
 			}
 		}
-		if set[s[right]] > 0 {
+
+		if _, ok := keys[s[right]]; ok && set[s[right]] == 0 {
 			pathHas[s[right]]++
 		}
 	}
@@ -103,8 +108,11 @@ func minWindow(s string, t string) string {
 }
 
 func main() {
-	s := "ADOBECODEBANC"
-	t := "ABC"
+	// s := "ADOBECODEBANC"
+	// t := "ABC"
+
+	s := "aa"
+	t := "aa"
 
 	res := minWindow(s, t)
 	fmt.Println(res)
