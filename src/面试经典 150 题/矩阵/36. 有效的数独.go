@@ -1,5 +1,6 @@
 package main
 
+// 优化点，改为一次遍历
 func isValidSudoku(board [][]byte) bool {
 	rows := make(map[byte]bool, 9)
 	cols := make(map[byte]bool, 9)
