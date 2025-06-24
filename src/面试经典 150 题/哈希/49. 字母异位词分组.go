@@ -5,6 +5,7 @@ import (
 	"sort"
 )
 
+// 通过 但是性能较差
 func groupAnagrams(strs []string) [][]string {
 
 	copy := make([]string, len(strs))
@@ -16,8 +17,6 @@ func groupAnagrams(strs []string) [][]string {
 		})
 		copy[k] = string(bytes)
 	}
-
-	// fmt.Println(copy)
 
 	res := make([][]string, 0, len(strs)/2+1)
 	existed := make(map[string]bool, len(copy)/2+1)
