@@ -18,7 +18,7 @@ func spiralOrder(matrix [][]int) []int {
 	for cnt < eleCnt {
 		// fmt.Printf("cnt: %+v, eleCnt: %+v\n", cnt, eleCnt)
 		// 上
-		for i := round; i < col-round-1; i++ {
+		for i := round; i <= col-round-1; i++ {
 			if cnt > eleCnt {
 				break
 			}
@@ -26,7 +26,7 @@ func spiralOrder(matrix [][]int) []int {
 			cnt++
 		}
 		// 右
-		for i := round; i < row-round-1; i++ {
+		for i := round + 1; i < row-round-1; i++ {
 			if cnt > eleCnt {
 				break
 			}
@@ -34,7 +34,7 @@ func spiralOrder(matrix [][]int) []int {
 			cnt++
 		}
 		// 下
-		for i := col - round - 1; i >= round+1; i-- {
+		for i := col - round - 1; i >= round; i-- {
 			if cnt > eleCnt {
 				break
 			}
@@ -42,7 +42,7 @@ func spiralOrder(matrix [][]int) []int {
 			cnt++
 		}
 		// 左
-		for i := row - round - 1; i >= round+1; i-- {
+		for i := row - round - 2; i >= round+1; i-- {
 			if cnt > eleCnt {
 				break
 			}
