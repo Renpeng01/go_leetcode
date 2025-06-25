@@ -16,39 +16,41 @@ func spiralOrder(matrix [][]int) []int {
 	round := 0
 	cnt := 0
 	for cnt < eleCnt {
-		fmt.Printf("cnt: %+v, eleCnt: %+v\n", cnt, eleCnt)
-		// 上
 		for i := round; i <= col-round-1; i++ {
-			if cnt > eleCnt {
+			if cnt >= eleCnt {
 				break
 			}
 			res = append(res, matrix[round][i])
 			cnt++
 		}
+
 		// 右
 		for i := round + 1; i < row-round-1; i++ {
-			if cnt > eleCnt {
+			if cnt >= eleCnt {
 				break
 			}
 			res = append(res, matrix[i][col-round-1])
 			cnt++
 		}
+
 		// 下
 		for i := col - round - 1; i >= round; i-- {
-			if cnt > eleCnt {
+			if cnt >= eleCnt {
 				break
 			}
 			res = append(res, matrix[row-round-1][i])
 			cnt++
 		}
+
 		// 左
 		for i := row - round - 2; i >= round+1; i-- {
-			if cnt > eleCnt {
+			if cnt >= eleCnt {
 				break
 			}
 			res = append(res, matrix[i][round])
 			cnt++
 		}
+
 		round++
 	}
 	return res
