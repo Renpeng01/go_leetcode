@@ -9,7 +9,7 @@ func longestConsecutive(nums []int) int {
 		pre[v] = v - 1
 	}
 
-	max := 0
+	max := 1
 	exist := make(map[int]struct{}, len(nums))
 	for i := 0; i < len(nums); i++ {
 		if _, ok := exist[nums[i]]; ok {
@@ -25,7 +25,6 @@ func longestConsecutive(nums []int) int {
 				break
 			}
 			currentMax++
-			nextKey++
 			exist[nextKey] = struct{}{}
 		}
 
@@ -36,7 +35,6 @@ func longestConsecutive(nums []int) int {
 				break
 			}
 			currentMax++
-			preKey--
 			exist[preKey] = struct{}{}
 		}
 
