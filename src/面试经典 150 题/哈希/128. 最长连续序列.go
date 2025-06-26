@@ -6,6 +6,7 @@ func longestConsecutive(nums []int) int {
 	next := make(map[int]int, len(nums))
 	pre := make(map[int]int, len(nums))
 
+	// 优化其实不需要记录pre和next,用一个map即可  因为其next的val一定是key+1  pre 的val一定是key-1
 	for _, v := range nums {
 		next[v] = v + 1
 		pre[v] = v - 1
