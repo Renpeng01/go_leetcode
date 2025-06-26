@@ -61,6 +61,8 @@ func longestConsecutive(nums []int) int {
 		if numsMap[v] {
 			continue
 		}
+
+		numsMap[v] = true
 		currentMax := 1
 		nextkey := v + 1
 		for {
@@ -69,7 +71,6 @@ func longestConsecutive(nums []int) int {
 			}
 			numsMap[nextkey] = true
 			nextkey++
-
 			currentMax++
 		}
 
@@ -81,6 +82,10 @@ func longestConsecutive(nums []int) int {
 			numsMap[preKey] = true
 			preKey--
 			currentMax++
+		}
+
+		if currentMax > max {
+			max = currentMax
 		}
 	}
 	return max
