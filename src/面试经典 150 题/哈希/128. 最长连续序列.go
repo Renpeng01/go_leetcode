@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func longestConsecutive(nums []int) int {
 	next := make(map[int]int, len(nums))
 	pre := make(map[int]int, len(nums))
@@ -9,16 +11,18 @@ func longestConsecutive(nums []int) int {
 		pre[v] = v - 1
 	}
 
-	max := 1
+	fmt.Println(next, pre)
+
+	max := 0
 	exist := make(map[int]struct{}, len(nums))
 	for i := 0; i < len(nums); i++ {
 		if _, ok := exist[nums[i]]; ok {
 			continue
 		}
+		exist[nums[i]] = struct{}{}
 
 		currentMax := 1
-		nextKey := nums[i]
-		ok := false
+		nextKey, ok := next[nums[i]]
 		for {
 			nextKey, ok = next[nextKey]
 			if !ok {
@@ -28,7 +32,7 @@ func longestConsecutive(nums []int) int {
 			exist[nextKey] = struct{}{}
 		}
 
-		preKey := nums[i]
+		preKey, ok := pre[nums[i]]
 		for {
 			preKey, ok = pre[preKey]
 			if !ok {
@@ -43,4 +47,10 @@ func longestConsecutive(nums []int) int {
 		}
 	}
 	return max
+}
+
+func main() {
+	nums := []int{100, 4, 200, 1, 3, 2}
+	res := longestConsecutive(nums)
+	fmt.Println(res)
 }
