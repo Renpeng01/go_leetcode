@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func longestConsecutive(nums []int) int {
+func longestConsecutive1(nums []int) int {
 	next := make(map[int]int, len(nums))
 	pre := make(map[int]int, len(nums))
 
@@ -49,7 +49,42 @@ func longestConsecutive(nums []int) int {
 	}
 	return max
 }
+func longestConsecutive(nums []int) int {
+	numsMap := make(map[int]bool, len(nums))
 
+	for _, v := range nums {
+		numsMap[v] = false
+	}
+
+	max := 0
+	for _, v := range nums {
+		if numsMap[v] {
+			continue
+		}
+		currentMax := 1
+		nextkey := v + 1
+		for {
+			if _, next := numsMap[nextkey]; !next {
+				break
+			}
+			numsMap[nextkey] = true
+			nextkey++
+
+			currentMax++
+		}
+
+		preKey := v - 1
+		for {
+			if _, pre := numsMap[preKey]; !pre {
+				break
+			}
+			numsMap[preKey] = true
+			preKey--
+			currentMax++
+		}
+	}
+	return max
+}
 func main() {
 	nums := []int{100, 4, 200, 1, 3, 2}
 	res := longestConsecutive(nums)
