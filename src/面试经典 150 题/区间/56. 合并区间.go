@@ -1,12 +1,17 @@
 package main
 
-import "sort"
+import (
+	"fmt"
+	"sort"
+)
 
 func merge(intervals [][]int) [][]int {
 
 	sort.SliceStable(intervals, func(i, j int) bool {
 		return intervals[i][0] < intervals[j][0]
 	})
+
+	// fmt.Println(intervals)
 
 	res := make([][]int, 0, len(intervals))
 	for i := 0; i < len(intervals); {
@@ -17,10 +22,10 @@ func merge(intervals [][]int) [][]int {
 
 		e := i
 		for j := i + 1; j < len(intervals); j++ {
-			if intervals[i][1] < intervals[j][0] {
+			if item[1] < intervals[j][0] {
 				break
 			}
-			item[1] = max(intervals[j][1], intervals[i][1])
+			item[1] = max(intervals[j][1], item[1])
 			e = j
 		}
 
@@ -36,4 +41,10 @@ func max(i, j int) int {
 		return i
 	}
 	return j
+}
+
+func main() {
+	intervals := [][]int{{1, 4}, {0, 2}, {3, 5}}
+	res := merge(intervals)
+	fmt.Println(res)
 }
