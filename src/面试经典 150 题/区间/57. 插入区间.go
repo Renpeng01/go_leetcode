@@ -14,6 +14,10 @@ func insert(intervals [][]int, newInterval []int) [][]int {
 		if intervals[i][1] < newInterval[0] || intervals[i][0] > newInterval[1] {
 			res = append(res, intervals[i])
 			start = i
+		} else if intervals[i][0] > newInterval[1] {
+			res = append(res, newInterval)
+			res = append(res, intervals[i])
+			start = i
 		}
 		break
 	}
