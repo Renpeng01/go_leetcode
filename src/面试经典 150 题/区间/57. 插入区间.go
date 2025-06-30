@@ -11,7 +11,7 @@ func insert(intervals [][]int, newInterval []int) [][]int {
 	res := make([][]int, 0, len(intervals))
 	start := -1
 	for i := 0; i < len(intervals); i++ {
-		if intervals[i][1] < newInterval[0] || intervals[i][0] > newInterval[1] {
+		if intervals[i][1] < newInterval[0] {
 			res = append(res, intervals[i])
 			start = i
 		} else if intervals[i][0] > newInterval[1] {
@@ -67,7 +67,7 @@ func main() {
 	// newInterval := []int{4, 8}
 
 	intervals := [][]int{{1, 5}}
-	newInterval := []int{6, 8}
+	newInterval := []int{0, 0}
 
 	res := insert(intervals, newInterval)
 	fmt.Println(res)
