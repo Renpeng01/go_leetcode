@@ -73,8 +73,11 @@ func min(i, j int) int {
 }
 
 func insert(intervals [][]int, newInterval []int) [][]int {
-	isInsert := false
+	if len(intervals) == 0 {
+		return [][]int{newInterval}
+	}
 
+	isInsert := false
 	res := make([][]int, 0, len(intervals))
 	for i := 0; i < len(intervals); {
 		if intervals[i][0] > newInterval[1] {
@@ -93,7 +96,7 @@ func insert(intervals [][]int, newInterval []int) [][]int {
 		} else {
 			cur := i
 			for j := cur; j < len(intervals); j++ {
-				if newInterval[1] > intervals[j][0] {
+				if newInterval[1] >= intervals[j][0] {
 					newInterval[0] = min(newInterval[0], intervals[j][0])
 					newInterval[1] = max(newInterval[1], intervals[j][1])
 					isInsert = true
@@ -103,14 +106,11 @@ func insert(intervals [][]int, newInterval []int) [][]int {
 				break
 			}
 			res = append(res, newInterval)
-			i = cur + 1
-
-			fmt.Println(111, res)
-
 			for m := cur + 1; m < len(intervals); m++ {
 				res = append(res, intervals[m])
+				cur = m
 			}
-			fmt.Println(222, res)
+			i = cur + 1
 		}
 	}
 	return res
