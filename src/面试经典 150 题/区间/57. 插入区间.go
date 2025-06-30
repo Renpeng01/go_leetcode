@@ -26,10 +26,10 @@ func insert(intervals [][]int, newInterval []int) [][]int {
 	fmt.Printf("start: %+v,res: %+v\n", start, res)
 	item := []int{newInterval[0], newInterval[1]}
 	fmt.Printf("item: %+v\n", item)
-	otherStart := -1
+	otherStart := start
 	for i := start + 1; i < len(intervals); i++ {
 		if item[1] < intervals[i][0] {
-			otherStart = i
+			otherStart = i - 1
 			break
 		}
 		if item[1] >= intervals[i][0] {
@@ -40,6 +40,7 @@ func insert(intervals [][]int, newInterval []int) [][]int {
 		}
 		break
 	}
+
 	res = append(res, item)
 	fmt.Printf("otherStart: %+v,res: %+v\n", otherStart, res)
 
@@ -65,14 +66,15 @@ func min(i, j int) int {
 }
 
 func main() {
-	intervals := [][]int{{1, 3}, {6, 9}}
-	newInterval := []int{2, 5}
 
 	// intervals := [][]int{{1, 2}, {3, 5}, {6, 7}, {8, 10}, {12, 16}}
 	// newInterval := []int{4, 8}
 
 	// intervals := [][]int{{1, 5}}
 	// newInterval := []int{2, 3}
+
+	intervals := [][]int{{1, 3}, {6, 9}}
+	newInterval := []int{2, 5}
 
 	res := insert(intervals, newInterval)
 	fmt.Println(res)
