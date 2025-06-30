@@ -21,8 +21,11 @@ func insert(intervals [][]int, newInterval []int) [][]int {
 	fmt.Printf("start: %+v,res: %+v\n", start, res)
 	item := []int{newInterval[0], newInterval[1]}
 	fmt.Printf("item: %+v\n", item)
-	otherStart := 0
+	otherStart := start + 1
 	for i := start + 1; i < len(intervals); i++ {
+		if item[1] < intervals[i][0] {
+			break
+		}
 		if item[1] >= intervals[i][0] {
 			item[0] = min(item[0], intervals[i][0])
 			item[1] = max(item[1], intervals[i][1])
