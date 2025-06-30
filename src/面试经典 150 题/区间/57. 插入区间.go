@@ -10,6 +10,7 @@ func insert(intervals [][]int, newInterval []int) [][]int {
 
 	res := make([][]int, 0, len(intervals))
 	start := -1
+	isComplete := false
 	for i := 0; i < len(intervals); i++ {
 		if intervals[i][1] < newInterval[0] {
 			res = append(res, intervals[i])
@@ -17,9 +18,14 @@ func insert(intervals [][]int, newInterval []int) [][]int {
 		} else if intervals[i][0] > newInterval[1] {
 			res = append(res, newInterval)
 			res = append(res, intervals[i])
+			isComplete = true
 			start = i
 		}
 		break
+	}
+
+	if isComplete {
+		return res
 	}
 
 	fmt.Printf("start: %+v,res: %+v\n", start, res)
