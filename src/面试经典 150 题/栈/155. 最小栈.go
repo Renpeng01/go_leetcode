@@ -97,7 +97,7 @@ func (this *MinStack) Push(val int) {
 
 func (this *MinStack) Pop() {
 	this.data = this.data[:len(this.data)-1]
-	this.minStack = this.data[:len(this.minStack)-1]
+	this.minStack = this.minStack[:len(this.minStack)-1]
 }
 
 func (this *MinStack) Top() int {
