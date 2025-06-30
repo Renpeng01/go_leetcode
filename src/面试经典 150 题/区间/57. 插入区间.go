@@ -15,10 +15,15 @@ func insert(intervals [][]int, newInterval []int) [][]int {
 			res = append(res, intervals[i])
 			start = i
 		} else if intervals[i][0] > newInterval[1] {
+			// res = append(res, newInterval)
+			// res = append(res, intervals[i])
+			// start = i
+			// break
 			res = append(res, newInterval)
-			res = append(res, intervals[i])
-			start = i
-			break
+			for j := i; j < len(intervals); j++ {
+				res = append(res, intervals[j])
+			}
+			return res
 		}
 		break
 	}
