@@ -41,12 +41,20 @@ func partition(head *ListNode, x int) *ListNode {
 			mNext.Next = head
 			mNext = mNext.Next
 		} else {
-			if (next.Next != nil || pre.Next == nil) && !afterXhasSmall {
+
+			if next.Next != nil {
 				mNext.Next = head
 				mNext = mNext.Next
 			} else {
-				mPre.Next = head
-				mPre = mPre.Next
+
+				if afterXhasSmall {
+					mNext.Next = head
+					mNext = mNext.Next
+				} else {
+					mPre.Next = head
+					mPre = mPre.Next
+				}
+
 			}
 		}
 
