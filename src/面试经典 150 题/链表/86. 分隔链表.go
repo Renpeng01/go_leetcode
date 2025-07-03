@@ -42,17 +42,17 @@ func partition(head *ListNode, x int) *ListNode {
 	}
 
 	// log
-	// logPre := pre
-	// logNext := next
-	// for logPre.Next != nil {
-	// 	fmt.Println("pre:", logPre.Next.Val)
-	// 	logPre = logPre.Next
-	// }
+	logPre := pre
+	logNext := next
+	for logPre.Next != nil {
+		fmt.Println("pre:", logPre.Next.Val)
+		logPre = logPre.Next
+	}
 
-	// for logNext.Next != nil {
-	// 	fmt.Println("next:", logNext.Next.Val)
-	// 	logNext = logNext.Next
-	// }
+	for logNext.Next != nil {
+		fmt.Println("next:", logNext.Next.Val)
+		logNext = logNext.Next
+	}
 
 	if pre.Next == nil {
 		return next.Next
@@ -85,6 +85,12 @@ func main() {
 	// node1.Next = node2
 
 	node1 := &ListNode{Val: 1, Next: nil}
+	node2 := &ListNode{Val: 3, Next: nil}
+	node3 := &ListNode{Val: 2, Next: nil}
+	node1.Next = node2
+	node2.Next = node3
+
+	// node1 := &ListNode{Val: 1, Next: nil}
 
 	mHead := node1
 	for mHead != nil {
@@ -94,7 +100,7 @@ func main() {
 
 	// partition(node1, 3)
 
-	res := partition(node1, 0)
+	res := partition(node1, 3)
 	i := 10
 	for res != nil && i > 0 {
 		fmt.Println("res:", res.Val)
