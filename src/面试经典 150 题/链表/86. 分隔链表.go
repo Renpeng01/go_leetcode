@@ -17,6 +17,21 @@ func partition(head *ListNode, x int) *ListNode {
 	mPre := pre
 	mNext := next
 
+	t := head
+	isFindX := false
+	afterXhasSmall := false
+	for t != nil {
+		if t.Val == x {
+			isFindX = true
+		}
+
+		if isFindX && t.Val < x {
+			afterXhasSmall = true
+			break
+		}
+		t = t.Next
+	}
+
 	for head != nil {
 		if head.Val < x {
 			mPre.Next = head
@@ -26,7 +41,7 @@ func partition(head *ListNode, x int) *ListNode {
 			mNext.Next = head
 			mNext = mNext.Next
 		} else {
-			if next.Next != nil || pre.Next == nil {
+			if (next.Next != nil || pre.Next == nil) && !afterXhasSmall {
 				mNext.Next = head
 				mNext = mNext.Next
 			} else {
@@ -42,17 +57,17 @@ func partition(head *ListNode, x int) *ListNode {
 	}
 
 	// log
-	logPre := pre
-	logNext := next
-	for logPre.Next != nil {
-		fmt.Println("pre:", logPre.Next.Val)
-		logPre = logPre.Next
-	}
+	// logPre := pre
+	// logNext := next
+	// for logPre.Next != nil {
+	// 	fmt.Println("pre:", logPre.Next.Val)
+	// 	logPre = logPre.Next
+	// }
 
-	for logNext.Next != nil {
-		fmt.Println("next:", logNext.Next.Val)
-		logNext = logNext.Next
-	}
+	// for logNext.Next != nil {
+	// 	fmt.Println("next:", logNext.Next.Val)
+	// 	logNext = logNext.Next
+	// }
 
 	if pre.Next == nil {
 		return next.Next
