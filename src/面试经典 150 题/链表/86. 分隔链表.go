@@ -18,7 +18,7 @@ func partition(head *ListNode, x int) *ListNode {
 	mNext := next
 
 	t := head
-	isFindX := false
+
 	afterXhasSmall := false
 	for t != nil {
 		if t.Val == x {
@@ -32,6 +32,7 @@ func partition(head *ListNode, x int) *ListNode {
 		t = t.Next
 	}
 
+	isFindX := false
 	for head != nil {
 		if head.Val < x {
 			mPre.Next = head
