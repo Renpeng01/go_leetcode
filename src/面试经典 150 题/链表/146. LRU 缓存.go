@@ -78,9 +78,13 @@ func (this *LRUCache) Put(key int, value int) {
 			newNode.pre = this.head
 		}
 		if len(this.m) >= this.capacity {
+
 			delete(this.m, this.tail.key)
+			this.tail = this.tail.pre
+			this.tail.next = nil
 		}
 		this.m[key] = newNode
+
 	} else {
 		if node == this.head.next {
 			return
@@ -123,7 +127,38 @@ func main() {
 
 	res := lru.Get(1)
 	fmt.Println("get(1):", res)
+
+	// head := lru.head
+	// tail := lru.tail
+
+	// fmt.Println("head: ", head.key, head.val)
+	// fmt.Println("tail: ", tail.key, tail.val)
+
+	// cur := head.next
+	// for cur != nil {
+	// 	fmt.Println(cur.key, cur.val)
+	// 	cur = cur.next
+	// }
+
+	// fmt.Println("m: ", lru.m)
+	// fmt.Println("capacity: ", lru.capacity)
+
 	lru.Put(3, 3)
+
+	head := lru.head
+	tail := lru.tail
+
+	fmt.Println("head: ", head.key, head.val)
+	fmt.Println("tail: ", tail.key, tail.val)
+
+	cur := head.next
+	for cur != nil {
+		fmt.Println(cur.key, cur.val)
+		cur = cur.next
+	}
+
+	fmt.Println("m: ", lru.m)
+	fmt.Println("capacity: ", lru.capacity)
 	res = lru.Get(2)
 	fmt.Println("get(2):", res)
 	lru.Put(4, 4)
