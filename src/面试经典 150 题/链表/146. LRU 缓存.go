@@ -43,21 +43,18 @@ func (this *LRUCache) Put(key int, value int) {
 			val: value,
 			key: key,
 		}
-		if len(this.m) >= this.capacity {
-
-			newNode.next = this.head.next
-			this.head.next.pre = newNode
-
+		if this.head.next == nil {
 			this.head.next = newNode
 			newNode.pre = this.head
-
-			fmt.Println("delete m: ", this.tail.key)
-			delete(this.m, this.tail.key)
-			this.tail = this.tail.pre
-			this.tail.next = nil
+			this.tail = newNode
 		} else {
-			this.tail.next = newNode
-			this.tail = this.tail.next
+			newNode.next = this.head.next
+			this.head.next.pre = newNode
+			this.head.next = newNode
+			newNode.pre = this.head
+		}
+		if len(this.m) >= this.capacity {
+			delete(this.m, this.tail.key)
 		}
 		this.m[key] = newNode
 	} else {
@@ -103,14 +100,13 @@ func main() {
 	res := lru.Get(1)
 	fmt.Println("get(1):", res)
 	lru.Put(3, 3)
-	// res = lru.Get(2)
-	// fmt.Println("get(2):", res)
-	// lru.Put(4, 4)
-	// res = lru.Get(1)
-	// fmt.Println("get(1):", res)
-	// res = lru.Get(3)
-	// fmt.Println("get(3):", res)
-	// res = lru.Get(4)
-	// fmt.Println("get(4):", res)
-
+	res = lru.Get(2)
+	fmt.Println("get(2):", res)
+	lru.Put(4, 4)
+	res = lru.Get(1)
+	fmt.Println("get(1):", res)
+	res = lru.Get(3)
+	fmt.Println("get(3):", res)
+	res = lru.Get(4)
+	fmt.Println("get(4):", res)
 }
