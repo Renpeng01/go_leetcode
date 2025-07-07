@@ -86,6 +86,7 @@ func (this *LRUCache) Put(key int, value int) {
 		this.m[key] = newNode
 
 	} else {
+		node.val = value
 		if node == this.head.next {
 			return
 		}
@@ -170,6 +171,5 @@ func main() {
 	fmt.Println("get(4):", res)
 }
 
-// [null,null,null,1,null,-1,null,1,3,4]
-// 预期结果
-// [null,null,null,1,null,-1,null,-1,3,4]
+// "LRUCache","put","put","put","put","get","get"]
+// [[2],[2,1],[1,1],[2,3],[4,1],[1],[2]]
