@@ -42,11 +42,12 @@ func (this *LRUCache) Put(key int, value int) {
 
 	node, ok := this.m[key]
 	if !ok {
-		if len(this.m) > this.capacity {
-			newNode := &listNode{
-				val: value,
-				key: key,
-			}
+		newNode := &listNode{
+			val: value,
+			key: key,
+		}
+		if len(this.m) >= this.capacity {
+
 			newNode.next = this.head.next
 			this.head.next.pre = newNode
 
@@ -58,14 +59,10 @@ func (this *LRUCache) Put(key int, value int) {
 			this.tail.next = nil
 
 		} else {
-			newNode := &listNode{
-				val: value,
-				key: key,
-			}
 			this.tail.next = newNode
 			this.tail = this.tail.next
-			this.m[key] = newNode
 		}
+		this.m[key] = newNode
 	} else {
 		if node == this.head.next {
 			return
