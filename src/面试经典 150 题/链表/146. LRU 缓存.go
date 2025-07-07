@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type listNode struct {
 	val  int
 	key  int
@@ -57,7 +59,6 @@ func (this *LRUCache) Put(key int, value int) {
 			delete(this.m, this.tail.key)
 			this.tail = this.tail.pre
 			this.tail.next = nil
-
 		} else {
 			this.tail.next = newNode
 			this.tail = this.tail.next
@@ -83,5 +84,22 @@ func (this *LRUCache) Put(key int, value int) {
 }
 
 func main() {
+
+	lru := Constructor(2)
+	lru.Put(1, 1)
+	lru.Put(2, 2)
+
+	res := lru.Get(1)
+	fmt.Println("get(1):", res)
+	lru.Put(3, 3)
+	res = lru.Get(2)
+	fmt.Println("get(2):", res)
+	lru.Put(4, 4)
+	res = lru.Get(1)
+	fmt.Println("get(1):", res)
+	res = lru.Get(3)
+	fmt.Println("get(3):", res)
+	res = lru.Get(4)
+	fmt.Println("get(4):", res)
 
 }
