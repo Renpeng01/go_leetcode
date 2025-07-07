@@ -32,6 +32,30 @@ func (this *LRUCache) Get(key int) int {
 	if !ok {
 		return -1
 	}
+
+	if this.head.next != node {
+
+		if this.tail == node {
+			this.tail = this.tail.pre
+
+			node.pre.next = nil
+
+			node.next = this.head.next
+			this.head.next.pre = node
+			this.head.next = node
+			node.pre = this.head
+
+		} else {
+			node.pre.next = node.next
+			node.next.pre = node.pre
+
+			node.next = this.head.next
+			this.head.next.pre = node
+
+			this.head.next = node
+			node.pre = this.head
+		}
+	}
 	return node.val
 }
 
@@ -82,20 +106,20 @@ func main() {
 	lru.Put(1, 1)
 	lru.Put(2, 2)
 
-	head := lru.head
-	tail := lru.tail
+	// head := lru.head
+	// tail := lru.tail
 
-	fmt.Println("head: ", head.key, head.val)
-	fmt.Println("tail: ", tail.key, tail.val)
+	// fmt.Println("head: ", head.key, head.val)
+	// fmt.Println("tail: ", tail.key, tail.val)
 
-	cur := head.next
-	for cur != nil {
-		fmt.Println(cur.key, cur.val)
-		cur = cur.next
-	}
+	// cur := head.next
+	// for cur != nil {
+	// 	fmt.Println(cur.key, cur.val)
+	// 	cur = cur.next
+	// }
 
-	fmt.Println("m: ", lru.m)
-	fmt.Println("capacity: ", lru.capacity)
+	// fmt.Println("m: ", lru.m)
+	// fmt.Println("capacity: ", lru.capacity)
 
 	res := lru.Get(1)
 	fmt.Println("get(1):", res)
@@ -110,3 +134,7 @@ func main() {
 	// res = lru.Get(4)
 	// fmt.Println("get(4):", res)
 }
+
+// [null,null,null,1,null,-1,null,1,3,4]
+// 预期结果
+// [null,null,null,1,null,-1,null,-1,3,4]
