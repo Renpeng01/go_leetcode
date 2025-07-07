@@ -82,31 +82,31 @@ func main() {
 	lru.Put(1, 1)
 	lru.Put(2, 2)
 
-	head := lru.head
-	tail := lru.tail
+	// head := lru.head
+	// tail := lru.tail
 
-	fmt.Println("head: ", head.key, head.val)
-	fmt.Println("tail: ", tail.key, tail.val)
+	// fmt.Println("head: ", head.key, head.val)
+	// fmt.Println("tail: ", tail.key, tail.val)
 
-	cur := head.next
-	for cur != nil {
-		fmt.Println(cur.key, cur.val)
-		cur = cur.next
-	}
+	// cur := head.next
+	// for cur != nil {
+	// 	fmt.Println(cur.key, cur.val)
+	// 	cur = cur.next
+	// }
 
-	fmt.Println("m: ", lru.m)
-	fmt.Println("capacity: ", lru.capacity)
+	// fmt.Println("m: ", lru.m)
+	// fmt.Println("capacity: ", lru.capacity)
 
 	res := lru.Get(1)
 	fmt.Println("get(1):", res)
 	lru.Put(3, 3)
 	res = lru.Get(2)
 	fmt.Println("get(2):", res)
-	lru.Put(4, 4)
-	res = lru.Get(1)
-	fmt.Println("get(1):", res)
-	res = lru.Get(3)
-	fmt.Println("get(3):", res)
-	res = lru.Get(4)
-	fmt.Println("get(4):", res)
+	// lru.Put(4, 4)
+	// res = lru.Get(1)
+	// fmt.Println("get(1):", res)
+	// res = lru.Get(3)
+	// fmt.Println("get(3):", res)
+	// res = lru.Get(4)
+	// fmt.Println("get(4):", res)
 }
