@@ -43,15 +43,20 @@ func (this *LRUCache) touch(node *listNode) {
 	if this.tail == node {
 		this.tail = this.tail.pre
 		this.tail.next = nil
+
+		node.next = this.tail
+		this.tail.pre = node
+
+		this.head.next = node
+		node.pre = this.head
 	} else {
 		node.pre.next = node.next
 		node.next.pre = node.pre
-
+		node.next = this.head.next
+		this.head.next.pre = node
+		this.head.next = node
+		node.pre = this.head
 	}
-	node.next = this.head.next
-	this.head.next.pre = node
-	this.head.next = node
-	node.pre = this.head
 
 }
 
@@ -88,4 +93,8 @@ func (this *LRUCache) Put(key int, value int) {
 			this.m[key] = newNode
 		}
 	}
+}
+
+func main() {
+
 }
