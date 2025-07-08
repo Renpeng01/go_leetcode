@@ -69,11 +69,13 @@ func (this *LRUCache) Put(key int, value int) {
 	node, ok := this.m[key]
 	if ok {
 		node.val = value
+		this.touch(node)
 	} else {
 		if len(this.m) >= this.capacity {
 			targetNode := this.tail
-			delete(this.m, targetNode.key)
 
+			delete(this.m, targetNode.key)
+			this.m[key] = targetNode
 			targetNode.key = key
 			targetNode.val = value
 			this.touch(targetNode)
@@ -135,5 +137,6 @@ func PrintLRU(lru *LRUCache, tag string) {
 		curNode = curNode.next
 	}
 
-	fmt.Printf("%s m: %+v, nodes: %s\n", tag, lru.m, strings.Join(nodeStr, ","))
+	fmt.Printf("%s m: %+v, nodes: %s, fisrt: %+v, tail: %+v\n", tag, lru.m, strings.Join(nodeStr, ","), lru.head.next.key, lru.tail.key)
+
 }
