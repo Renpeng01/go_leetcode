@@ -72,6 +72,8 @@ func (this *LRUCache) Put(key int, value int) {
 	} else {
 		if len(this.m) >= this.capacity {
 			targetNode := this.tail
+			delete(this.m, targetNode.key)
+
 			targetNode.key = key
 			targetNode.val = value
 			this.touch(targetNode)
@@ -105,12 +107,22 @@ func main() {
 	lru.Put(1, 1)
 	PrintLRU(&lru, "Put(1, 1)")
 
-	lru.Put(1, 1)
+	lru.Put(2, 2)
 	PrintLRU(&lru, "Put(2, 2)")
 
-	// res := lru.Get(1)
-	// fmt.Printf("Get(1) res: %+v", res)
-	// PrintLRU(&lru, "Get(1)")
+	res := lru.Get(1)
+	fmt.Printf("Get(1) res: %+v\n", res)
+	PrintLRU(&lru, "Get(1)")
+
+	lru.Put(3, 3)
+	PrintLRU(&lru, "Put(3, 3)")
+
+	res = lru.Get(2)
+	fmt.Printf("Get(2) res: %+v\n", res)
+	PrintLRU(&lru, "Get(2)")
+
+	lru.Put(4, 4)
+	PrintLRU(&lru, "Put(4, 4)")
 
 }
 
@@ -118,7 +130,7 @@ func PrintLRU(lru *LRUCache, tag string) {
 
 	nodeStr := make([]string, 0, 8)
 	curNode := lru.head.next
-	if curNode != nil {
+	for curNode != nil {
 		nodeStr = append(nodeStr, fmt.Sprintf("%v:%v", curNode.key, curNode.val))
 		curNode = curNode.next
 	}
