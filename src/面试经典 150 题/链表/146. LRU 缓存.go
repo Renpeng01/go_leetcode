@@ -48,20 +48,14 @@ func (this *LRUCache) touch(node *listNode) {
 	if this.tail == node {
 		this.tail = this.tail.pre
 		this.tail.next = nil
-
-		node.next = this.tail
-		this.tail.pre = node
-
-		this.head.next = node
-		node.pre = this.head
 	} else {
 		node.pre.next = node.next
 		node.next.pre = node.pre
-		node.next = this.head.next
-		this.head.next.pre = node
-		this.head.next = node
-		node.pre = this.head
 	}
+	node.next = this.head.next
+	this.head.next.pre = node
+	this.head.next = node
+	node.pre = this.head
 
 }
 
@@ -105,26 +99,55 @@ func main() {
 	// ["LRUCache","put","put","get","put","get","put","get","get","get"]
 	// [[2],[1,1],[2,2],[1],[3,3],[2],[4,4],[1],[3],[4]]
 
-	lru := Constructor(2)
+	// ["LRUCache","put","put","put","put","get","get","get","get","put","get","get","get","get","get"]
+	// [[3],[1,1],[2,2],[3,3],[4,4],[4],[3],[2],[1],[5,5],[1],[2],[3],[4],[5]]
+
+	var res int
+
+	lru := Constructor(3)
 	lru.Put(1, 1)
 	PrintLRU(&lru, "Put(1, 1)")
 
 	lru.Put(2, 2)
 	PrintLRU(&lru, "Put(2, 2)")
 
-	res := lru.Get(1)
-	fmt.Printf("Get(1) res: %+v\n", res)
-	PrintLRU(&lru, "Get(1)")
-
 	lru.Put(3, 3)
 	PrintLRU(&lru, "Put(3, 3)")
 
-	res = lru.Get(2)
-	fmt.Printf("Get(2) res: %+v\n", res)
-	PrintLRU(&lru, "Get(2)")
-
 	lru.Put(4, 4)
 	PrintLRU(&lru, "Put(4, 4)")
+
+	// res = lru.Get(4)
+	// PrintLRU(&lru, "Get(4)")
+
+	// res = lru.Get(3)
+	// PrintLRU(&lru, "Get(4)")
+
+	// res = lru.Get(2)
+	// PrintLRU(&lru, "Get(4)")
+
+	// res = lru.Get(1)
+	// PrintLRU(&lru, "Get(4)")
+
+	// lru.Put(5, 5)
+	// PrintLRU(&lru, "Put(5, 5)")
+
+	// res = lru.Get(1)
+	// PrintLRU(&lru, "Get(1)")
+
+	// res = lru.Get(2)
+	// PrintLRU(&lru, "Get(2)")
+
+	// res = lru.Get(3)
+	// PrintLRU(&lru, "Get(3)")
+
+	// res = lru.Get(4)
+	// PrintLRU(&lru, "Get(4)")
+
+	// res = lru.Get(5)
+	// PrintLRU(&lru, "Get(5)")
+
+	fmt.Println(res)
 
 }
 
