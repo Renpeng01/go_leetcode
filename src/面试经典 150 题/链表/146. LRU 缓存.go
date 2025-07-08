@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"strings"
+)
+
 type listNode struct {
 	val  int
 	key  int
@@ -86,9 +91,6 @@ func (this *LRUCache) Put(key int, value int) {
 				this.head.next.pre = newNode
 				this.head.next = newNode
 				newNode.pre = this.head
-
-				this.tail = this.tail.pre
-				this.tail.next = nil
 			}
 			this.m[key] = newNode
 		}
@@ -96,5 +98,30 @@ func (this *LRUCache) Put(key int, value int) {
 }
 
 func main() {
+	// ["LRUCache","put","put","get","put","get","put","get","get","get"]
+	// [[2],[1,1],[2,2],[1],[3,3],[2],[4,4],[1],[3],[4]]
 
+	lru := Constructor(2)
+	lru.Put(1, 1)
+	PrintLRU(&lru, "Put(1, 1)")
+
+	lru.Put(1, 1)
+	PrintLRU(&lru, "Put(2, 2)")
+
+	// res := lru.Get(1)
+	// fmt.Printf("Get(1) res: %+v", res)
+	// PrintLRU(&lru, "Get(1)")
+
+}
+
+func PrintLRU(lru *LRUCache, tag string) {
+
+	nodeStr := make([]string, 0, 8)
+	curNode := lru.head.next
+	if curNode != nil {
+		nodeStr = append(nodeStr, fmt.Sprintf("%v:%v", curNode.key, curNode.val))
+		curNode = curNode.next
+	}
+
+	fmt.Printf("%s m: %+v, nodes: %s\n", tag, lru.m, strings.Join(nodeStr, ","))
 }
