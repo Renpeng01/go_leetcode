@@ -30,7 +30,7 @@ func buildTree(inorder []int, postorder []int) *TreeNode {
 	fmt.Println("leftInOrder:", leftInOrder, "rightInOrder:", rightInOrder)
 
 	leftPostOrder := postorder[0:len(leftInOrder)]
-	rightPostOrder := postorder[len(leftInOrder):len(postorder)]
+	rightPostOrder := postorder[len(leftInOrder) : len(postorder)-1]
 
 	fmt.Println("leftPostOrder:", leftPostOrder, "rightPostOrder:", rightPostOrder)
 
