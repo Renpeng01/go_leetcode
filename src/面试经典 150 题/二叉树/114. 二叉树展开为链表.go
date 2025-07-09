@@ -21,6 +21,6 @@ func flatten(root *TreeNode) {
 		cur.Right = root.Right
 		root.Right = root.Left
 		root.Left = nil
-		flatten(root.Right)
 	}
+	flatten(root.Right)
 }
