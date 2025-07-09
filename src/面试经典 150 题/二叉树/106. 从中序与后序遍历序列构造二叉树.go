@@ -8,6 +8,7 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
+// TODO: 看下题解的迭代版本
 func buildTree(inorder []int, postorder []int) *TreeNode {
 	if len(postorder) == 0 {
 		return nil
