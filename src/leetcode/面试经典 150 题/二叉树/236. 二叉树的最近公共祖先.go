@@ -47,13 +47,14 @@ func getNodePath(root, target *TreeNode) []*TreeNode {
 			return path
 		}
 
+		path = append(path, cur)
 		if cur.Left == nil && cur.Right == nil {
-			path = []*TreeNode{}
+			path = path[1:]
 			cur = queue[0]
 			queue = queue[1:]
 			continue
 		}
-		path = append(path, cur)
+
 		cur = cur.Left
 	}
 
