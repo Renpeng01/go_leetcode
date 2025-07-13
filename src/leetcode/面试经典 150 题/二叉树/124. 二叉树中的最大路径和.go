@@ -56,11 +56,9 @@ func maxPathSum(root *TreeNode) int {
 		}
 
 		maxPathSum = max(max(max(max(maxPathSum, node.Val), node.Val+right), node.Val+left), node.Val+left+right)
-		cacheMax[node] = max(max(node.Val, node.Val+left), node.Val+node.Val+right)
+		cacheMax[node] = max(max(node.Val, node.Val+left), node.Val+right)
 	}
-
 	return maxPathSum
-
 }
 
 // 包含node的最大路径和
