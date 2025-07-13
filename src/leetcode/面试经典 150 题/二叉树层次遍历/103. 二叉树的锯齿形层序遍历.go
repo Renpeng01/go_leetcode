@@ -10,9 +10,7 @@ func zigzagLevelOrder(root *TreeNode) [][]int {
 	if root == nil {
 		return nil
 	}
-
 	num := 1
-
 	res := make([][]int, 0, 8)
 	stack := make([]*TreeNode, 0, 16)
 	stack = append(stack, root)
