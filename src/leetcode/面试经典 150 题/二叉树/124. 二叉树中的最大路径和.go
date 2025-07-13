@@ -8,7 +8,7 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func maxPathSum(root *TreeNode) int {
+func maxPathSum1(root *TreeNode) int {
 
 	if root == nil {
 		return 0
@@ -72,6 +72,29 @@ func maxPathSumFromLowLevel(node *TreeNode) int {
 	c := node.Val + maxPathSumFromLowLevel(node.Right)
 	maxPathSum := max(max(a, b), c)
 	return maxPathSum
+}
+
+var maxSum int
+
+func maxPathSum(root *TreeNode) int {
+	maxSum = math.MinInt
+
+	dfs(root)
+	return maxSum
+
+}
+
+func dfs(node *TreeNode) int {
+	if node == nil {
+		return 0
+	}
+
+	left := dfs(node.Left)
+	right := dfs(node.Right)
+	sum := node.Val + left + right
+	maxSum = max(maxSum, sum)
+	output := node.Val + max(left, right)
+	return max(output, 0)
 }
 
 func max(i, j int) int {
