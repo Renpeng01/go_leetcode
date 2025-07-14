@@ -17,17 +17,20 @@ func kthSmallest(root *TreeNode, k int) int {
 	if len(arr) == 1 {
 		return arr[0]
 	}
-	inOrder(root)
+	inOrder(root, k)
 
 	return arr[k-1]
 
 }
 
-func inOrder(node *TreeNode) {
+func inOrder(node *TreeNode, k int) {
 	if node == nil {
 		return
 	}
-	inOrder(node.Left)
+	inOrder(node.Left, k)
 	arr = append(arr, node.Val)
-	inOrder(node.Right)
+	if len(arr) == k { // 这里是关键，需要提前结束，否则性能不好
+		return
+	}
+	inOrder(node.Right, k)
 }
