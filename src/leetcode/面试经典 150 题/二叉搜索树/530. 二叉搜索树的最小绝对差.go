@@ -8,42 +8,33 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
+var arr []int
+
 func getMinimumDifference(root *TreeNode) int {
 	if root == nil {
 		return 0
 	}
+	arr = make([]int, 0, 16)
 
-	stack := make([]*TreeNode, 0, 8)
-	stack = append(stack, root)
-
-	minDiff := math.MaxInt
-	for len(stack) > 0 {
-		node := stack[0]
-		stack = stack[1:]
-
-		a1 := math.MaxInt
-		a2 := math.MaxInt
-
-		if node.Left != nil {
-			stack = append(stack, node.Left)
-			a1 = node.Val - node.Left.Val
-		}
-		if node.Right != nil {
-			stack = append(stack, node.Right)
-			a2 = node.Right.Val - node.Val
-		}
-		minDiff = min(min(a1, a2), minDiff)
+	if len(arr) == 1 {
+		return arr[0]
 	}
-	return minDiff
+	inOrder(root)
+
+	min := math.MaxInt
+	for i := 1; i < len(arr); i++ {
+		if arr[i]-arr[i-1] < min {
+			min = arr[i] - arr[i-1]
+		}
+	}
+	return min
 }
 
-func min(i, j int) int {
-	if i < j {
-		return i
+func inOrder(node *TreeNode) {
+	if node == nil {
+		return
 	}
-	return j
+	inOrder(node.Left)
+	arr = append(arr, node.Val)
+	inOrder(node.Right)
 }
-
-// 给你一个二叉搜索树的根节点 root ，返回 树中任意两不同节点值之间的最小差值 。
-
-// 差值是一个正数，其数值等于两值之差的绝对值。
