@@ -27,7 +27,7 @@ func inOrder(node *TreeNode) {
 	inOrder(node.Left)
 	arr = append(arr, node.Val)
 	if len(arr) > 1 {
-		if arr[len(arr)-1] <= arr[len(arr)-2] {
+		if arr[len(arr)-1] <= arr[len(arr)-2] { // 提前退出
 			return
 		}
 	}
