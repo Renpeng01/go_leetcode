@@ -42,31 +42,39 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 		}
 	}
 	if len(firsts) == 0 {
+		fmt.Println(111111)
 		return false
 	}
 
 	exist := make(map[int]bool, 16)
-	dfs(edgsNext, firsts[0], exist)
+	if hasCircle(edgsNext, firsts[0], exist) {
+		fmt.Println(2222)
+		return false
+	}
 
 	for k := range allCourse {
 		if !exist[k] {
+			fmt.Println(3333)
 			return false
 		}
 	}
 	return true
 }
 
-func dfs(edgs map[int][]int, node int, exist map[int]bool) {
+func hasCircle(edgs map[int][]int, node int, exist map[int]bool) bool {
 	if exist[node] {
-		return
+		return true
 	}
 	exist[node] = true
 	for _, v := range edgs[node] {
 		if exist[v] {
-			return
+			return true
 		}
-		dfs(edgs, v, exist)
+		if hasCircle(edgs, v, exist) {
+			return true
+		}
 	}
+	return false
 }
 
 func main() {
