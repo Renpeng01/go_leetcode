@@ -26,7 +26,6 @@ func cloneExe(source, new *Node, exist map[[2]int]struct{}) {
 		if _, ok := exist[[2]int{source.Val, node.Val}]; ok {
 			pathExist++
 		} else {
-
 			newNode := &Node{}
 			cloneExe(node, newNode, exist)
 			new.Neighbors = append(new.Neighbors, newNode)
