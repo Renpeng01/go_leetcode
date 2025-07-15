@@ -1,6 +1,8 @@
 package main
 
 // 判断是否为合法的有向无环图
+var hasDoneCoursesCnt int
+
 func canFinish(numCourses int, prerequisites [][]int) bool {
 
 	if len(prerequisites) == 0 {
@@ -42,27 +44,21 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 
 	for _, v := range firsts {
 		exist := make(map[int]bool, 16)
-		if dfs(edgsNext, v, exist) {
-			return false
-		}
+		dfs(edgsNext, v, exist)
 	}
-	return true
+	return hasDoneCoursesCnt == numCourses
 }
 
-func dfs(edgs map[int][]int, node int, exist map[int]bool) bool {
+func dfs(edgs map[int][]int, node int, exist map[int]bool) {
 	if exist[node] {
-		return true
+		return
 	}
-
+	hasDoneCoursesCnt++
 	exist[node] = true
 	for _, v := range edgs[node] {
 		if exist[v] {
-			return true
+			return
 		}
-
-		if dfs(edgs, v, exist) {
-			return true
-		}
+		dfs(edgs, v, exist)
 	}
-	return false
 }
