@@ -42,22 +42,33 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 		}
 	}
 	if len(firsts) == 0 {
-		fmt.Println(111111)
+		// fmt.Println(111111)
 		return false
 	}
+	// fmt.Println(firsts)
+	// fmt.Println(edgePre)
+	// fmt.Println(edgsNext)
 
-	exist := make(map[int]bool, 16)
-	if hasCircle(edgsNext, firsts[0], exist) {
-		fmt.Println(2222)
-		return false
-	}
-
-	for k := range allCourse {
-		if !exist[k] {
-			fmt.Println(3333)
+	// hasDone := make(map[int]bool, 16)
+	for _, v := range firsts {
+		exist := make(map[int]bool, 16)
+		if hasCircle(edgsNext, v, exist) {
+			// fmt.Println(2222)
 			return false
 		}
+
+		// for k := range exist {
+		// 	hasDone[k] = true
+		// }
+
 	}
+
+	// for k := range allCourse {
+	// 	if !hasDone[k] {
+	// 		fmt.Println(3333)
+	// 		return false
+	// 	}
+	// }
 	return true
 }
 
@@ -73,6 +84,7 @@ func hasCircle(edgs map[int][]int, node int, exist map[int]bool) bool {
 		if hasCircle(edgs, v, exist) {
 			return true
 		}
+		delete(exist, v)
 	}
 	return false
 }
