@@ -1,8 +1,8 @@
 package main
 
-// 判断是否为合法的有向无环图
-var hasDoneCoursesCnt int
+import "fmt"
 
+// 判断是否为合法的有向无环图
 func canFinish(numCourses int, prerequisites [][]int) bool {
 
 	if len(prerequisites) == 0 {
@@ -10,9 +10,12 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 	}
 	edgsNext := make(map[int][]int, 16)
 	edgePre := make(map[int][]int, 16)
+	allCourse := make(map[int]struct{}, 16)
 	for _, v := range prerequisites {
 		cur := v[0]
 		pre := v[1]
+		allCourse[cur] = struct{}{}
+		allCourse[cur] = struct{}{}
 		if edgsNext[pre] == nil {
 			edgsNext[pre] = make([]int, 0, 8)
 		}
@@ -42,18 +45,21 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 		return false
 	}
 
-	for _, v := range firsts {
-		exist := make(map[int]bool, 16)
-		dfs(edgsNext, v, exist)
+	exist := make(map[int]bool, 16)
+	dfs(edgsNext, firsts[0], exist)
+
+	for k := range allCourse {
+		if !exist[k] {
+			return false
+		}
 	}
-	return hasDoneCoursesCnt == numCourses
+	return true
 }
 
 func dfs(edgs map[int][]int, node int, exist map[int]bool) {
 	if exist[node] {
 		return
 	}
-	hasDoneCoursesCnt++
 	exist[node] = true
 	for _, v := range edgs[node] {
 		if exist[v] {
@@ -61,4 +67,14 @@ func dfs(edgs map[int][]int, node int, exist map[int]bool) {
 		}
 		dfs(edgs, v, exist)
 	}
+}
+
+func main() {
+	// prerequisites := [][]int{{0, 1}}
+	prerequisites := [][]int{{1, 4}, {2, 4}, {3, 1}, {3, 2}}
+	numCourses := 5
+
+	res := canFinish(numCourses, prerequisites)
+	fmt.Println("res: ", res)
+
 }
