@@ -40,7 +40,8 @@ func dfs(b, e string, val float64, edges map[string][]*item, res []float64, i in
 		return
 	}
 	pathSet[b] = struct{}{}
-	if b == e {
+	_, ok := edges[b]
+	if b == e && ok {
 		res[i] = val
 		return
 	}
