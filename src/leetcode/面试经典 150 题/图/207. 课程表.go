@@ -35,9 +35,9 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 		}
 	}
 
-	// fmt.Printf("edgeNext: %+v\n", edgeNext)
-	// fmt.Printf("edgePre: %+v\n", edgePre)
-	// fmt.Printf("startCourses: %+v\n", startCourses)
+	fmt.Printf("edgeNext: %+v\n", edgeNext)
+	fmt.Printf("edgePre: %+v\n", edgePre)
+	fmt.Printf("startCourses: %+v\n", startCourses)
 
 	if len(startCourses) == 0 {
 		return false
@@ -70,9 +70,8 @@ func isCircleByDfs(edgeNext map[int][]int, curCourse int, pathSet map[int]struct
 func main() {
 	numCourses := 2
 	prerequisites := [][]int{
-		// {0, 1},
-		// {1, 0},
-		// {},
+		// {0, 10}, {3, 18}, {5, 5}, {6, 11}, {11, 14}, {13, 1}, {15, 1}, {17, 4},
+		{5, 5},
 	}
 
 	res := canFinish(numCourses, prerequisites)
