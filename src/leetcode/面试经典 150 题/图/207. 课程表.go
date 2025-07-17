@@ -18,7 +18,7 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 	}
 
 	pathSet := make(map[int]int, 16)
-	for v := 0; v < numCourses; v++ {
+	for v := 0; v < numCourses && valid; v++ {
 		if pathSet[v] == 0 {
 			isCircleByDfs(edgeNext, v, pathSet)
 		}
