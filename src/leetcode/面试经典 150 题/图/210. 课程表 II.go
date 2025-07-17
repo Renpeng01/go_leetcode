@@ -2,12 +2,12 @@ package main
 
 var valid bool
 
-var res []int
+var result []int
 
 func findOrder(numCourses int, prerequisites [][]int) []int {
 	edgeNext := make(map[int][]int, 16)
 	valid = true
-	res = make([]int, 0, 16)
+	result = make([]int, 0, 16)
 	for _, q := range prerequisites {
 		cur := q[0]
 		pre := q[1]
@@ -27,7 +27,12 @@ func findOrder(numCourses int, prerequisites [][]int) []int {
 	if !valid {
 		return []int{}
 	}
-	return res
+
+	for i := 0; i < len(result)/2; i++ { // TODO 为什么交换
+		result[i], result[numCourses-i-1] = result[numCourses-i-1], result[i]
+	}
+
+	return result
 }
 
 func isCircleByDfs(edgeNext map[int][]int, curCourse int, pathSet map[int]int) {
@@ -46,5 +51,5 @@ func isCircleByDfs(edgeNext map[int][]int, curCourse int, pathSet map[int]int) {
 
 	}
 	pathSet[curCourse] = 2 //被2标记过的公共路径不在重复走
-	res = append(res, curCourse)
+	result = append(result, curCourse)
 }
