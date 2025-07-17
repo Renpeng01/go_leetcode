@@ -24,6 +24,9 @@ func findOrder(numCourses int, prerequisites [][]int) []int {
 			isCircleByDfs(edgeNext, v, pathSet)
 		}
 	}
+	if !valid {
+		return []int{}
+	}
 	return res
 }
 
