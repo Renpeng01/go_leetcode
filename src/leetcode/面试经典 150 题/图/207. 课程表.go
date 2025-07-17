@@ -39,6 +39,7 @@ func isCircleByDfs(edgeNext map[int][]int, curCourse int, pathSet map[int]bool) 
 			return
 		}
 		isCircleByDfs(edgeNext, v, pathSet)
+		pathSet[v] = false
 	}
 }
 
