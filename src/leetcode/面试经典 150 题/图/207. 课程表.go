@@ -6,10 +6,7 @@ var valid bool
 
 func canFinish(numCourses int, prerequisites [][]int) bool {
 	edgeNext := make(map[int][]int, 16)
-	edgePre := make(map[int][]int, 16)
-	valid = false
-
-	courses := make(map[int]struct{}, 16)
+	valid = true
 	for _, q := range prerequisites {
 		cur := q[0]
 		pre := q[1]
@@ -18,28 +15,15 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 			edgeNext[pre] = make([]int, 0, 16)
 		}
 		edgeNext[pre] = append(edgeNext[pre], cur)
-
-		if edgePre[cur] == nil {
-			edgePre[cur] = make([]int, 0, 16)
-		}
-		edgePre[cur] = append(edgePre[cur], pre)
-		courses[cur] = struct{}{}
-		courses[pre] = struct{}{}
 	}
 
-	startCourses := make([]int, 0, 16)
-	for k := range courses {
-		if _, ok := edgePre[k]; !ok {
-			startCourses = append(startCourses, k)
-		}
-	}
-
-	for _, v := range startCourses {
-		pathSet := make(map[int]bool, 16)
-		isCircleByDfs(edgeNext, v, pathSet)
+	for v := 0; v < numCourses; v++ {
 		if !valid {
 			return false
 		}
+		pathSet := make(map[int]bool, 16)
+		isCircleByDfs(edgeNext, v, pathSet)
+
 	}
 	return valid
 }
