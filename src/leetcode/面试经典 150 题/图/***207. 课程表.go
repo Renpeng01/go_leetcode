@@ -41,7 +41,7 @@ func isCircleByDfs(edgeNext map[int][]int, curCourse int, pathSet map[int]int) {
 		}
 
 	}
-	pathSet[curCourse] = 2
+	pathSet[curCourse] = 2 //被2标记过的公共路径不在重复走
 }
 
 func main() {
