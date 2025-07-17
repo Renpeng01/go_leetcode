@@ -1,6 +1,12 @@
 package main
 
+import "fmt"
+
 func canFinish(numCourses int, prerequisites [][]int) bool {
+
+	if len(prerequisites) == 0 {
+		return true
+	}
 	edgeNext := make(map[int][]int, 16)
 	edgePre := make(map[int][]int, 16)
 
@@ -19,6 +25,7 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 		}
 		edgePre[cur] = append(edgePre[cur], pre)
 		courses[cur] = struct{}{}
+		courses[pre] = struct{}{}
 	}
 
 	startCourses := make([]int, 0, 16)
@@ -26,6 +33,14 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 		if _, ok := edgePre[k]; !ok {
 			startCourses = append(startCourses, k)
 		}
+	}
+
+	// fmt.Printf("edgeNext: %+v\n", edgeNext)
+	// fmt.Printf("edgePre: %+v\n", edgePre)
+	// fmt.Printf("startCourses: %+v\n", startCourses)
+
+	if len(startCourses) == 0 {
+		return false
 	}
 
 	for _, v := range startCourses {
@@ -50,4 +65,17 @@ func isCircleByDfs(edgeNext map[int][]int, curCourse int, pathSet map[int]struct
 	}
 
 	return false
+}
+
+func main() {
+	numCourses := 2
+	prerequisites := [][]int{
+		// {0, 1},
+		// {1, 0},
+		// {},
+	}
+
+	res := canFinish(numCourses, prerequisites)
+	fmt.Println("res: ", res)
+
 }
