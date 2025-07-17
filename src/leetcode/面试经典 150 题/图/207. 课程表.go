@@ -3,10 +3,6 @@ package main
 import "fmt"
 
 func canFinish(numCourses int, prerequisites [][]int) bool {
-
-	if len(prerequisites) == 0 {
-		return true
-	}
 	edgeNext := make(map[int][]int, 16)
 	edgePre := make(map[int][]int, 16)
 
@@ -35,44 +31,30 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 		}
 	}
 
-	// fmt.Printf("edgeNext: %+v\n", edgeNext)
-	// fmt.Printf("edgePre: %+v\n", edgePre)
-	// fmt.Printf("startCourses: %+v\n", startCourses)
-
-	if len(startCourses) == 0 {
-		return false
-	}
-
+	valid := false
 	for _, v := range startCourses {
 		pathSet := make(map[int]bool, 16)
-		dealSet := make(map[int]bool, 16)
-		if isCircleByDfs(edgeNext, -1, v, pathSet, dealSet) {
+		isCircleByDfs(edgeNext, v, pathSet, &valid)
+		if !valid {
 			return false
 		}
-
-		for k := range dealSet {
-			delete(courses, k)
-		}
 	}
-	fmt.Printf("len(courses): %+v\n", len(courses))
-	return len(courses) == 0
+	return valid
 }
 
-func isCircleByDfs(edgeNext map[int][]int, pre, curCourse int, pathSet, dealSet map[int]bool) bool {
+func isCircleByDfs(edgeNext map[int][]int, curCourse int, pathSet map[int]bool, valid *bool) {
 	if pathSet[curCourse] {
-		return true
+		*valid = false
+		return
 	}
 	pathSet[curCourse] = true
-	dealSet[curCourse] = true
 
 	for _, v := range edgeNext[curCourse] {
-		if isCircleByDfs(edgeNext, curCourse, v, pathSet, dealSet) {
-			return true
+		if !*valid {
+			return
 		}
-		pathSet[v] = false
+		isCircleByDfs(edgeNext, v, pathSet, valid)
 	}
-
-	return false
 }
 
 func main() {
