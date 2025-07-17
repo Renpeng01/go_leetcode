@@ -28,7 +28,7 @@ func findOrder(numCourses int, prerequisites [][]int) []int {
 		return []int{}
 	}
 
-	for i := 0; i < len(result)/2; i++ { // TODO 为什么交换
+	for i := 0; i < len(result)/2; i++ { // 这里需要倒序一下，因为是递归，所以第一个访问的节点在list的最后 需要翻转下
 		result[i], result[numCourses-i-1] = result[numCourses-i-1], result[i]
 	}
 
