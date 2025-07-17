@@ -45,28 +45,31 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 
 	for _, v := range startCourses {
 		pathSet := make(map[[2]int]struct{}, 16)
-		if isCircleByDfs(edgeNext, -1, v, pathSet) {
+		dealSet := make(map[int]struct{}, 16)
+		if isCircleByDfs(edgeNext, -1, v, pathSet, dealSet) {
 			return false
 		}
 
-		for k := range pathSet {
-			delete(courses, k[1])
+		for k := range dealSet {
+			delete(courses, k)
 		}
 	}
 	fmt.Printf("len(courses): %+v\n", len(courses))
 	return len(courses) == 0
 }
 
-func isCircleByDfs(edgeNext map[int][]int, pre, curCourse int, pathSet map[[2]int]struct{}) bool {
+func isCircleByDfs(edgeNext map[int][]int, pre, curCourse int, pathSet map[[2]int]struct{}, dealSet map[int]struct{}) bool {
 	if _, ok := pathSet[[2]int{pre, curCourse}]; ok {
 		return true
 	}
 	pathSet[[2]int{pre, curCourse}] = struct{}{}
+	dealSet[curCourse] = struct{}{}
 
 	for _, v := range edgeNext[curCourse] {
-		if isCircleByDfs(edgeNext, curCourse, v, pathSet) {
+		if isCircleByDfs(edgeNext, curCourse, v, pathSet, dealSet) {
 			return true
 		}
+		delete(pathSet, [2]int{curCourse, v})
 	}
 
 	return false
