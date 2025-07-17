@@ -2,9 +2,12 @@ package main
 
 import "fmt"
 
+var valid bool
+
 func canFinish(numCourses int, prerequisites [][]int) bool {
 	edgeNext := make(map[int][]int, 16)
 	edgePre := make(map[int][]int, 16)
+	valid = false
 
 	courses := make(map[int]struct{}, 16)
 	for _, q := range prerequisites {
@@ -31,10 +34,9 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 		}
 	}
 
-	valid := false
 	for _, v := range startCourses {
 		pathSet := make(map[int]bool, 16)
-		isCircleByDfs(edgeNext, v, pathSet, &valid)
+		isCircleByDfs(edgeNext, v, pathSet)
 		if !valid {
 			return false
 		}
@@ -42,26 +44,24 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 	return valid
 }
 
-func isCircleByDfs(edgeNext map[int][]int, curCourse int, pathSet map[int]bool, valid *bool) {
+func isCircleByDfs(edgeNext map[int][]int, curCourse int, pathSet map[int]bool) {
 	if pathSet[curCourse] {
-		*valid = false
+		valid = false
 		return
 	}
 	pathSet[curCourse] = true
-
 	for _, v := range edgeNext[curCourse] {
-		if !*valid {
+		if !valid {
 			return
 		}
-		isCircleByDfs(edgeNext, v, pathSet, valid)
+		isCircleByDfs(edgeNext, v, pathSet)
 	}
 }
 
 func main() {
 	numCourses := 2
 	prerequisites := [][]int{
-		// {0, 10}, {3, 18}, {5, 5}, {6, 11}, {11, 14}, {13, 1}, {15, 1}, {17, 4},
-		{5, 5},
+		{1, 0},
 	}
 
 	res := canFinish(numCourses, prerequisites)
