@@ -35,17 +35,17 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 		}
 	}
 
-	fmt.Printf("edgeNext: %+v\n", edgeNext)
-	fmt.Printf("edgePre: %+v\n", edgePre)
-	fmt.Printf("startCourses: %+v\n", startCourses)
+	// fmt.Printf("edgeNext: %+v\n", edgeNext)
+	// fmt.Printf("edgePre: %+v\n", edgePre)
+	// fmt.Printf("startCourses: %+v\n", startCourses)
 
 	if len(startCourses) == 0 {
 		return false
 	}
 
 	for _, v := range startCourses {
-		pathSet := make(map[[2]int]struct{}, 16)
-		dealSet := make(map[int]struct{}, 16)
+		pathSet := make(map[int]bool, 16)
+		dealSet := make(map[int]bool, 16)
 		if isCircleByDfs(edgeNext, -1, v, pathSet, dealSet) {
 			return false
 		}
@@ -58,18 +58,18 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 	return len(courses) == 0
 }
 
-func isCircleByDfs(edgeNext map[int][]int, pre, curCourse int, pathSet map[[2]int]struct{}, dealSet map[int]struct{}) bool {
-	if _, ok := pathSet[[2]int{pre, curCourse}]; ok {
+func isCircleByDfs(edgeNext map[int][]int, pre, curCourse int, pathSet, dealSet map[int]bool) bool {
+	if pathSet[curCourse] {
 		return true
 	}
-	pathSet[[2]int{pre, curCourse}] = struct{}{}
-	dealSet[curCourse] = struct{}{}
+	pathSet[curCourse] = true
+	dealSet[curCourse] = true
 
 	for _, v := range edgeNext[curCourse] {
 		if isCircleByDfs(edgeNext, curCourse, v, pathSet, dealSet) {
 			return true
 		}
-		delete(pathSet, [2]int{curCourse, v})
+		pathSet[v] = false
 	}
 
 	return false
