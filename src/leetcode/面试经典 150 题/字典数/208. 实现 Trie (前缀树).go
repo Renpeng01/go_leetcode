@@ -5,7 +5,7 @@ import (
 )
 
 type TrieNoe struct {
-	childern []*TrieNoe
+	vals []*TrieNoe
 }
 
 type Trie struct {
@@ -22,31 +22,31 @@ func Constructor() Trie {
 func (this *Trie) Insert(word string) {
 	node := this.root
 	for i := 0; i < len(word); i++ {
-		if len(node.childern) == 0 {
-			node.childern = make([]*TrieNoe, 26)
+		if node.vals == nil {
+			node.vals = make([]*TrieNoe, 26)
 		}
 
-		if node.childern[word[i]-97] == nil {
-			node.childern[word[i]-97] = &TrieNoe{}
+		if node.vals[word[i]-97] == nil {
+			node.vals[word[i]-97] = &TrieNoe{} // 赋值
 		}
 
-		node = node.childern[word[i]-97]
+		node = node.vals[word[i]-97]
 	}
 }
 
 func (this *Trie) Search(word string) bool {
 	node := this.find(word)
-	return node != nil && len(node.childern) == 0
+	return node != nil && len(node.vals) == 0
 
 }
 
 func (this *Trie) find(word string) *TrieNoe {
 	node := this.root
 	for i := 0; i < len(word); i++ {
-		if len(node.childern) == 0 || node.childern[word[i]-97] == nil {
+		if len(node.vals) == 0 || node.vals[word[i]-97] == nil {
 			return nil
 		}
-		node = node.childern[word[i]-97]
+		node = node.vals[word[i]-97]
 	}
 	return node
 }
