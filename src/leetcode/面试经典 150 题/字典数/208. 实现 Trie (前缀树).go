@@ -25,7 +25,11 @@ func (this *Trie) Insert(word string) {
 		if len(node.childern) == 0 {
 			node.childern = make([]*TrieNoe, 26)
 		}
-		node.childern[word[i]-97] = &TrieNoe{}
+
+		if node.childern[word[i]-97] == nil {
+			node.childern[word[i]-97] = &TrieNoe{}
+		}
+
 		node = node.childern[word[i]-97]
 	}
 }
