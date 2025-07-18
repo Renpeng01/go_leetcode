@@ -5,7 +5,8 @@ import (
 )
 
 type TrieNoe struct {
-	vals []*TrieNoe
+	isLeaf bool
+	vals   []*TrieNoe
 }
 
 type Trie struct {
@@ -29,14 +30,16 @@ func (this *Trie) Insert(word string) {
 		if node.vals[word[i]-97] == nil {
 			node.vals[word[i]-97] = &TrieNoe{} // 赋值
 		}
-
+		if i == len(word)-1 {
+			node.isLeaf = true
+		}
 		node = node.vals[word[i]-97]
 	}
 }
 
 func (this *Trie) Search(word string) bool {
 	node := this.find(word)
-	return node != nil && len(node.vals) == 0
+	return node != nil && node.isLeaf
 
 }
 
@@ -46,7 +49,10 @@ func (this *Trie) find(word string) *TrieNoe {
 		if len(node.vals) == 0 || node.vals[word[i]-97] == nil {
 			return nil
 		}
-		node = node.vals[word[i]-97]
+		if i < len(word)-1 {
+			node = node.vals[word[i]-97]
+		}
+
 	}
 	return node
 }
