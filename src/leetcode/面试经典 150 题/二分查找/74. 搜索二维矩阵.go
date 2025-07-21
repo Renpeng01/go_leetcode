@@ -8,7 +8,8 @@ func searchMatrix(matrix [][]int, target int) bool {
 		rLo := 0
 		rHi := len(matrix)
 		rMid := rLo + (rHi-rLo)/2
-		for rLo <= rHi {
+		for rLo < rHi {
+			rMid = rLo + (rHi-rLo)/2
 			if matrix[0][rMid] == target {
 				return true
 			}
@@ -22,8 +23,9 @@ func searchMatrix(matrix [][]int, target int) bool {
 
 		cLo := 0
 		cHi := len(matrix[0])
-		cMid := cLo + (cHi-rLo)/2
-		for cLo <= cHi {
+		cMid := cLo + (cHi-cLo)/2
+		for cLo < cHi {
+			cMid = cLo + (cHi-cLo)/2
 			if matrix[cMid][0] == target {
 				return true
 			}
@@ -40,5 +42,8 @@ func searchMatrix(matrix [][]int, target int) bool {
 }
 
 func main() {
+	matrix := [][]int{{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 60}}
+	target := 3
+	searchMatrix(matrix, target)
 
 }
