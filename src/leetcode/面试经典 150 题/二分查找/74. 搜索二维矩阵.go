@@ -8,7 +8,7 @@ func searchMatrix(matrix [][]int, target int) bool {
 	lo := 0
 	hi := len(matrix) - 1
 
-	size := len(matrix[0])
+	size := len(matrix)
 
 	var mid int
 	for lo <= hi {
@@ -18,13 +18,13 @@ func searchMatrix(matrix [][]int, target int) bool {
 		}
 		if matrix[mid][0] > target {
 			if (mid-1 >= 0 && matrix[mid-1][0] < target) || mid == 0 {
-				fmt.Println(222)
+				// fmt.Println(222)
 				break
 			}
 			hi = mid - 1
 		} else {
 			if (mid+1 <= size-1 && matrix[mid+1][0] > target) || mid == size-1 {
-				fmt.Println(1111)
+				// fmt.Println(1111)
 				break
 			}
 			lo = mid + 1
