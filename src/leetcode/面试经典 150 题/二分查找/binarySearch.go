@@ -69,7 +69,7 @@ func binarySearch3(nums []int, target int) int {
 	return -1
 }
 
-// 最后一个大于等于target
+// 最后一个小于等于target
 func binarySearch4(nums []int, target int) int {
 	l := 0
 	r := len(nums) - 1
@@ -84,7 +84,6 @@ func binarySearch4(nums []int, target int) int {
 			l = mid + 1
 		} else {
 			r = mid - 1
-
 		}
 	}
 	return -1
