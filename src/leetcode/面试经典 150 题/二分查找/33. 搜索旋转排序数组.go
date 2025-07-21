@@ -20,7 +20,7 @@ func search(nums []int, target int) int {
 			}
 
 			// 在左侧
-			if nums[0] < nums[mid] {
+			if nums[0] <= nums[mid] {
 				if mid+1 <= len(nums)-1 && nums[mid] > nums[mid+1] {
 					reverseIndex = mid + 1
 					break
@@ -30,7 +30,7 @@ func search(nums []int, target int) int {
 			}
 
 			// 在右侧
-			if nums[mid] < nums[len(nums)-1] {
+			if nums[mid] <= nums[len(nums)-1] {
 				if mid-1 >= 0 && nums[mid-1] > nums[mid] {
 					reverseIndex = mid - 1
 					break
@@ -42,7 +42,7 @@ func search(nums []int, target int) int {
 
 		if reverseIndex != -1 {
 
-			// fmt.Println("reverseIndex: ", reverseIndex)
+			fmt.Println("reverseIndex: ", reverseIndex)
 
 			if target >= nums[0] && target <= nums[reverseIndex-1] {
 				start = 0
@@ -79,9 +79,10 @@ func search(nums []int, target int) int {
 
 func main() {
 
-	nums := []int{4, 5, 6, 7, 0, 1, 2}
+	// nums := []int{4, 5, 6, 7, 0, 1, 2}
 
-	index := search(nums, 4)
+	nums := []int{3, 1}
+	index := search(nums, 0)
 	fmt.Println(index)
 
 }
