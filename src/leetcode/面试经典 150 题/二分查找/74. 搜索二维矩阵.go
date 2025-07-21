@@ -2,9 +2,9 @@ package main
 
 func searchMatrix(matrix [][]int, target int) bool {
 
-	r := len(matrix) - 1
-	c := len(matrix[0])
-	for r > 0 && c > 0 {
+	r := 0
+	c := 0
+	for r < len(matrix) && c < len(matrix[0]) {
 		rLo := 0
 		rHi := r
 		rMid := rLo + (rHi-rLo)/2
@@ -18,22 +18,26 @@ func searchMatrix(matrix [][]int, target int) bool {
 				rHi = rMid - 1
 			}
 		}
-		r = rMid
+		r = rLo
 
 		cLo := 0
 		cHi := c
 		cMid := cLo + (cHi-rLo)/2
 		for cLo <= cHi {
-			if matrix[0][cMid] == target {
+			if matrix[cMid][0] == target {
 				return true
 			}
 			if target > matrix[0][cMid] {
 				cLo = cMid + 1
-			} else {
+			} else
 				cHi = rMid - 1
 			}
 		}
-		c = cMid
+		c = cLo
+
+		if c == -1 || r == -1 {
+			break
+		}
 	}
 
 	return false
