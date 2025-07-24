@@ -2,14 +2,14 @@ package main
 
 import "fmt"
 
-var res [][][]int
-var path [][]int
+var res [][][2]int
+var path [][2]int
 
 var pathSet map[[2]int]struct{}
 
 func exist(board [][]byte, word string) bool {
-	res = make([][][]int, 0, 16)
-	path = make([][]int, 0, 16)
+	res = make([][][2]int, 0, 16)
+	path = make([][2]int, 0, 16)
 	pathSet = make(map[[2]int]struct{}, 16)
 	backtracking(board, 0, 0, 0, word)
 	fmt.Println(res)
@@ -27,11 +27,11 @@ func backtracking(board [][]byte, ii, jj, n int, word string) {
 				break
 			}
 
-			path = append(path, []int{i, j})
+			path = append(path, [2]int{i, j})
 			pathSet[[2]int{i, j}] = struct{}{}
 
 			if n+1 == len(word) {
-				tmp := make([][]int, 0, 16)
+				tmp := make([][2]int, 0, 16)
 				for _, pair := range path {
 					tmp = append(tmp, pair)
 				}
@@ -63,8 +63,10 @@ func backtracking(board [][]byte, ii, jj, n int, word string) {
 					backtracking(board, i, j+1, n+1, word)
 				}
 			}
+
+			delete(pathSet, path[len(path)-1])
 			path = path[:len(path)-1]
-			delete(pathSet, [2]int{i, j})
+
 		}
 	}
 }
