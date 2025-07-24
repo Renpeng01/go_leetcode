@@ -6,14 +6,15 @@ var res [][][2]int
 var path [][2]int
 var pathSet map[[2]int]struct{}
 
-var steps [][]int = [][]int{{1, 1}, {-1, -1}, {1, -1}, {-1, 1}}
+var steps [][]int = [][]int{{1, 0}, {-1, 0}, {0, -1}, {0, 1}}
 
 func exist(board [][]byte, word string) bool {
 	res = make([][][2]int, 0, 16)
-	path = make([][2]int, 0, 16)
-	pathSet = make(map[[2]int]struct{}, 16)
+
 	for i := 0; i < len(board); i++ {
 		for j := 0; j < len(board[0]); j++ {
+			path = make([][2]int, 0, 16)
+			pathSet = make(map[[2]int]struct{}, 16)
 			backtracking(board, i, j, 0, word)
 		}
 	}
