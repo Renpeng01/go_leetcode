@@ -2,12 +2,17 @@ package main
 
 import "fmt"
 
-var pathSet map[[2]int]struct{}
+var pathSet [][]bool
 
 var steps [][]int = [][]int{{1, 0}, {-1, 0}, {0, -1}, {0, 1}}
 
 func exist(board [][]byte, word string) bool {
-	pathSet = make(map[[2]int]struct{}, 16)
+	pathSet = make([][]bool, len(board))
+	for i := 0; i < len(board); i++ {
+		pathSet[i] = make([]bool, len(board[i]))
+	}
+
+	fmt.Println(pathSet)
 
 	for i := 0; i < len(board); i++ {
 		for j := 0; j < len(board[0]); j++ {
@@ -23,19 +28,20 @@ func exist(board [][]byte, word string) bool {
 func backtracking(board [][]byte, i, j, n int, word string) bool {
 
 	if board[i][j] == word[n] {
-		pathSet[[2]int{i, j}] = struct{}{}
-		if n-1 == len(word) {
+		pathSet[i][j] = true
+		if n+1 == len(word) {
 			return true
 		}
 
 		for _, step := range steps {
-			if _, ok := pathSet[[2]int{i + step[0], j + step[1]}]; !ok && i+step[0] >= 0 && i+step[0] < len(board) && j+step[1] >= 0 && j+step[1] < len(board[0]) {
+
+			if i+step[0] >= 0 && i+step[0] < len(board) && j+step[1] >= 0 && j+step[1] < len(board[0]) && !pathSet[i+step[0]][j+step[1]] {
 				if backtracking(board, i+step[0], j+step[1], n+1, word) {
 					return true
 				}
 			}
 		}
-		delete(pathSet, [2]int{i, j})
+		pathSet[i][j] = false
 
 	}
 	return false
