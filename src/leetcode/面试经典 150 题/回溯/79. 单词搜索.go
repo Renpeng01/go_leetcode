@@ -17,19 +17,10 @@ func exist(board [][]byte, word string) bool {
 }
 
 func backtracking(board [][]byte, ii, jj, n int, word string) {
-	// if n == len(word) {
-	// 	tmp := make([][]int, 0, 16)
-	// 	for _, pair := range path {
-	// 		tmp = append(tmp, pair)
-	// 	}
-	// 	res = append(res, tmp)
-	// 	return
-	// }
 	for i := ii; i < len(board); i++ {
-		s
 		for j := jj; j < len(board[0]); j++ {
 			if _, ok := pathSet[[2]int{i, j}]; ok {
-				continue
+				break
 			}
 
 			if board[i][j] != word[n] {
