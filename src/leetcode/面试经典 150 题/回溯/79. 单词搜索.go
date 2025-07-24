@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 var res [][][]int
 var path [][]int
 
@@ -10,30 +12,41 @@ func exist(board [][]byte, word string) bool {
 	path = make([][]int, 0, 16)
 	pathSet = make(map[[2]int]struct{}, 16)
 	backtracking(board, 0, 0, 0, word)
+	fmt.Println(res)
 	return len(res) > 0
 }
 
 func backtracking(board [][]byte, ii, jj, n int, word string) {
-	if n == len(word) {
-		tmp := make([][]int, 0, 16)
-		for _, pair := range path {
-			tmp = append(tmp, pair)
-		}
-		res = append(res, tmp)
-		return
-	}
+	// if n == len(word) {
+	// 	tmp := make([][]int, 0, 16)
+	// 	for _, pair := range path {
+	// 		tmp = append(tmp, pair)
+	// 	}
+	// 	res = append(res, tmp)
+	// 	return
+	// }
 	for i := ii; i < len(board); i++ {
+		s
 		for j := jj; j < len(board[0]); j++ {
 			if _, ok := pathSet[[2]int{i, j}]; ok {
 				continue
 			}
 
 			if board[i][j] != word[n] {
-				continue
+				break
 			}
 
 			path = append(path, []int{i, j})
 			pathSet[[2]int{i, j}] = struct{}{}
+
+			if n+1 == len(word) {
+				tmp := make([][]int, 0, 16)
+				for _, pair := range path {
+					tmp = append(tmp, pair)
+				}
+				res = append(res, tmp)
+				return
+			}
 			// 上
 			if i-1 >= 0 {
 				if _, ok := pathSet[[2]int{i - 1, j}]; !ok {
@@ -63,4 +76,12 @@ func backtracking(board [][]byte, ii, jj, n int, word string) {
 			delete(pathSet, [2]int{i, j})
 		}
 	}
+}
+
+func main() {
+	board := [][]byte{{'b'}, {'a'}, {'b'}, {'b'}, {'a'}}
+	word := "baa"
+
+	res := exist(board, word)
+	fmt.Println("res: ", res)
 }
