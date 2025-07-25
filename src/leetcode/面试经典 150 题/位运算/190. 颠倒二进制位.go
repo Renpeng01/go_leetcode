@@ -25,6 +25,6 @@ func reverseBits(n int) int {
 }
 
 func main() {
-	res := reverseBits(43261596)
+	res := reverseBits(11)
 	fmt.Println(res)
 }
