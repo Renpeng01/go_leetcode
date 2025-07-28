@@ -48,6 +48,37 @@ func findTargetSumWays(nums []int, target int) int {
 	return dp[len(nums)-1][bag]
 }
 
+func findTargetSumWays2(nums []int, target int) int {
+
+	sum := 0
+	for _, v := range nums {
+		sum += v
+	}
+
+	if abs(target) > sum {
+		return 0
+	}
+
+	if (sum+target)%2 == 1 {
+		return 0
+	}
+
+	bag := (sum + target) / 2
+	dp := make([]int, bag+1)
+	dp[0] = 1
+	for i := 0; i < len(nums); i++ {
+		for j := bag; j >= nums[i]; j-- {
+			dp[j] += dp[j-nums[i]]
+		}
+	}
+
+	for _, v := range dp {
+		fmt.Println(v)
+	}
+
+	return dp[bag]
+}
+
 func abs(a int) int {
 	if a > 0 {
 		return a
@@ -57,9 +88,12 @@ func abs(a int) int {
 }
 
 func main() {
-	nums := []int{1, 1, 1, 1, 1}
-	target := 3
+	// nums := []int{1, 1, 1, 1, 1}
+	// target := 3
 
-	res := findTargetSumWays(nums, target)
+	nums := []int{0}
+	target := 0
+
+	res := findTargetSumWays2(nums, target)
 	fmt.Println(res)
 }
