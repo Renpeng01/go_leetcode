@@ -14,21 +14,34 @@ func maximalSquare(matrix [][]byte) int {
 
 	for i := 1; i < len(matrix[0]); i++ {
 		if matrix[0][i] == '1' {
-			dp[0][i] = dp[0][i-1] + 1
+			dp[0][i] = 1
 		}
 	}
 
 	for i := 1; i < len(matrix); i++ {
 		if matrix[i][0] == '1' {
-			dp[i][0] = dp[i-1][0] + 1
+			dp[i][0] = 1
 		}
 	}
 
 	for i := 1; i < len(matrix); i++ {
 		for j := 1; j < len(matrix[0]); j++ {
 			if matrix[i][j] == '1' {
+				// dp[i][j] = dp[i-1][j]
+
+				if 
+			} else {
 
 			}
 		}
 	}
+
+	return dp[len(matrix)-1][len(matrix[0])-1]
+}
+
+func max(a,b int) int{
+	if a > b{
+		return a
+	}
+	return b
 }
