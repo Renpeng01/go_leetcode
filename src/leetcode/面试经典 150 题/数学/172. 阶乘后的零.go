@@ -22,3 +22,7 @@ func trailingZeroes1(n int) int {
 	}
 	return zeroCnt
 }
+
+func trailingZeroes(n int) int {
+
+}
