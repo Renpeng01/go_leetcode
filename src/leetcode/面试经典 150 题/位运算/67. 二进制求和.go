@@ -1,25 +1,66 @@
 package main
 
+import (
+	"fmt"
+	"strconv"
+)
+
 func addBinary(a string, b string) string {
-	carry := '0'
 
-	n := len(a)
-	if len(b) < n {
-		n = len(b)
-	}
+	i := len(a) - 1
+	j := len(b) - 1
 
+	pre := 0
 	res := ""
-	for i := 0; i < n; i++ {
-		if a[len(a)-1-i] == '1' && b[len(b)-1-i] == '1' {
-			if carry == '0' {
+	for i >= 0 && j >= 0 {
+		av := a[i] - '0'
+		bv := b[j] - '0'
 
-			} else {
+		v := int(av) + int(bv) + pre
+		pre = 0
+		if v > 1 {
+			pre = v / 2
+			v = v % 2
+		}
+		res = strconv.Itoa(v) + res
+		i--
+		j--
+	}
+	// fmt.Println(res)
 
-			}
-		}else a[len(a)-1-i] == '1' ||b[len(b)-1-i] == '1'{
-
-		}else{
+	for m := i; m >= 0; m-- {
+		av := a[m] - '0'
+		v := int(av) + pre
+		pre = 0
+		if v > 1 {
+			pre = v / 2
+			v = v % 2
 
 		}
+		res = strconv.Itoa(v) + res
 	}
+	for m := j; m >= 0; m-- {
+		av := b[m] - '0'
+		v := int(av) + pre
+		pre = 0
+		if v > 1 {
+			pre = v / 2
+			v = v % 2
+
+		}
+		res = strconv.Itoa(v) + res
+	}
+
+	if pre == 1 {
+		res = "1" + res
+	}
+
+	return res
+}
+
+func main() {
+	a := "11"
+	b := "1"
+	res := addBinary(a, b)
+	fmt.Println(res)
 }
