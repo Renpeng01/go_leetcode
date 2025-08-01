@@ -15,12 +15,12 @@ func myPow(x float64, n int) float64 {
 
 	base := x
 	for n > 0 {
-		if n%2 == 1 {
+		if n&1 == 1 {
 			res = res * base
 		}
 
 		base = base * base
-		n /= 2
+		n = n >> 1
 	}
 
 	if isNegative {
