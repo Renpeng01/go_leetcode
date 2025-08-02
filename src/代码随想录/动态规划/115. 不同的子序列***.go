@@ -11,10 +11,6 @@ func numDistinct(s string, t string) int {
 	for i := 0; i < len(dp); i++ {
 		dp[i][0] = 1
 	}
-	// dp[0][0] = 1
-	// for _, v := range dp {
-	// 	fmt.Println(v)
-	// }
 
 	for i := 1; i < len(dp); i++ {
 		for j := 1; j < len(dp[i]); j++ {
