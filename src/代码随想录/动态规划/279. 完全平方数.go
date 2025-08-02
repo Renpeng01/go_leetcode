@@ -21,7 +21,6 @@ func numSquares(n int) int {
 
 	}
 	return dp[n]
-
 }
 
 func min(a, b int) int {
@@ -32,6 +31,6 @@ func min(a, b int) int {
 }
 
 func main() {
-	res := numSquares(12)
+	res := numSquares(11)
 	fmt.Println(res)
 }
