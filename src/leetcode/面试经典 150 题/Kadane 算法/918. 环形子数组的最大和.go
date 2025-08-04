@@ -12,7 +12,7 @@ func maxSubarraySumCircular(nums []int) int {
 		}
 	}
 
-	fmt.Println(newNums)
+	// fmt.Println(newNums)
 
 	windowSize := len(nums)
 	l := 0
@@ -20,27 +20,28 @@ func maxSubarraySumCircular(nums []int) int {
 	val := newNums[0]
 
 	for i := 1; i < len(newNums); i++ {
-		dp[i] = max(dp[i], dp[i-1]+newNums[i])
 		r = i
+		dp[i] = max(dp[i], dp[i-1]+newNums[i])
+		// fmt.Println("111dp[i]:", dp[i])
 		if r-l+1 <= windowSize {
 			if dp[i] <= 0 {
 				l = i + 1
 				r = i + 1
-				continue
 			}
 		} else {
 			dp[i] = dp[i] - newNums[l]
-			l = l + 1
-			for m := l; m <= r; m++ {
+			l++
+			for m := l; m < r; m++ {
 				if newNums[m] < 0 {
 					dp[i] = dp[i] - newNums[m]
-					l = m
+					l++
 				} else {
 					break
 				}
 			}
 
 		}
+		// fmt.Println("222dp[i]:", dp[i])
 		val = max(dp[i], val)
 
 	}
@@ -55,7 +56,7 @@ func max(a, b int) int {
 }
 
 func main() {
-	nums := []int{5, -3, 5}
+	nums := []int{-3, -2, -3}
 	res := maxSubarraySumCircular(nums)
 	// fmt.Printlln(res)
 	fmt.Println(res)
