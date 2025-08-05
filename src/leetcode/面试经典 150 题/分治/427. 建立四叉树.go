@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type Node struct {
 	Val         bool
 	IsLeaf      bool
@@ -19,10 +21,10 @@ func construct(grid [][]int) *Node {
 		return node
 	}
 
-	topLeftGrid := make([][]int, 0)
-	topRightGrid := make([][]int, 0)
-	bottomLeftGrid := make([][]int, 0)
-	bottomRightGrid := make([][]int, 0)
+	topLeftGrid := make([][]int, 0, 256)
+	topRightGrid := make([][]int, 0, 256)
+	bottomLeftGrid := make([][]int, 0, 256)
+	bottomRightGrid := make([][]int, 0, 256)
 
 	for i := 0; i < len(grid); i++ {
 		topLeftItem := make([]int, 0, 4)
@@ -60,13 +62,22 @@ func construct(grid [][]int) *Node {
 				bottomRightGrid = append(bottomRightGrid, bottomRightItem)
 			}
 		}
-
 	}
 
+	fmt.Println(topLeftGrid)
+	fmt.Println(topRightGrid)
+	fmt.Println(bottomLeftGrid)
+	fmt.Println(bottomRightGrid)
+
 	root := &Node{}
-	root.TopLeft = construct(topLeftGrid)
-	root.TopRight = construct(topRightGrid)
-	root.BottomLeft = construct(bottomLeftGrid)
-	root.BottomRight = construct(bottomRightGrid)
+	// root.TopLeft = construct(topLeftGrid)
+	// root.TopRight = construct(topRightGrid)
+	// root.BottomLeft = construct(bottomLeftGrid)
+	// root.BottomRight = construct(bottomRightGrid)
 	return root
+}
+
+func main() {
+	grid := [][]int{{0, 1}, {1, 0}}
+	construct(grid)
 }
