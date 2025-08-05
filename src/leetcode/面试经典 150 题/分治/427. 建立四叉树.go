@@ -26,8 +26,21 @@ func build(grid [][]int, left, right, top, bottom int) *Node {
 		return node
 	}
 
-	isAll := false
-	for i := top;i <= bottom;
+	sum := 0
+	for i := top; i <= bottom; i++ {
+		for j := left; j <= right; j++ {
+			sum += grid[i][j]
+		}
+	}
+
+	if sum == (right-left+1)*(bottom-top+1) || sum == 0 {
+		node := &Node{}
+		if grid[left][top] == 1 {
+			node.Val = true
+			node.IsLeaf = true
+		}
+		return node
+	}
 
 	horizontalMid := left + (right-left)/2
 	verticalMid := top + (bottom-top)/2
