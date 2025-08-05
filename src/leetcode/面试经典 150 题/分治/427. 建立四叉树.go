@@ -14,10 +14,6 @@ func construct(grid [][]int) *Node {
 }
 
 func build(grid [][]int, left, right, top, bottom int) *Node {
-	if left > right && top > bottom {
-		return nil
-	}
-
 	sum := 0
 	for i := top; i <= bottom; i++ {
 		for j := left; j <= right; j++ {
