@@ -89,20 +89,20 @@ func sortList(head *ListNode) *ListNode {
 
 	mLeftHead := leftHead
 
-	mLeftStr := ""
-	for mLeftHead != nil {
-		mLeftStr += strconv.Itoa(mLeftHead.Val) + ","
-		mLeftHead = mLeftHead.Next
-	}
-	// fmt.Println("mLeftStr: ", mLeftStr)
+	// mLeftStr := ""
+	// for mLeftHead != nil {
+	// 	mLeftStr += strconv.Itoa(mLeftHead.Val) + ","
+	// 	mLeftHead = mLeftHead.Next
+	// }
+	// // fmt.Println("mLeftStr: ", mLeftStr)
 
-	mRightHead := rightHead
-	mRightStr := ""
-	for mRightHead != nil {
-		mRightStr += strconv.Itoa(mRightHead.Val) + ","
-		mRightHead = mRightHead.Next
-	}
-	// fmt.Println("mLeftStr: ", mRightStr)
+	// mRightHead := rightHead
+	// mRightStr := ""
+	// for mRightHead != nil {
+	// 	mRightStr += strconv.Itoa(mRightHead.Val) + ","
+	// 	mRightHead = mRightHead.Next
+	// }
+	// // fmt.Println("mLeftStr: ", mRightStr)
 
 	left := sortList(leftHead)
 	right := sortList(rightHead)
