@@ -34,7 +34,7 @@ func build(grid [][]int, left, right, top, bottom int) *Node {
 
 	if sum == (right-left+1)*(bottom-top+1) || sum == 0 {
 		node := &Node{}
-		if grid[left][top] == 1 {
+		if sum == (right-left+1)*(bottom-top+1) {
 			node.Val = true
 			node.IsLeaf = true
 		}
