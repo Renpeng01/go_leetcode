@@ -19,21 +19,23 @@ func maxSubarraySumCircular(nums []int) int {
 	r := 0
 	val := newNums[0]
 
+	sum := newNums[0]
 	for i := 1; i < len(newNums); i++ {
 		r = i
+		sum += newNums[i]
 		dp[i] = max(dp[i], dp[i-1]+newNums[i])
 		fmt.Println("111dp[i]:", dp[i])
 		if r-l+1 <= windowSize {
-			if dp[i] <= 0 {
+			if sum <= 0 {
 				l = i + 1
 				r = i + 1
 			}
 		} else {
-			dp[i] = dp[i] - newNums[l]
+			sum -= newNums[l]
 			l++
 			for m := l; m < r; m++ {
 				if newNums[m] < 0 {
-					dp[i] = dp[i] - newNums[m]
+					sum -= newNums[m]
 					l++
 				} else {
 					break
