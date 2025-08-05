@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 type Node struct {
 	Val         bool
 	IsLeaf      bool
@@ -16,13 +14,8 @@ func construct(grid [][]int) *Node {
 }
 
 func build(grid [][]int, left, right, top, bottom int) *Node {
-	if left == right && top == bottom {
-		node := &Node{}
-		node.IsLeaf = true
-		if grid[left][top] == 1 {
-			node.Val = true
-		}
-		return node
+	if left > right && top > bottom {
+		return nil
 	}
 
 	sum := 0
@@ -45,9 +38,7 @@ func build(grid [][]int, left, right, top, bottom int) *Node {
 	horizontalMid := left + (right-left)/2
 	verticalMid := top + (bottom-top)/2
 
-	root := &Node{
-		Val: true,
-	}
+	root := &Node{}
 	// fmt.Println("TopLeft", left, horizontalMid, top, verticalMid)
 	root.TopLeft = build(grid, left, horizontalMid, top, verticalMid)
 
@@ -72,8 +63,9 @@ func main() {
 		{0, 0, 1, 1},
 	}
 
-	res := construct(grid)
-	fmt.Println(res.IsLeaf, res.Val)
+	construct(grid)
+	// res := construct(grid)
+	// fmt.Println(res.IsLeaf, res.Val)
 	// fmt.Println(res.TopLeft)
 	// fmt.Println(res.TopRight)
 	// fmt.Println(res.BottomLeft)
