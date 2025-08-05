@@ -45,8 +45,9 @@ func build(grid [][]int, left, right, top, bottom int) *Node {
 	horizontalMid := left + (right-left)/2
 	verticalMid := top + (bottom-top)/2
 
-	root := &Node{}
-
+	root := &Node{
+		Val: true,
+	}
 	// fmt.Println("TopLeft", left, horizontalMid, top, verticalMid)
 	root.TopLeft = build(grid, left, horizontalMid, top, verticalMid)
 
@@ -72,8 +73,9 @@ func main() {
 	}
 
 	res := construct(grid)
-	fmt.Println(res.TopLeft)
-	fmt.Println(res.TopRight)
-	fmt.Println(res.BottomLeft)
-	fmt.Println(res.BottomRight)
+	fmt.Println(res.IsLeaf, res.Val)
+	// fmt.Println(res.TopLeft)
+	// fmt.Println(res.TopRight)
+	// fmt.Println(res.BottomLeft)
+	// fmt.Println(res.BottomRight)
 }
