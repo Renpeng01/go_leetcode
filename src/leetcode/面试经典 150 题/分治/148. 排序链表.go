@@ -87,7 +87,7 @@ func sortList(head *ListNode) *ListNode {
 	rightHead := slow.Next
 	slow.Next = nil
 
-	mLeftHead := leftHead
+	// mLeftHead := leftHead
 
 	// mLeftStr := ""
 	// for mLeftHead != nil {
