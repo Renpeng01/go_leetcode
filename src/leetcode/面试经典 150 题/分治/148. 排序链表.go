@@ -127,9 +127,10 @@ func merge(left, right *ListNode) *ListNode {
 	}
 	res := mhead
 	for left != nil && right != nil {
+		fmt.Println("mhead", mhead.Val)
 		if left.Val < right.Val {
 			mhead.Next = left
-			left = left
+			left = left.Next
 		} else {
 			mhead.Next = right
 			right = right.Next
@@ -155,6 +156,7 @@ func main() {
 	n2 := &ListNode{
 		Val: 2,
 	}
+
 	n3 := &ListNode{
 		Val: 1,
 	}
@@ -166,11 +168,12 @@ func main() {
 	n2.Next = n3
 	n3.Next = n4
 
-	res := sortList(n1)
+	res := merge(n1, n3)
 
 	resStr := ""
 	for res != nil {
 		resStr += strconv.Itoa(res.Val)
+		fmt.Println(1111)
 		res = res.Next
 	}
 	fmt.Println("--------------")
