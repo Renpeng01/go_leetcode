@@ -12,7 +12,7 @@ type Node struct {
 }
 
 func construct(grid [][]int) *Node {
-	return build(grid, 0, len(grid)-1, 0, len(grid[0])-1)
+	return build(grid, 0, len(grid[0])-1, 0, len(grid)-1)
 }
 
 func build(grid [][]int, left, right, top, bottom int) *Node {
@@ -62,9 +62,16 @@ func build(grid [][]int, left, right, top, bottom int) *Node {
 }
 
 func main() {
-	grid := [][]int{{0, 1}, {1, 0}}
-	res := construct(grid)
+	// grid := [][]int{{0, 1}, {1, 0}}
 
+	grid := [][]int{
+		{1, 1, 0, 0},
+		{0, 0, 1, 1},
+		{1, 1, 0, 0},
+		{0, 0, 1, 1},
+	}
+
+	res := construct(grid)
 	fmt.Println(res.TopLeft)
 	fmt.Println(res.TopRight)
 	fmt.Println(res.BottomLeft)
