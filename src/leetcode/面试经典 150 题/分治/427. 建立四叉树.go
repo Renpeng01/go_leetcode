@@ -16,7 +16,6 @@ func construct(grid [][]int) *Node {
 }
 
 func build(grid [][]int, left, right, top, bottom int) *Node {
-
 	if left == right && top == bottom {
 		node := &Node{}
 		if grid[left][top] == 1 {
