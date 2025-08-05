@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"strconv"
+)
+
 type ListNode struct {
 	Val  int
 	Next *ListNode
@@ -81,6 +86,23 @@ func sortList(head *ListNode) *ListNode {
 	rightHead := slow.Next
 	slow.Next = nil
 
+	mLeftHead := leftHead
+
+	mLeftStr := ""
+	for mLeftHead != nil {
+		mLeftStr += strconv.Itoa(mLeftHead.Val) + ","
+		mLeftHead = mLeftHead.Next
+	}
+	fmt.Println("mLeftStr: ", mLeftStr)
+
+	mRightHead := rightHead
+	mRightStr := ""
+	for mRightHead != nil {
+		mRightStr += strconv.Itoa(mRightHead.Val) + ","
+		mRightHead = mRightHead.Next
+	}
+	fmt.Println("mLeftStr: ", mRightStr)
+
 	left := sortList(leftHead)
 	right := sortList(rightHead)
 	return merge(left, right)
@@ -114,5 +136,43 @@ func merge(left, right *ListNode) *ListNode {
 		}
 		mhead = mhead.Next
 	}
+
+	if left != nil {
+		mhead.Next = left
+	}
+
+	if right != nil {
+		mhead.Next = right
+	}
 	return res
+}
+
+func main() {
+	// [4,2,1,3]
+	n1 := &ListNode{
+		Val: 4,
+	}
+	n2 := &ListNode{
+		Val: 2,
+	}
+	n3 := &ListNode{
+		Val: 1,
+	}
+	n4 := &ListNode{
+		Val: 3,
+	}
+
+	n1.Next = n2
+	n2.Next = n3
+	n3.Next = n4
+
+	res := sortList(n1)
+
+	resStr := ""
+	for res != nil {
+		resStr += strconv.Itoa(res.Val)
+		res = res.Next
+	}
+	fmt.Println("--------------")
+	fmt.Println(resStr)
 }
