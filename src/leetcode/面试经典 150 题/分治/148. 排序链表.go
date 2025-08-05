@@ -71,6 +71,7 @@ func merge1(l1, l2 []*ListNode) []*ListNode {
 	return res
 }
 
+// 超时
 func sortList(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
@@ -93,7 +94,7 @@ func sortList(head *ListNode) *ListNode {
 		mLeftStr += strconv.Itoa(mLeftHead.Val) + ","
 		mLeftHead = mLeftHead.Next
 	}
-	fmt.Println("mLeftStr: ", mLeftStr)
+	// fmt.Println("mLeftStr: ", mLeftStr)
 
 	mRightHead := rightHead
 	mRightStr := ""
@@ -101,7 +102,7 @@ func sortList(head *ListNode) *ListNode {
 		mRightStr += strconv.Itoa(mRightHead.Val) + ","
 		mRightHead = mRightHead.Next
 	}
-	fmt.Println("mLeftStr: ", mRightStr)
+	// fmt.Println("mLeftStr: ", mRightStr)
 
 	left := sortList(leftHead)
 	right := sortList(rightHead)
@@ -127,7 +128,7 @@ func merge(left, right *ListNode) *ListNode {
 	}
 	res := mhead
 	for left != nil && right != nil {
-		fmt.Println("mhead", mhead.Val)
+		// fmt.Println("mhead", mhead.Val)
 		if left.Val < right.Val {
 			mhead.Next = left
 			left = left.Next
@@ -168,7 +169,7 @@ func main() {
 	n2.Next = n3
 	n3.Next = n4
 
-	res := merge(n1, n3)
+	res := sortList(n1)
 
 	resStr := ""
 	for res != nil {
