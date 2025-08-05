@@ -16,7 +16,6 @@ func mergeKLists(lists []*ListNode) *ListNode {
 		lists = lists[2:]
 		lists = append(lists, l1)
 	}
-	fmt.Println(lists)
 	return lists[0]
 }
 
