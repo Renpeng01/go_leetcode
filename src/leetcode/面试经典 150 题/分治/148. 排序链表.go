@@ -16,7 +16,7 @@ func sortList1(head *ListNode) *ListNode {
 		head = head.Next
 	}
 
-	res := mergeSort(l)
+	res := mergeSort1(l)
 
 	mhead := res[0]
 	result := mhead
@@ -27,18 +27,18 @@ func sortList1(head *ListNode) *ListNode {
 	return result
 }
 
-func mergeSort(l []*ListNode) []*ListNode {
+func mergeSort1(l []*ListNode) []*ListNode {
 	if len(l) == 0 {
 		return nil
 	}
 	mid := len(l) / 2
-	l1 := mergeSort(l[0:mid])
-	l2 := mergeSort(l[mid:])
+	l1 := mergeSort1(l[0:mid])
+	l2 := mergeSort1(l[mid:])
 
-	return merge(l1, l2)
+	return merge1(l1, l2)
 }
 
-func merge(l1, l2 []*ListNode) []*ListNode {
+func merge1(l1, l2 []*ListNode) []*ListNode {
 	if len(l1) == 0 {
 		return l2
 	}
@@ -62,6 +62,57 @@ func merge(l1, l2 []*ListNode) []*ListNode {
 	}
 	if len(l2) > 0 {
 		res = append(res, l2...)
+	}
+	return res
+}
+
+func sortList(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+	slow := head
+	fast := head
+	for slow != nil && slow.Next != nil && fast.Next != nil && fast.Next.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+	}
+
+	leftHead := head
+	rightHead := slow.Next
+	slow.Next = nil
+
+	left := sortList(leftHead)
+	right := sortList(rightHead)
+	return merge(left, right)
+
+}
+
+func merge(left, right *ListNode) *ListNode {
+	if left == nil {
+		return right
+	}
+	if right == nil {
+		return left
+	}
+
+	var mhead *ListNode
+	if left.Val < right.Val {
+		mhead = left
+		left = left.Next
+	} else {
+		mhead = right
+		right = right.Next
+	}
+	res := mhead
+	for left != nil && right != nil {
+		if left.Val < right.Val {
+			mhead.Next = left
+			left = left
+		} else {
+			mhead.Next = right
+			right = right.Next
+		}
+		mhead = mhead.Next
 	}
 	return res
 }
