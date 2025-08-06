@@ -3,37 +3,35 @@ package main
 import "fmt"
 
 func snakesAndLadders(board [][]int) int {
-	queue := make([]int, 0, 16)
 	aimIndex := len(board) * len(board)
-	queue = append(queue, 1)
-
-	visited := make(map[int]struct{}, 256)
-
-	cnt := 0
+	type pair struct{ id, step int }
+	queue := []pair{{1, 0}}
+	visited := make(map[int]struct{}, aimIndex)
 	for len(queue) > 0 {
-		index := queue[0]
+		p := queue[0]
 		queue = queue[1:]
 
-		if _, ok := visited[index]; ok {
-			continue
-		}
-		visited[index] = struct{}{}
-		if index == aimIndex {
-			break
-		}
-		i, j := getPoint(index, len(board))
-		if board[i][j] != -1 {
-			queue = append(queue, board[i][j])
-			cnt++
-			continue
-		}
-		b, e := next(index, len(board))
+		b, e := next(p.id, len(board))
 		for k := b; k <= e; k++ {
-			queue = append(queue, k)
+			nxt := k
+			if nxt > aimIndex {
+				break
+			}
+			i, j := getPoint(nxt, len(board))
+			if board[i][j] > 0 {
+				nxt = board[i][j]
+			}
+			if nxt == aimIndex { // 到达终点
+				return p.step + 1
+			}
+			if _, ok := visited[nxt]; ok {
+				continue
+			}
+			queue = append(queue, pair{nxt, p.step + 1})
+			visited[nxt] = struct{}{}
 		}
-		cnt++
 	}
-	return cnt
+	return -1
 }
 
 func next(index, n int) (int, int) {
