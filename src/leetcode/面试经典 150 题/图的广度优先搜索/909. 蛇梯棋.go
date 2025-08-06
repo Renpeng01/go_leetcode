@@ -54,6 +54,15 @@ func getPoint(index, n int) (int, int) {
 	return i, j
 }
 
+// func getPoint(id, n int) (r, c int) {
+// 	r, c = (id-1)/n, (id-1)%n
+// 	if r%2 == 1 {
+// 		c = n - 1 - c
+// 	}
+// 	r = n - 1 - r
+// 	return
+// }
+
 func main() {
 
 	var i, j int
