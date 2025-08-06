@@ -5,28 +5,33 @@ import "fmt"
 func snakesAndLadders(board [][]int) int {
 	queue := make([]int, 0, 16)
 	aimIndex := len(board) * len(board)
-	i, j := getPoint(1, len(board))
-	queue = append(queue, board[i][j])
+	queue = append(queue, 1)
+
+	visited := make(map[int]struct{}, 256)
 
 	cnt := 0
 	for len(queue) > 0 {
-		cnt++
 		index := queue[0]
 		queue = queue[1:]
+
+		if _, ok := visited[index]; ok {
+			continue
+		}
+		visited[index] = struct{}{}
 		if index == aimIndex {
 			break
 		}
-
 		i, j := getPoint(index, len(board))
 		if board[i][j] != -1 {
 			queue = append(queue, board[i][j])
+			cnt++
 			continue
 		}
 		b, e := next(index, len(board))
 		for k := b; k <= e; k++ {
-			i, j = getPoint(k, len(board))
-			queue = append(queue, board[i][j])
+			queue = append(queue, k)
 		}
+		cnt++
 	}
 	return cnt
 }
@@ -44,15 +49,9 @@ func min(a, b int) int {
 
 func getPoint(index, n int) (int, int) {
 	i := n - 1 - (index-1)/n
-	j := index % n
-	if j != 0 {
-		j--
-	}
-
-	fmt.Println("11", j)
+	j := (index - 1) % n
 	if i%2 == 0 {
 		j = n - 1 - j
-		fmt.Println("22", n)
 	}
 	return i, j
 }
@@ -60,12 +59,12 @@ func getPoint(index, n int) (int, int) {
 func main() {
 
 	var i, j int
-	// i, j = getPoint(1, 6)
-	// fmt.Println(i, j)
+	i, j = getPoint(1, 6)
+	fmt.Println(i, j)
 
-	// i, j = getPoint(8, 6)
-	// fmt.Println(i, j)
+	i, j = getPoint(8, 6)
+	fmt.Println(i, j)
 
-	i, j = getPoint(12, 6)
+	i, j = getPoint(36, 6)
 	fmt.Println(i, j)
 }
