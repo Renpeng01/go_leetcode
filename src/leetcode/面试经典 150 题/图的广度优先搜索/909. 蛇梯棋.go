@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func snakesAndLadders(board [][]int) int {
 	queue := make([]int, 0, 16)
 	aimIndex := len(board) * len(board)
@@ -41,9 +43,29 @@ func min(a, b int) int {
 }
 
 func getPoint(index, n int) (int, int) {
-	return 0, 0
+	i := n - 1 - (index-1)/n
+	j := index % n
+	if j != 0 {
+		j--
+	}
+
+	fmt.Println("11", j)
+	if i%2 == 0 {
+		j = n - 1 - j
+		fmt.Println("22", n)
+	}
+	return i, j
 }
 
-func getIndex(i, j int) int {
-	return 0
+func main() {
+
+	var i, j int
+	// i, j = getPoint(1, 6)
+	// fmt.Println(i, j)
+
+	// i, j = getPoint(8, 6)
+	// fmt.Println(i, j)
+
+	i, j = getPoint(12, 6)
+	fmt.Println(i, j)
 }
