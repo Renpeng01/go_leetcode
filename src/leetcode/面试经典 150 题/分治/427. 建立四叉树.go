@@ -1,0 +1,69 @@
+package main
+
+type Node struct {
+	Val         bool
+	IsLeaf      bool
+	TopLeft     *Node
+	TopRight    *Node
+	BottomLeft  *Node
+	BottomRight *Node
+}
+
+func construct(grid [][]int) *Node {
+	return build(grid, 0, len(grid[0])-1, 0, len(grid)-1)
+}
+
+func build(grid [][]int, left, right, top, bottom int) *Node {
+	sum := 0
+	for i := top; i <= bottom; i++ {
+		for j := left; j <= right; j++ {
+			sum += grid[i][j]
+		}
+	}
+
+	if sum == (right-left+1)*(bottom-top+1) || sum == 0 {
+		node := &Node{}
+		node.IsLeaf = true
+		if sum == (right-left+1)*(bottom-top+1) {
+			node.Val = true
+
+		}
+		return node
+	}
+
+	horizontalMid := left + (right-left)/2
+	verticalMid := top + (bottom-top)/2
+
+	root := &Node{}
+	// fmt.Println("TopLeft", left, horizontalMid, top, verticalMid)
+	root.TopLeft = build(grid, left, horizontalMid, top, verticalMid)
+
+	// fmt.Println("TopRight", horizontalMid+1, right, top, verticalMid)
+	root.TopRight = build(grid, horizontalMid+1, right, top, verticalMid)
+
+	// fmt.Println("BottomLeft", left, horizontalMid, verticalMid+1, bottom)
+	root.BottomLeft = build(grid, left, horizontalMid, verticalMid+1, bottom)
+
+	// fmt.Println("BottomRight", horizontalMid+1, right, verticalMid+1, bottom)
+	root.BottomRight = build(grid, horizontalMid+1, right, verticalMid+1, bottom)
+	return root
+}
+
+func main() {
+	// grid := [][]int{{0, 1}, {1, 0}}
+
+	grid := [][]int{
+		{1, 1, 0, 0},
+		{0, 0, 1, 1},
+		{1, 1, 0, 0},
+		{0, 0, 1, 1},
+	}
+
+	construct(grid)
+	// res := construct(grid)
+	// fmt.Println(res.IsLeaf, res.Val)
+	// fmt.Println(res.TopLeft)
+	// fmt.Println(res.TopRight)
+	// fmt.Println(res.BottomLeft)
+	// fmt.Println(res.BottomRight)
+}
