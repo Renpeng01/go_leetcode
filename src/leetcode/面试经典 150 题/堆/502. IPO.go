@@ -29,67 +29,90 @@ func findMaximizedCapital(k int, w int, profits []int, capital []int) int {
 		return projects[i].Capital < projects[j].Capital
 	})
 
-	for _, v := range projects {
-
-		buildMinHeap(v.Profit, k)
-	}
-
-	fmt.Println(heap)
-	res := w
-	for i := 0; i < len(heap); i++ {
-		if i == 0 {
-			continue
+	maxHeap := NewHeap()
+	visited := make(map[int]struct{}, len(projects))
+	for k > 0 {
+		for i, v := range projects {
+			if _, ok := visited[i]; ok {
+				continue
+			}
+			if w < v.Capital {
+				break
+			}
+			maxHeap.insert(v.Profit)
+			visited[i] = struct{}{}
 		}
-		res += heap[i]
+
+		if len(maxHeap.data) <= 1 {
+			break
+		}
+		w = w + maxHeap.pop()
+		k--
 	}
 
+	return w
+}
+
+type Heap struct {
+	data []int
+}
+
+func NewHeap() *Heap {
+	data := make([]int, 0, 256)
+	data = append(data, 0)
+	return &Heap{
+		data: data,
+	}
+}
+
+func (heap *Heap) insert(v int) {
+	heap.data = append(heap.data, v)
+	heap.heapifyUp(len(heap.data) - 1)
+
+}
+
+func (heap *Heap) heapifyUp(i int) {
+
+	i = i / 2
+	for i > 1 {
+		parent := i / 2
+		if heap.data[i] > heap.data[parent] {
+			heap.data[i], heap.data[parent] = heap.data[parent], heap.data[i]
+		}
+		i = parent
+	}
+
+}
+
+func (heap *Heap) pop() int {
+	res := heap.data[1]
+	heap.data[1] = heap.data[len(heap.data)-1]
+	heap.data = heap.data[:len(heap.data)-1]
+	heap.heapifyDown(1)
 	return res
 }
 
-func buildMinHeap(v, k int) {
-	if len(heap)-1 < k {
-		heap = append(heap, v)
+func (heap *Heap) heapifyDown(i int) {
+	last := len(heap.data) - 1
+	for {
 
-		i := len(heap) - 1
+		left := 2 * i
+		right := 2*i + 1
+		targetIndex := i
 
-		// heapifyUp
-		for i > 1 {
-			parent := i / 2
-			if heap[i] < heap[parent] {
-				heap[i], heap[parent] = heap[parent], heap[i]
-			}
-			i = parent
+		if left <= last && heap.data[left] > heap.data[targetIndex] {
+			targetIndex = left
+		}
+		if right <= last && heap.data[right] > heap.data[targetIndex] {
+			targetIndex = right
 		}
 
-	} else {
-		if heap[1] >= v {
-			// return heap
-			return
+		if targetIndex == i {
+			break
 		}
-		i := 1
-		heap[i] = v
 
-		// heapifyDown
-		last := len(heap) - 1
-		for {
-			left := 2 * i
-			right := 2*i + 1
-			smallIndex := i
-
-			if left <= last && heap[left] < heap[smallIndex] {
-				smallIndex = left
-			}
-			if right <= last && heap[right] < heap[smallIndex] {
-				smallIndex = right
-			}
-
-			if smallIndex == i {
-				break
-			}
-
-			heap[i], heap[smallIndex] = heap[smallIndex], heap[i]
-			i = smallIndex
-		}
+		heap.data[i], heap.data[targetIndex] = heap.data[targetIndex], heap.data[i]
+		i = targetIndex
 	}
 }
 
