@@ -30,12 +30,11 @@ func findMaximizedCapital(k int, w int, profits []int, capital []int) int {
 	})
 
 	for _, v := range projects {
-		if w < v.Capital {
-			break
-		}
+
 		buildMinHeap(v.Profit, k)
 	}
 
+	fmt.Println(heap)
 	res := w
 	for i := 0; i < len(heap); i++ {
 		if i == 0 {
@@ -44,7 +43,7 @@ func findMaximizedCapital(k int, w int, profits []int, capital []int) int {
 		res += heap[i]
 	}
 
-	return w
+	return res
 }
 
 func buildMinHeap(v, k int) {
