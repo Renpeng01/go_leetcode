@@ -13,6 +13,7 @@ type item struct {
 
 var heap []*item
 
+// 超时
 func kSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 	heap = make([]*item, 0, k+1)
 	heap = append(heap, &item{})
