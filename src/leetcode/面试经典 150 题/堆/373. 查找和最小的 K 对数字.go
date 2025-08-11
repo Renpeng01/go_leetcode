@@ -11,8 +11,10 @@ type item struct {
 	pair []int
 }
 
+var heap []*item
+
 func kSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
-	heap := make([]*item, 0, k+1)
+	heap = make([]*item, 0, k+1)
 	heap = append(heap, &item{})
 	for i := 0; i < len(nums1); i++ {
 		for j := 0; j < len(nums2); j++ {
@@ -20,12 +22,12 @@ func kSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 				sum:  nums1[i] + nums2[j],
 				pair: []int{nums1[i], nums2[j]},
 			}
-			heap = buildMaxHeap(it, heap, k)
+			// heap = buildMaxHeap(it, &heap, k)
+			buildMaxHeap(it, k)
 		}
 	}
 
 	res := make([][]int, 0, k)
-
 	for i, item := range heap {
 		if i == 0 {
 			continue
@@ -35,8 +37,7 @@ func kSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 	return res
 }
 
-func buildMaxHeap(it *item, heap []*item, k int) []*item {
-
+func buildMaxHeap(it *item, k int) {
 	if len(heap)-1 < k {
 		heap = append(heap, it)
 		i := len(heap) - 1
@@ -51,7 +52,8 @@ func buildMaxHeap(it *item, heap []*item, k int) []*item {
 		}
 	} else {
 		if heap[1].sum <= it.sum {
-			return heap
+			// return heap
+			return
 		}
 		i := 1
 		heap[i] = it
@@ -78,7 +80,7 @@ func buildMaxHeap(it *item, heap []*item, k int) []*item {
 			i = maxIndex
 		}
 	}
-	return heap
+	// return heap
 }
 
 func main() {
