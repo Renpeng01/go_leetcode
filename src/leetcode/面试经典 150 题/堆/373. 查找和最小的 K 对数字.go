@@ -46,9 +46,10 @@ func buildMaxHeap(it *item, heap []*item, k int) []*item {
 				return heap
 			}
 
-			if heap[i].sum > heap[i/2].sum {
-				heap[i], heap[i/2] = heap[i/2], heap[i]
+			if heap[i].sum < heap[i/2].sum {
+				break
 			}
+			heap[i], heap[i/2] = heap[i/2], heap[i]
 			i = i / 2
 		}
 
@@ -90,9 +91,9 @@ func buildMaxHeap(it *item, heap []*item, k int) []*item {
 }
 
 func main() {
-	nums1 := []int{1, 7, 11}
-	nums2 := []int{2, 4, 6}
-	k := 3
+	nums1 := []int{-10, -4, 0, 0, 6}
+	nums2 := []int{3, 5, 6, 7, 8, 100}
+	k := 10
 	res := kSmallestPairs(nums1, nums2, k)
 	fmt.Println(res)
 }
