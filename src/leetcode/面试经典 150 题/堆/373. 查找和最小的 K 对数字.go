@@ -65,12 +65,12 @@ func buildMaxHeap(it *item, heap []*item, k int) []*item {
 	i := 1
 
 	for i < len(heap) {
-		if i*2 >= len(heap)-1 {
+		if i*2 > len(heap)-1 {
 			// PrintHeap(heap)
 			break
 		}
 
-		if i*2+1 >= len(heap)-1 {
+		if i*2+1 > len(heap)-1 {
 			if heap[i*2].sum > heap[i].sum {
 				heap[i*2], heap[i] = heap[i], heap[i*2]
 			}
