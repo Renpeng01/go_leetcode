@@ -20,7 +20,7 @@ func findMaximizedCapital(k int, w int, profits []int, capital []int) int {
 		})
 	}
 
-	sort.SliceStable(projects, func(i, j int) bool {
+	sort.Slice(projects, func(i, j int) bool {
 		return projects[i].Capital < projects[j].Capital
 	})
 
