@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 )
 
 type item struct {
@@ -35,21 +37,25 @@ func kSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 
 func buildMaxHeap(it *item, heap []*item, k int) []*item {
 
+	fmt.Println("insert", it.sum, it.pair)
 	if len(heap)-1 < k {
 		heap = append(heap, it)
 	} else {
-		if heap[1].sum < it.sum {
+		if heap[1].sum <= it.sum {
+			PrintHeap(heap)
 			return heap
 		}
 
+		fmt.Println("swap", heap[1].pair, it.pair)
 		heap[1] = heap[len(heap)-1]
 		heap[len(heap)-1] = it
+
 	}
 
 	i := len(heap) - 1
 	for i > 1 {
 		if i/2 < 1 {
-
+			PrintHeap(heap)
 			return heap
 		}
 
@@ -60,26 +66,27 @@ func buildMaxHeap(it *item, heap []*item, k int) []*item {
 		i = i / 2
 	}
 
+	PrintHeap(heap)
 	return heap
 }
 
 func main() {
-	nums1 := []int{-10, -4, 0, 0, 6}
-	nums2 := []int{3, 5, 6, 7, 8, 100}
-	k := 10
+	nums1 := []int{0, 0, 0, 0, 0}
+	nums2 := []int{-3, 22, 35, 56, 76}
+	k := 22
 	res := kSmallestPairs(nums1, nums2, k)
 	fmt.Println(res)
 }
 
 func PrintHeap(heap []*item) {
 	// return
-	// res := make([]string, 0, 16)
-	// for i, h := range heap {
-	// 	if i == 0 {
-	// 		continue
-	// 	}
-	// 	s := "sum:" + strconv.Itoa(h.sum) + "_pair:" + strconv.Itoa(h.pair[0]) + "," + strconv.Itoa(h.pair[1])
-	// 	res = append(res, s)
-	// }
-	// fmt.Println(strings.Join(res, ","))
+	res := make([]string, 0, 16)
+	for i, h := range heap {
+		if i == 0 {
+			continue
+		}
+		s := "sum:" + strconv.Itoa(h.sum) + "_pair:" + strconv.Itoa(h.pair[0]) + "," + strconv.Itoa(h.pair[1])
+		res = append(res, s)
+	}
+	fmt.Println(strings.Join(res, ","))
 }
