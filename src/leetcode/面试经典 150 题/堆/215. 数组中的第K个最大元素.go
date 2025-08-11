@@ -19,7 +19,17 @@ func buildMaxHeap(nums []int) {
 	n := (len(nums) - 1) / 2
 
 	for i := n; i >= 0; i-- {
-		build(nums, i)
+		// build(nums, i)
+		if i*2 >= len(nums) {
+			break
+		}
+
+		if i*2+1 >= len(nums) {
+			if nums[i*2] > nums[i] {
+				nums[i], nums[i*2] = nums[i*2], nums[i]
+			}
+			continue
+		}
 	}
 }
 
