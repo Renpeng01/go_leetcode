@@ -13,20 +13,21 @@ type item struct {
 
 var heap []*item
 
-// 使用长度为k的最大堆超时
+// 效率低下
 func kSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 	heap = make([]*item, 0, k+1)
 	heap = append(heap, &item{})
 
-	l1 := min(len(nums1), k)
-	l2 := min(len(nums2), k)
-	for i := 0; i < l1; i++ {
-		for j := 0; j < l2; j++ {
+	for i := 0; i < len(nums1); i++ {
+		for j := 0; j < len(nums2); j++ {
+			if len(heap)-1 == k && nums1[i]+nums2[j] >= heap[1].sum { // 如无此代码，则超时  含义 如果当前sum大于堆顶，则后续也不会出现更小的
+				break
+			}
 			it := &item{
 				sum:  nums1[i] + nums2[j],
 				pair: []int{nums1[i], nums2[j]},
 			}
-			// heap = buildMaxHeap(it, &heap, k)
+
 			buildMaxHeap(it, k)
 		}
 	}
