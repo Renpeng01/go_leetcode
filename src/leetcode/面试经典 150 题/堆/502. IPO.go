@@ -10,12 +10,7 @@ type Project struct {
 	Capital int
 }
 
-var heap []int
-
 func findMaximizedCapital(k int, w int, profits []int, capital []int) int {
-
-	heap = make([]int, 0, k+1)
-	heap = append(heap, 0)
 
 	projects := make([]*Project, 0, len(profits))
 	for i := 0; i < len(profits); i++ {
@@ -30,27 +25,34 @@ func findMaximizedCapital(k int, w int, profits []int, capital []int) int {
 	})
 
 	maxHeap := NewHeap()
-	visited := make(map[int]struct{}, len(projects))
+	// visited := make(map[int]struct{}, len(projects))
 	for k > 0 {
-		for i, v := range projects {
-			if _, ok := visited[i]; ok {
-				continue
-			}
-			if w < v.Capital {
+
+		for len(projects) > 0 {
+			if w < projects[0].Capital {
 				break
 			}
-			maxHeap.insert(v.Profit)
-			visited[i] = struct{}{}
+			maxHeap.insert(projects[0].Profit)
+			projects = projects[1:]
+
 		}
+		// for i, v := range projects {
+		// 	if _, ok := visited[i]; ok {
+		// 		continue
+		// 	}
+		// if w < v.Capital {
+		// 	break
+		// }
+		// maxHeap.insert(v.Profit)
+		// visited[i] = struct{}{}
+		// }
 
 		if len(maxHeap.data) <= 1 {
 			break
 		}
 
 		s := maxHeap.pop()
-
 		w = w + s
-		fmt.Println(s, w)
 		k--
 	}
 
@@ -76,8 +78,6 @@ func (heap *Heap) insert(v int) {
 }
 
 func (heap *Heap) heapifyUp(i int) {
-
-	i = i / 2
 	for i > 1 {
 		parent := i / 2
 		if heap.data[i] > heap.data[parent] {
@@ -121,13 +121,20 @@ func (heap *Heap) heapifyDown(i int) {
 }
 
 func main() {
-	profits := []int{1, 2, 3}
-	capital := []int{0, 1, 1}
 
-	k := 2
-	w := 0
+	maxHeap := NewHeap()
 
-	res := findMaximizedCapital(k, w, profits, capital)
-	fmt.Println(res)
+	maxHeap.insert(5)
+	maxHeap.insert(1)
+	maxHeap.insert(1)
+	maxHeap.insert(2)
+	maxHeap.insert(2)
+	maxHeap.insert(6)
+
+	fmt.Println(maxHeap.data)
+
+	for i := 0; i < 6; i++ {
+		fmt.Println(maxHeap.pop())
+	}
 
 }
