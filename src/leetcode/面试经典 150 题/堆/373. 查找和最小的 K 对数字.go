@@ -37,43 +37,52 @@ func kSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 
 func buildMaxHeap(it *item, heap []*item, k int) []*item {
 
-	fmt.Println("insert", it.sum, it.pair)
 	if len(heap)-1 < k {
 		heap = append(heap, it)
+		i := len(heap) - 1
+
+		// heapifyUp
+		for i > 0 {
+			parent := i / 2
+			if heap[i].sum > heap[parent].sum {
+				heap[i], heap[parent] = heap[parent], heap[i]
+			}
+			i = parent
+		}
 	} else {
 		if heap[1].sum <= it.sum {
-			// PrintHeap(heap)
 			return heap
 		}
 
-		fmt.Println("swap", heap[1].pair, it.pair)
-		heap[1] = heap[len(heap)-1]
-		heap[len(heap)-1] = it
+		i := 1
+		heap[i] = it
 
-	}
+		// heapifyDown
+		last := len(heap) - 1
+		for {
+			left := 2 * i
+			right := 2*i + 1
+			maxIndex := i
 
-	i := len(heap) - 1
-	for i > 1 {
-		if i/2 < 1 {
-			// PrintHeap(heap)
-			return heap
-		}
-
-		parendIndex := i / 2
-		if parendIndex*2 == i {
-			if parendIndex*2+1 <= len(heap)-1 {
-
-			} else {
-
+			if left <= last && heap[left].sum > heap[maxIndex].sum {
+				maxIndex = left
 			}
-		} else {
+			if right <= last && heap[right].sum > heap[maxIndex].sum {
+				maxIndex = right
+			}
 
+			if maxIndex == i {
+				break
+			}
+
+			heap[i], heap[maxIndex] = heap[maxIndex], heap[i]
+			i = maxIndex
 		}
 
-		i = parendIndex
+		return heap
+
 	}
 
-	// PrintHeap(heap)
 	return heap
 }
 
