@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
 
 type item struct {
 	sum  int
@@ -9,25 +13,29 @@ type item struct {
 
 func kSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 	heap := make([]*item, 0, k+1)
+	heap = append(heap, &item{})
 	for i := 0; i < len(nums1); i++ {
 		for j := 0; j < len(nums2); j++ {
 			it := &item{
 				sum:  nums1[i] + nums2[j],
 				pair: []int{nums1[i], nums2[j]},
 			}
-			buildMaxHeap(it, heap, k)
+			heap = buildMaxHeap(it, heap, k)
 		}
 	}
 
 	res := make([][]int, 0, k)
 
-	for _, item := range heap {
+	for i, item := range heap {
+		if i == 0 {
+			continue
+		}
 		res = append(res, item.pair)
 	}
 	return res
 }
 
-func buildMaxHeap(it *item, heap []*item, k int) {
+func buildMaxHeap(it *item, heap []*item, k int) []*item {
 	//  len(heap)-1 的值即是长度，也是index
 	if len(heap)-1 < k {
 		heap = append(heap, it)
@@ -35,7 +43,7 @@ func buildMaxHeap(it *item, heap []*item, k int) {
 		i := len(heap) - 1
 		for i > 1 {
 			if i/2 < 1 {
-				return
+				return heap
 			}
 
 			if heap[i].sum > heap[i/2].sum {
@@ -43,11 +51,14 @@ func buildMaxHeap(it *item, heap []*item, k int) {
 			}
 			i = i / 2
 		}
-		return
+
+		// PrintHeap(heap)
+		return heap
 	}
 
 	if heap[1].sum < it.sum {
-		return
+		// PrintHeap(heap)
+		return heap
 	}
 	heap[1] = it
 
@@ -55,6 +66,7 @@ func buildMaxHeap(it *item, heap []*item, k int) {
 
 	for i < len(heap) {
 		if i*2 >= len(heap)-1 {
+			// PrintHeap(heap)
 			break
 		}
 
@@ -62,6 +74,7 @@ func buildMaxHeap(it *item, heap []*item, k int) {
 			if heap[i*2].sum > heap[i].sum {
 				heap[i*2], heap[i] = heap[i], heap[i*2]
 			}
+			// PrintHeap(heap)
 			break
 		}
 
@@ -72,6 +85,8 @@ func buildMaxHeap(it *item, heap []*item, k int) {
 		heap[swapIndex], heap[i] = heap[i], heap[swapIndex]
 		i = swapIndex
 	}
+	// PrintHeap(heap)
+	return heap
 }
 
 func main() {
@@ -80,4 +95,16 @@ func main() {
 	k := 3
 	res := kSmallestPairs(nums1, nums2, k)
 	fmt.Println(res)
+}
+
+func PrintHeap(heap []*item) {
+	res := make([]string, 0, 16)
+	for i, h := range heap {
+		if i == 0 {
+			continue
+		}
+		s := "sum:" + strconv.Itoa(h.sum) + "_pair:" + strconv.Itoa(h.pair[0]) + "," + strconv.Itoa(h.pair[1])
+		res = append(res, s)
+	}
+	fmt.Println(strings.Join(res, ","))
 }
