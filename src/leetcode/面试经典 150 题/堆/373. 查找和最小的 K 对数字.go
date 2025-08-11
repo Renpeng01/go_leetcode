@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type item struct {
 	sum  int
 	pair []int
@@ -8,7 +10,7 @@ type item struct {
 func kSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 	heap := make([]*item, 0, k+1)
 	for i := 0; i < len(nums1); i++ {
-		for j := 0; i < len(nums2); j++ {
+		for j := 0; j < len(nums2); j++ {
 			it := &item{
 				sum:  nums1[i] + nums2[j],
 				pair: []int{nums1[i], nums2[j]},
@@ -70,4 +72,12 @@ func buildMaxHeap(it *item, heap []*item, k int) {
 		heap[swapIndex], heap[i] = heap[i], heap[swapIndex]
 		i = swapIndex
 	}
+}
+
+func main() {
+	nums1 := []int{1, 7, 11}
+	nums2 := []int{2, 4, 6}
+	k := 3
+	res := kSmallestPairs(nums1, nums2, k)
+	fmt.Println(res)
 }
