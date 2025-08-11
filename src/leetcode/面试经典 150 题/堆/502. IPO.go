@@ -5,42 +5,44 @@ import (
 	"sort"
 )
 
+type Project struct {
+	Profit  int
+	Capital int
+}
+
+// 超时
 func findMaximizedCapital(k int, w int, profits []int, capital []int) int {
-	earnings := make([]int, len(profits))
-	for i := 0; i < len(earnings); i++ {
-		earnings[i] = profits[i] - capital[i]
+
+	projects := make([]*Project, 0, len(profits))
+	for i := 0; i < len(profits); i++ {
+		projects = append(projects, &Project{
+			Profit:  profits[i],
+			Capital: capital[i],
+		})
 	}
-	fmt.Println("earnings", earnings)
 
-	sort.Slice(capital, func(i, j int) bool {
-		return earnings[i] > earnings[j]
+	sort.SliceStable(projects, func(i, j int) bool {
+		return projects[i].Profit > projects[j].Profit
 	})
-	fmt.Println("capital", capital)
 
-	sort.Slice(earnings, func(i, j int) bool {
-		return earnings[i] > earnings[j]
-	})
-	fmt.Println("newearnings", earnings)
-
-	res := 0
-	visited := make(map[int]struct{}, len(earnings))
+	visited := make(map[int]struct{}, len(projects))
 	for k > 0 {
-		for i, v := range capital {
+		for i, v := range projects {
 			if _, ok := visited[i]; ok {
 				continue
 			}
 
-			if w < v {
+			if w < v.Capital {
 				continue
 			}
-			w = w + earnings[i]
+			w = w + v.Profit
 			visited[i] = struct{}{}
 			break
 		}
 		k--
 	}
 
-	return res
+	return w
 }
 
 func main() {
