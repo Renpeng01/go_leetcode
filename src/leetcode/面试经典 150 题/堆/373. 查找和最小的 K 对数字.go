@@ -13,12 +13,15 @@ type item struct {
 
 var heap []*item
 
-// 超时
+// 使用长度为k的最大堆超时
 func kSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 	heap = make([]*item, 0, k+1)
 	heap = append(heap, &item{})
-	for i := 0; i < len(nums1); i++ {
-		for j := 0; j < len(nums2); j++ {
+
+	l1 := min(len(nums1), k)
+	l2 := min(len(nums2), k)
+	for i := 0; i < l1; i++ {
+		for j := 0; j < l2; j++ {
 			it := &item{
 				sum:  nums1[i] + nums2[j],
 				pair: []int{nums1[i], nums2[j]},
@@ -36,6 +39,14 @@ func kSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 		res = append(res, item.pair)
 	}
 	return res
+}
+
+func min(a, b int) int {
+
+	if a < b {
+		return a
+	}
+	return b
 }
 
 func buildMaxHeap(it *item, k int) {

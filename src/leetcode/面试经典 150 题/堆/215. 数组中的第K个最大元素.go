@@ -1,59 +1,61 @@
 package main
 
+var heap []int
+
 func findKthLargest(nums []int, k int) int {
 
-	if len(nums) < k {
-		return -1
-	}
-	nums = append([]int{0}, nums...)
+	heap = make([]int, 0, len(nums)+1)
+	heap = append(heap, 0)
 
-	for i := 1; i < k; i++ {
-		nums[i] = nums[len(nums)-1]
-		nums = nums[:len(nums)-1]
-		buildMaxHeap(nums)
+	for _, v := range nums {
+		buildMinHeap(v, k)
 	}
-	return nums[1]
+
+	return heap[1]
 }
 
-func buildMaxHeap(nums []int) {
-	n := (len(nums) - 1) / 2
+func buildMinHeap(v int, k int) {
+	if len(heap)-1 < k {
+		heap = append(heap, v)
 
-	for i := n; i >= 0; i-- {
-		// build(nums, i)
-		if i*2 >= len(nums) {
-			break
-		}
+		i := len(heap) - 1
 
-		if i*2+1 >= len(nums) {
-			if nums[i*2] > nums[i] {
-				nums[i], nums[i*2] = nums[i*2], nums[i]
+		// heapifyUp
+		for i > 1 {
+			parent := i / 2
+			if heap[i] < heap[parent] {
+				heap[i], heap[parent] = heap[parent], heap[i]
 			}
-			continue
+			i = parent
 		}
-	}
-}
-
-func build(nums []int, index int) {
-	if index*2 >= len(nums) {
-		return
-	}
-
-	if index*2+1 >= len(nums) {
-		if nums[index*2] > nums[index] {
-			nums[index], nums[index*2] = nums[index*2], nums[index]
+	} else {
+		if heap[1] >= v {
+			// return heap
 			return
 		}
-		return
-	}
+		i := 1
+		heap[i] = v
 
-	if nums[index] > nums[index*2] && nums[index] > nums[index*2+1] {
-		return
-	}
+		// heapifyDown
+		last := len(heap) - 1
+		for {
+			left := 2 * i
+			right := 2*i + 1
+			smallIndex := i
 
-	swipIndex := index * 2
-	if nums[index*2+1] > nums[index*2] {
-		swipIndex++
+			if left <= last && heap[left] < heap[smallIndex] {
+				smallIndex = left
+			}
+			if right <= last && heap[right] < heap[smallIndex] {
+				smallIndex = right
+			}
+
+			if smallIndex == i {
+				break
+			}
+
+			heap[i], heap[smallIndex] = heap[smallIndex], heap[i]
+			i = smallIndex
+		}
 	}
-	nums[index], nums[swipIndex] = nums[swipIndex], nums[index]
-	build(nums, swipIndex)
 }
