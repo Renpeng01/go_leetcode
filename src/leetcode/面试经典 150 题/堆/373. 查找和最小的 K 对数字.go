@@ -42,7 +42,7 @@ func buildMaxHeap(it *item, heap []*item, k int) []*item {
 		heap = append(heap, it)
 	} else {
 		if heap[1].sum <= it.sum {
-			PrintHeap(heap)
+			// PrintHeap(heap)
 			return heap
 		}
 
@@ -55,18 +55,25 @@ func buildMaxHeap(it *item, heap []*item, k int) []*item {
 	i := len(heap) - 1
 	for i > 1 {
 		if i/2 < 1 {
-			PrintHeap(heap)
+			// PrintHeap(heap)
 			return heap
 		}
 
-		if heap[i].sum < heap[i/2].sum {
-			break
+		parendIndex := i / 2
+		if parendIndex*2 == i {
+			if parendIndex*2+1 <= len(heap)-1 {
+
+			} else {
+
+			}
+		} else {
+
 		}
-		heap[i], heap[i/2] = heap[i/2], heap[i]
-		i = i / 2
+
+		i = parendIndex
 	}
 
-	PrintHeap(heap)
+	// PrintHeap(heap)
 	return heap
 }
 
