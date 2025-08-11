@@ -116,3 +116,6 @@ func PrintHeap(heap []*item) {
 	}
 	fmt.Println(strings.Join(res, ","))
 }
+
+// 性能更好的思路
+// https://www.bilibili.com/video/BV1Mv4y1Z79v/?spm_id_from=333.337.search-card.all.click&vd_source=70c464e99440c207e9933663bb2e5166
