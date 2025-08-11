@@ -26,6 +26,7 @@ func kSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 }
 
 func buildMaxHeap(it *item, heap []*item, k int) {
+	//  len(heap)-1 的值即是长度，也是index
 	if len(heap)-1 < k {
 		heap = append(heap, it)
 
@@ -40,6 +41,7 @@ func buildMaxHeap(it *item, heap []*item, k int) {
 			}
 			i = i / 2
 		}
+		return
 	}
 
 	if heap[1].sum < it.sum {
@@ -50,15 +52,15 @@ func buildMaxHeap(it *item, heap []*item, k int) {
 	i := 1
 
 	for i < len(heap) {
-		if i*2 >= len(heap) {
+		if i*2 >= len(heap)-1 {
 			break
 		}
 
-		if i*2+1 >= len(heap) {
-			if heap[i*2+1].sum > heap[i].sum {
-				heap[i*2+1], heap[i] = heap[i], heap[i*2+1]
-				break
+		if i*2+1 >= len(heap)-1 {
+			if heap[i*2].sum > heap[i].sum {
+				heap[i*2], heap[i] = heap[i], heap[i*2]
 			}
+			break
 		}
 
 		swapIndex := i * 2
@@ -68,5 +70,4 @@ func buildMaxHeap(it *item, heap []*item, k int) {
 		heap[swapIndex], heap[i] = heap[i], heap[swapIndex]
 		i = swapIndex
 	}
-
 }
