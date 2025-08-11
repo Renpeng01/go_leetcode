@@ -46,7 +46,11 @@ func findMaximizedCapital(k int, w int, profits []int, capital []int) int {
 		if len(maxHeap.data) <= 1 {
 			break
 		}
-		w = w + maxHeap.pop()
+
+		s := maxHeap.pop()
+
+		w = w + s
+		fmt.Println(s, w)
 		k--
 	}
 
