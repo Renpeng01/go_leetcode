@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 )
 
 type item struct {
@@ -61,31 +59,24 @@ func buildMaxHeap(it *item, heap []*item, k int) []*item {
 		// PrintHeap(heap)
 		return heap
 	}
-	heap[1] = it
 
-	i := 1
+	// fmt.Println(heap[1].pair, it.pair)
+	heap[1] = heap[len(heap)-1]
+	heap[len(heap)-1] = it
 
-	for i < len(heap) {
-		if i*2 > len(heap)-1 {
-			// PrintHeap(heap)
+	i := len(heap) - 1
+	for i > 1 {
+		if i/2 < 1 {
+			return heap
+		}
+
+		if heap[i].sum < heap[i/2].sum {
 			break
 		}
-
-		if i*2+1 > len(heap)-1 {
-			if heap[i*2].sum > heap[i].sum {
-				heap[i*2], heap[i] = heap[i], heap[i*2]
-			}
-			// PrintHeap(heap)
-			break
-		}
-
-		swapIndex := i * 2
-		if heap[i*2+1].sum > heap[i*2].sum {
-			swapIndex = i*2 + 1
-		}
-		heap[swapIndex], heap[i] = heap[i], heap[swapIndex]
-		i = swapIndex
+		heap[i], heap[i/2] = heap[i/2], heap[i]
+		i = i / 2
 	}
+
 	// PrintHeap(heap)
 	return heap
 }
@@ -99,13 +90,14 @@ func main() {
 }
 
 func PrintHeap(heap []*item) {
-	res := make([]string, 0, 16)
-	for i, h := range heap {
-		if i == 0 {
-			continue
-		}
-		s := "sum:" + strconv.Itoa(h.sum) + "_pair:" + strconv.Itoa(h.pair[0]) + "," + strconv.Itoa(h.pair[1])
-		res = append(res, s)
-	}
-	fmt.Println(strings.Join(res, ","))
+	// return
+	// res := make([]string, 0, 16)
+	// for i, h := range heap {
+	// 	if i == 0 {
+	// 		continue
+	// 	}
+	// 	s := "sum:" + strconv.Itoa(h.sum) + "_pair:" + strconv.Itoa(h.pair[0]) + "," + strconv.Itoa(h.pair[1])
+	// 	res = append(res, s)
+	// }
+	// fmt.Println(strings.Join(res, ","))
 }
