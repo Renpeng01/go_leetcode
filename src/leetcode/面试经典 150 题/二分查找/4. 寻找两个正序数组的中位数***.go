@@ -16,20 +16,20 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 		j := (m+n+1)/2 - i
 
 		left1 := math.MinInt
-		if i > 0 {
+		if i != 0 {
 			left1 = nums1[i-1]
 		}
 		right1 := math.MaxInt
-		if i < m {
+		if i != m {
 			right1 = nums1[i]
 		}
 
 		left2 := math.MinInt
-		if j > 0 {
+		if j != 0 {
 			left2 = nums2[j-1]
 		}
 		right2 := math.MaxInt
-		if j < n {
+		if j != n {
 			right2 = nums2[j]
 		}
 
