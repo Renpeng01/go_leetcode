@@ -3,23 +3,17 @@ package main
 import "fmt"
 
 type MedianFinder struct {
-	// data []int
 	heap *Heap
 }
 
 func Constructor() MedianFinder {
-	// data := make([]int, 0, 256)
 	return MedianFinder{
 		heap: NewHeap(),
 	}
 }
 
 func (this *MedianFinder) AddNum(num int) {
-	// this.data = append(this.data, num)
 	this.heap.insert(num)
-
-	// fmt.Println("heap", this.heap.data)
-
 }
 
 func (this *MedianFinder) FindMedian() float64 {
@@ -43,9 +37,6 @@ func (this *MedianFinder) FindMedian() float64 {
 	} else {
 		res = float64(resList[len(resList)-1])
 	}
-
-	// fmt.Println("resList", resList, "len(this.heap.data)-1):", len(this.heap.data)-1)
-
 	for _, v := range resList {
 		this.heap.insert(v)
 
@@ -55,7 +46,6 @@ func (this *MedianFinder) FindMedian() float64 {
 
 type Heap struct {
 	data []int
-	// k    int
 }
 
 func NewHeap() *Heap {
@@ -63,22 +53,10 @@ func NewHeap() *Heap {
 	data = append(data, 0)
 	return &Heap{
 		data: data,
-		// k:    k,
 	}
 }
 
 func (heap *Heap) insert(v int) {
-
-	// if len(heap.data)-1 < heap.k {
-	// 	heap.data = append(heap.data, v)
-	// 	heap.heapifyUp(len(heap.data) - 1)
-	// } else {
-	// 	if heap.data[1] > v {
-	// 		return
-	// 	}
-	// 	heap.data[1] = v
-	// 	heap.heapifyDown(1)
-	// }
 	heap.data = append(heap.data, v)
 	heap.heapifyUp(len(heap.data) - 1)
 }
