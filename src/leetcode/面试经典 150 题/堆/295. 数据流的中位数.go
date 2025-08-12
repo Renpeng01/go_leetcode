@@ -1,66 +1,86 @@
 package main
 
+import "fmt"
+
 type MedianFinder struct {
-	data []int
+	// data []int
+	heap *Heap
 }
 
 func Constructor() MedianFinder {
-	data := make([]int, 0, 256)
+	// data := make([]int, 0, 256)
 	return MedianFinder{
-		data: data,
+		heap: NewHeap(),
 	}
 }
 
 func (this *MedianFinder) AddNum(num int) {
-	this.data = append(this.data, num)
+	// this.data = append(this.data, num)
+	this.heap.insert(num)
+
+	// fmt.Println("heap", this.heap.data)
 
 }
 
 func (this *MedianFinder) FindMedian() float64 {
 
-	// len为奇数 len/2 为中位数
-	// len为偶数 (len/2-1 + len/2）/2 为中位数
-
-	n := len(this.data)/2 + 1
-	mHeap := NewHeap(n)
-	for i := 0; i < len(this.data); i++ {
-		mHeap.insert(this.data[i])
+	if len(this.heap.data)-1 == 1 {
+		return float64(this.heap.data[1])
 	}
 
-	if len(this.data)%2 == 1 {
-		return float64(mHeap.pop())
+	resList := make([]int, 0, 256)
+
+	l := (len(this.heap.data) - 1) % 2
+
+	n := (len(this.heap.data)-1)/2 + 1
+	for i := 1; i <= n; i++ {
+		resList = append(resList, this.heap.pop())
 	}
 
-	return (float64(mHeap.pop()) + float64(mHeap.pop())) / 2
+	var res float64
+	if l == 0 {
+		res = float64((resList[len(resList)-1] + resList[len(resList)-2])) / float64(2)
+	} else {
+		res = float64(resList[len(resList)-1])
+	}
 
+	// fmt.Println("resList", resList, "len(this.heap.data)-1):", len(this.heap.data)-1)
+
+	for _, v := range resList {
+		this.heap.insert(v)
+
+	}
+	return res
 }
 
 type Heap struct {
 	data []int
-	k    int
+	// k    int
 }
 
-func NewHeap(k int) *Heap {
+func NewHeap() *Heap {
 	data := make([]int, 0, 256)
 	data = append(data, 0)
 	return &Heap{
 		data: data,
-		k:    k,
+		// k:    k,
 	}
 }
 
 func (heap *Heap) insert(v int) {
 
-	if len(heap.data)-1 < heap.k {
-		heap.data = append(heap.data, v)
-		heap.heapifyUp(len(heap.data) - 1)
-	} else {
-		if heap.data[1] > v {
-			return
-		}
-		heap.data[1] = v
-		heap.heapifyDown(1)
-	}
+	// if len(heap.data)-1 < heap.k {
+	// 	heap.data = append(heap.data, v)
+	// 	heap.heapifyUp(len(heap.data) - 1)
+	// } else {
+	// 	if heap.data[1] > v {
+	// 		return
+	// 	}
+	// 	heap.data[1] = v
+	// 	heap.heapifyDown(1)
+	// }
+	heap.data = append(heap.data, v)
+	heap.heapifyUp(len(heap.data) - 1)
 }
 
 func (heap *Heap) heapifyUp(i int) {
@@ -111,3 +131,27 @@ func (heap *Heap) heapifyDown(i int) {
  * obj.AddNum(num);
  * param_2 := obj.FindMedian();
  */
+
+func main() {
+	m := Constructor()
+
+	m.AddNum(-1)
+	r := m.FindMedian()
+	fmt.Println(r)
+
+	m.AddNum(-2)
+	r = m.FindMedian()
+	fmt.Println(r)
+
+	m.AddNum(-3)
+	r = m.FindMedian()
+	fmt.Println(r)
+
+	m.AddNum(-4)
+	r = m.FindMedian()
+	fmt.Println(r)
+
+	m.AddNum(-5)
+	r = m.FindMedian()
+	fmt.Println(r)
+}
