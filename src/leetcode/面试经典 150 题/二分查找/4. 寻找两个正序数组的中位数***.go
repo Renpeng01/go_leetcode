@@ -5,6 +5,10 @@ import "math"
 // https://www.bilibili.com/video/BV1ss5xzAEwR/?spm_id_from=333.337.search-card.all.click&vd_source=70c464e99440c207e9933663bb2e5166
 func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 
+	if len(nums1) > len(nums2) {
+		nums1, nums2 = nums2, nums1
+	}
+
 	m := len(nums1)
 	n := len(nums2)
 
