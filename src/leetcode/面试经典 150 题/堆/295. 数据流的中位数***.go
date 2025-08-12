@@ -1,106 +1,83 @@
 package main
 
-import "fmt"
+import "container/heap"
 
+type MinHeap []int
+
+func (h MinHeap) Len() int           { return len(h) }
+func (h MinHeap) Less(i, j int) bool { return h[i] < h[j] }
+func (h MinHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+
+func (h *MinHeap) Push(x any) {
+	// Push 和 Pop 会通过 heap.Interface 的方法被调用
+	// 这里只是简单的 append
+	*h = append(*h, x.(int))
+}
+
+func (h *MinHeap) Pop() any {
+	old := *h
+	n := len(old)
+	x := old[n-1]
+	*h = old[0 : n-1]
+	return x
+}
+
+type MaxHeap []int
+
+func (h MaxHeap) Len() int           { return len(h) }
+func (h MaxHeap) Less(i, j int) bool { return h[i] > h[j] }
+func (h MaxHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+
+func (h *MaxHeap) Push(x any) {
+	// Push 和 Pop 会通过 heap.Interface 的方法被调用
+	// 这里只是简单的 append
+	*h = append(*h, x.(int))
+}
+
+func (h *MaxHeap) Pop() any {
+	old := *h
+	n := len(old)
+	x := old[n-1]
+	*h = old[0 : n-1]
+	return x
+}
+
+// https://www.bilibili.com/video/BV1VX4y1x7YN/?spm_id_from=333.337.search-card.all.click&vd_source=70c464e99440c207e9933663bb2e5166
 type MedianFinder struct {
-	heap *Heap
+	maxHeap MaxHeap
+	minHeap MinHeap
 }
 
 func Constructor() MedianFinder {
 	return MedianFinder{
-		heap: NewHeap(),
+		maxHeap: MaxHeap{},
+		minHeap: MinHeap{},
 	}
 }
 
 func (this *MedianFinder) AddNum(num int) {
-	this.heap.insert(num)
+	if this.maxHeap.Len() == 0 || num <= this.maxHeap[0] {
+		heap.Push(&this.maxHeap, num)
+		if this.maxHeap.Len()-this.minHeap.Len() > 1 {
+			v := heap.Pop(&this.maxHeap)
+			heap.Push(&this.minHeap, v)
+		}
+	} else {
+		heap.Push(&this.minHeap, num)
+
+		if this.minHeap.Len() > this.maxHeap.Len() {
+			v := heap.Pop(&this.minHeap)
+			heap.Push(&this.maxHeap, v)
+		}
+	}
 }
 
 func (this *MedianFinder) FindMedian() float64 {
 
-	if len(this.heap.data)-1 == 1 {
-		return float64(this.heap.data[1])
+	if this.minHeap.Len() == this.maxHeap.Len() {
+		return (float64(this.maxHeap[0]) + float64(this.minHeap[0])) / float64(2)
 	}
-
-	resList := make([]int, 0, 256)
-
-	l := (len(this.heap.data) - 1) % 2
-
-	n := (len(this.heap.data)-1)/2 + 1
-	for i := 1; i <= n; i++ {
-		resList = append(resList, this.heap.pop())
-	}
-
-	var res float64
-	if l == 0 {
-		res = float64((resList[len(resList)-1] + resList[len(resList)-2])) / float64(2)
-	} else {
-		res = float64(resList[len(resList)-1])
-	}
-	for _, v := range resList {
-		this.heap.insert(v)
-
-	}
-	return res
-}
-
-type Heap struct {
-	data []int
-}
-
-func NewHeap() *Heap {
-	data := make([]int, 0, 256)
-	data = append(data, 0)
-	return &Heap{
-		data: data,
-	}
-}
-
-func (heap *Heap) insert(v int) {
-	heap.data = append(heap.data, v)
-	heap.heapifyUp(len(heap.data) - 1)
-}
-
-func (heap *Heap) heapifyUp(i int) {
-	for i > 1 {
-		parent := i / 2
-		if heap.data[i] < heap.data[parent] {
-			heap.data[i], heap.data[parent] = heap.data[parent], heap.data[i]
-		}
-		i = parent
-	}
-}
-
-func (heap *Heap) pop() int {
-	res := heap.data[1]
-	heap.data[1] = heap.data[len(heap.data)-1]
-	heap.data = heap.data[:len(heap.data)-1]
-	heap.heapifyDown(1)
-	return res
-}
-
-func (heap *Heap) heapifyDown(i int) {
-	last := len(heap.data) - 1
-	for {
-
-		left := 2 * i
-		right := 2*i + 1
-		targetIndex := i
-
-		if left <= last && heap.data[left] < heap.data[targetIndex] {
-			targetIndex = left
-		}
-		if right <= last && heap.data[right] < heap.data[targetIndex] {
-			targetIndex = right
-		}
-
-		if targetIndex == i {
-			break
-		}
-
-		heap.data[i], heap.data[targetIndex] = heap.data[targetIndex], heap.data[i]
-		i = targetIndex
-	}
+	return float64(this.maxHeap[0])
 }
 
 /**
@@ -109,27 +86,3 @@ func (heap *Heap) heapifyDown(i int) {
  * obj.AddNum(num);
  * param_2 := obj.FindMedian();
  */
-
-func main() {
-	m := Constructor()
-
-	m.AddNum(-1)
-	r := m.FindMedian()
-	fmt.Println(r)
-
-	m.AddNum(-2)
-	r = m.FindMedian()
-	fmt.Println(r)
-
-	m.AddNum(-3)
-	r = m.FindMedian()
-	fmt.Println(r)
-
-	m.AddNum(-4)
-	r = m.FindMedian()
-	fmt.Println(r)
-
-	m.AddNum(-5)
-	r = m.FindMedian()
-	fmt.Println(r)
-}
