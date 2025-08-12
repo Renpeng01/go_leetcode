@@ -21,7 +21,7 @@ func (this *MedianFinder) FindMedian() float64 {
 	// len为奇数 len/2 为中位数
 	// len为偶数 (len/2-1 + len/2）/2 为中位数
 
-	n := len(this.data) / 2
+	n := len(this.data)/2 + 1
 	mHeap := NewHeap(n)
 	for i := 0; i < len(this.data); i++ {
 		mHeap.insert(this.data[i])
