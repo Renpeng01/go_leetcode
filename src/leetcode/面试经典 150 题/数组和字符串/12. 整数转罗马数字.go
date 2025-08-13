@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sort"
+	"strconv"
 )
 
 func intToRoman(num int) string {
@@ -25,33 +26,57 @@ func intToRoman(num int) string {
 	fmt.Println(keys)
 
 	for i := len(keys) - 1; i >= 0; i-- {
-		fmt.Printf("i: %+v, key: %+v, num: %+v, num/keys[i]: %+v\n", i, keys[i], num, num/keys[i])
-		if num/keys[i] > 0 {
-			if num/keys[i] == 4 {
-				if i == 0 {
-					res += "VI"
-				} else if i == 2 {
-					res += "XL"
-				} else if i == 4 {
+		fmt.Printf("i: %+v, key: %+v, num: %+v, num/keys[i]: %+v\n", i, keys[i], num, highestDigit(num))
+
+		
+		if highestDigit(num) > 0 {
+			if highestDigit(num) == 4 {
+				if num > 100 {
 					res += "CD"
+				} else if num > 10 {
+					res += "XL"
+				} else if num > 1 {
+					res += "VI"
 				} else {
 					for j := 0; j < num/keys[i]; j++ {
 						res += rel[keys[i]]
 					}
 				}
-			} else if num/keys[i] == 9 || num == 9 {
-				if i == 0 || i == 1 {
-					res += "IX"
-					break
-				} else if i == 2 {
-					res += "XC"
-				} else if i == 4 {
+				// if i == 0 {
+				// 	res += "VI"
+				// } else if i == 2 {
+				// 	res += "XL"
+				// } else if i == 4 {
+				// 	res += "CD"
+				// } else {
+				// for j := 0; j < num/keys[i]; j++ {
+				// 	res += rel[keys[i]]
+				// }
+				// }
+			} else if highestDigit(num) == 9 || num == 9 {
+				if num > 500 {
 					res += "CM"
+				} else if num > 50 {
+					res += "XC"
+				} else if num > 5 {
+					res += "IX"
 				} else {
 					for j := 0; j < num/keys[i]; j++ {
 						res += rel[keys[i]]
 					}
 				}
+				// if i == 0 || i == 1 {
+				// 	res += "IX"
+				// 	break
+				// } else if i == 2 {
+				// 	res += "XC"
+				// } else if i == 4 {
+				// 	res += "CM"
+				// } else {
+				// for j := 0; j < num/keys[i]; j++ {
+				// 	res += rel[keys[i]]
+				// }
+				// }
 
 			} else {
 				// fmt.Printf("cnt: %+v,relVal: %+v\n", num/keys[i], rel[keys[i]])
@@ -72,7 +97,25 @@ func intToRoman(num int) string {
 // MMMDCCXLIX
 
 func main() {
-	num := 1900
+	num := 1994
 	res := intToRoman(num)
 	fmt.Println(res)
 }
+
+func highestDigit(num int) int {
+	if num == 0 {
+		return 0
+	}
+
+	// 处理负数情况
+	if num < 0 {
+		num = -num
+	}
+
+	s := strconv.Itoa(num)
+	digit, _ := strconv.Atoi(string(s[0]))
+	return digit
+}
+
+MCMCDXCXLVIVI
+MCMXCIV
