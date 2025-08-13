@@ -6,6 +6,7 @@ import (
 	"strconv"
 )
 
+// 今天状态不好!!!!!!!!!!
 func intToRoman(num int) string {
 	rel := map[int]string{
 		1:    "I",
@@ -28,11 +29,12 @@ func intToRoman(num int) string {
 	for i := len(keys) - 1; i >= 0; i-- {
 		fmt.Printf("i: %+v, key: %+v, num: %+v, num/keys[i]: %+v\n", i, keys[i], num, highestDigit(num))
 
-		
+
 		if highestDigit(num) > 0 {
 			if highestDigit(num) == 4 {
 				if num > 100 {
 					res += "CD"
+
 				} else if num > 10 {
 					res += "XL"
 				} else if num > 1 {
