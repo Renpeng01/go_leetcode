@@ -6,6 +6,7 @@ import "fmt"
 // https://www.bilibili.com/video/BV1xV411q7wE/?spm_id_from=333.337.search-card.all.click&vd_source=70c464e99440c207e9933663bb2e5166
 var res []string
 
+// 不要想着找规律的回溯，要用暴力的思想加剪枝
 func generateParenthesis(n int) []string {
 	res = make([]string, 0, 256)
 	backtracking("(", 1, 0, n)
