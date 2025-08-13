@@ -118,43 +118,38 @@ func highestDigit(num int) int {
 	return digit
 }
 
-
-
-
 var valueSymbols = []struct {
-    value  int
-    symbol string
+	value  int
+	symbol string
 }{
-    {1000, "M"},
-    {900, "CM"},
-    {500, "D"},
-    {400, "CD"},
-    {100, "C"},
-    {90, "XC"},
-    {50, "L"},
-    {40, "XL"},
-    {10, "X"},
-    {9, "IX"},
-    {5, "V"},
-    {4, "IV"},
-    {1, "I"},
+	{1000, "M"},
+	{900, "CM"},
+	{500, "D"},
+	{400, "CD"},
+	{100, "C"},
+	{90, "XC"},
+	{50, "L"},
+	{40, "XL"},
+	{10, "X"},
+	{9, "IX"},
+	{5, "V"},
+	{4, "IV"},
+	{1, "I"},
 }
 
 func intToRoman(num int) string {
-    roman := []byte{}
-    for _, vs := range valueSymbols {
-        for num >= vs.value {
-            num -= vs.value
-            roman = append(roman, vs.symbol...)
-        }
-        if num == 0 {
-            break
-        }
-    }
-    return string(roman)
+	roman := []byte{}
+	for _, vs := range valueSymbols {
+		for num >= vs.value {
+			num -= vs.value
+			roman = append(roman, vs.symbol...)
+		}
+		if num == 0 {
+			break
+		}
+	}
+	return string(roman)
 }
 
-作者：力扣官方题解
-链接：https://leetcode.cn/problems/integer-to-roman/solutions/774611/zheng-shu-zhuan-luo-ma-shu-zi-by-leetcod-75rs/
-来源：力扣（LeetCode）
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+// 由于num范围是 1 <= num <= 3999  也可以全部列举出来
+// https://www.bilibili.com/video/BV1Lq4y1A7uE/?spm_id_from=333.337.search-card.all.click&vd_source=70c464e99440c207e9933663bb2e5166
