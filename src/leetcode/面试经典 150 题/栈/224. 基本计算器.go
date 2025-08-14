@@ -117,7 +117,8 @@ func isNum(c byte) bool {
 
 func main() {
 	// s := "(11+(4+5+2)-3)+(6+8)"
-	s := "(1+(4+5+2)-3)+(6+8)"
+	// s := "(1+(4+5+2)-3)+(6+8)"
+	s := "1-(     -2))"
 	res := buildExpression(s)
 	fmt.Println(res)
 
