@@ -115,18 +115,18 @@ func minWindow(s string, t string) string {
 		return ""
 	}
 
-	left := -1
+	left := 0
 	right := 0
 	minLen := math.MaxInt
 
 	res := ""
 
-	for len(s)-1-left+1 >= len(t) {
+	for ; len(s)-1-left+1 >= len(t); left++ {
 		letterCnt := make(map[byte]int, len(t))
 		for i := 0; i < len(t); i++ {
 			letterCnt[t[i]]++
 		}
-		fmt.Println(left)
+		// fmt.Println(left)
 
 		for i := left + 1; i < len(s); i++ {
 			if _, ok := letterCnt[s[i]]; ok {
@@ -134,6 +134,8 @@ func minWindow(s string, t string) string {
 				break
 			}
 		}
+
+		// fmt.Println("left:", left)
 
 		isFinish := false
 		for i := left; i < len(s); i++ {
@@ -151,6 +153,7 @@ func minWindow(s string, t string) string {
 			}
 		}
 
+		// fmt.Println("right:", right, "isFinish:", isFinish)
 		if left > right {
 			break
 		}
@@ -166,11 +169,11 @@ func minWindow(s string, t string) string {
 }
 
 func main() {
-	// s := "ADOBECODEBANC"
-	// t := "ABC"
+	s := "ADOBECODEBANC"
+	t := "ABC"
 
-	s := "a"
-	t := "a"
+	// s := "a"
+	// t := "a"
 
 	res := minWindow(s, t)
 	fmt.Println(res)
