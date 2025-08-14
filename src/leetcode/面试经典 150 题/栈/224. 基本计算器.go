@@ -7,16 +7,17 @@ import (
 )
 
 func calculate(s string) int {
-	ops := make([]byte, 0, 16)
+	ops := make([]string, 0, 16)
 	nums := make([]int, 0, 16)
+	exps := buildExpression(s)
 
-	for i := 0; i < len(s); i++ {
-		if s[i] == '-' || s[i] == '+' {
-			ops = append(ops, s[i])
-		} else if s[i] == '(' || s[i] == ')' || strings.TrimSpace(string(s[i])) == "" {
+	for i := 0; i < len(exps); i++ {
+		if exps[i] == "-" || exps[i] == "+" {
+			ops = append(ops, exps[i])
+		} else if exps[i] == "(" || exps[i] == ")" {
 			continue
 		} else {
-			n, _ := strconv.Atoi(string(s[i]))
+			n, _ := strconv.Atoi(string(exps[i]))
 			if len(ops) == 0 {
 				nums = append(nums, n)
 			} else {
@@ -28,7 +29,7 @@ func calculate(s string) int {
 
 					nums = nums[:len(nums)-1]
 					ops = ops[:len(ops)-1]
-					nums = append(nums, calculateItem(n1, n, string(op)))
+					nums = append(nums, calculateItem(n1, n, op))
 				}
 			}
 		}
@@ -75,6 +76,11 @@ func buildExpression(s string) []string {
 
 	for i := 0; i < len(s); {
 
+		if len(strings.TrimSpace(string(s[i]))) == 0 {
+			i++
+			continue
+		}
+
 		if !isNum(s[i]) {
 			res = append(res, string(s[i]))
 			i++
@@ -88,7 +94,7 @@ func buildExpression(s string) []string {
 		}
 		res = append(res, s[i:j])
 		i = j
-		fmt.Println(i, j)
+		// fmt.Println(i, j)
 	}
 	return res
 }
@@ -98,7 +104,8 @@ func isNum(c byte) bool {
 }
 
 func main() {
-	s := "(11+(4+5+2)-3)+(6+8)"
+	// s := "(11+(4+5+2)-3)+(6+8)"
+	s := "1 + 1"
 	res := buildExpression(s)
 	fmt.Println(res)
 
