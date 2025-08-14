@@ -1,8 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
-func minWindow(s string, t string) string {
+func minWindow1(s string, t string) string {
 
 	if len(t) > len(s) {
 		return ""
@@ -116,4 +119,64 @@ func main() {
 
 	res := minWindow(s, t)
 	fmt.Println(res)
+}
+
+func minWindow(s string, t string) string {
+	if len(t) == 0 || len(s) < len(t) {
+		return ""
+	}
+
+	letters := make(map[byte]struct{}, len(t))
+	// letterCnt := make(map[byte]int, len(t))
+	for i := 0; i < len(t); i++ {
+		letters[t[i]] = struct{}{}
+		// letterCnt[t[i]]++
+
+	}
+
+	left := -1
+	right := 0
+	minLen := math.MaxInt
+
+	res := ""
+
+	for len(s)-1-left >= len(t) {
+		letterCnt := make(map[byte]int, len(t))
+		for i := 0; i < len(t); i++ {
+			letterCnt[t[i]]++
+
+		}
+
+		for i := left + 1; i < len(s); i++ {
+			if _, ok := letters[s[i]]; ok {
+				left = i
+				break
+			}
+		}
+
+		for i := left; i < len(s); i++ {
+			if len(letterCnt) == 0 {
+				right = i
+				break
+			}
+			if _, ok := letters[s[i]]; ok {
+				letterCnt[s[i]]--
+
+				if letterCnt[s[i]] == 0 {
+					delete(letterCnt, s[i])
+				}
+			}
+		}
+
+		if left >= right {
+			break
+		}
+
+		if right+1-left < minLen {
+			minLen = right + 1 - left
+			res = s[left : right+1]
+		}
+
+	}
+	return res
 }
