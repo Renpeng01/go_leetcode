@@ -3,9 +3,10 @@ package main
 import (
 	"fmt"
 	"strconv"
+	"strings"
 )
 
-func calculate(s string) int {
+func calculate1(s string) int {
 	ops := make([]string, 0, 16)
 	nums := make([]int, 0, 16)
 	exps := buildExpression(s)
@@ -148,10 +149,6 @@ func buildExpression(s string) []string {
 	return res
 }
 
-func isNum(c byte) bool {
-	return c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9'
-}
-
 func main() {
 	// s := "(11+(4+5+2)-3)+(6+8)"
 	// s := "(1+(4+5+2)-3)+(6+8)"
@@ -160,4 +157,70 @@ func main() {
 	res := calculate(s)
 	fmt.Println(res)
 
+}
+
+// https://www.bilibili.com/video/BV1HyGgzjEf3/?spm_id_from=333.337.search-card.all.click&vd_source=70c464e99440c207e9933663bb2e5166
+func calculate(s string) int {
+
+	s = strings.Replace(s, " ", "", -1)
+
+	nums := make([]int, 0, 16)
+	ops := make([]byte, 0, 16)
+
+	cal := func() {
+		r := nums[len(nums)-1]
+		nums = nums[:len(nums)-1]
+		l := nums[len(nums)-1]
+		nums = nums[:len(nums)-1]
+		op := ops[len(ops)-1]
+		ops = ops[:len(ops)-1]
+
+		val := 0
+		switch op {
+		case '+':
+			val = l + r
+		case '-':
+			val = l - r
+		}
+		nums = append(nums, val)
+	}
+
+	for i := 0; i < len(s); i++ {
+		if s[i] == '(' {
+			ops = append(ops, s[i])
+		} else if s[i] == ')' {
+			for ops[len(ops)-1] != '(' {
+				cal()
+			}
+			ops = ops[:len(ops)-1]
+		} else if isNum(s[i]) {
+
+			v := int(s[i] - '0')
+			for ; i+1 < len(s) && isNum(s[i+1]); i++ {
+				v = int(s[i+1]-'0') + v*10
+			}
+			nums = append(nums, v)
+		} else {
+			if s[i] == '-' {
+				if i == 0 || s[i-1] == '(' {
+					nums = append(nums, 0)
+				}
+			}
+
+			for len(ops) > 0 && ops[len(ops)-1] != '(' {
+				cal()
+			}
+			ops = append(ops, s[i])
+		}
+	}
+
+	for len(ops) > 0 {
+		cal()
+	}
+	return nums[0]
+
+}
+
+func isNum(c byte) bool {
+	return c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9'
 }
