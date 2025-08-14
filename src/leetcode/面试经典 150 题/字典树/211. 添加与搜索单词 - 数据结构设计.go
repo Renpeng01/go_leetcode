@@ -26,10 +26,15 @@ func (this *WordDictionary) AddWord(word string) {
 			continue
 		}
 
-		node[index] = &letterNode{
-			isLeaf:   i == len(word)-1,
-			children: make([]*letterNode, 26),
+		if node[index] == nil {
+			node[index] = &letterNode{
+				isLeaf:   i == len(word)-1,
+				children: make([]*letterNode, 26),
+			}
+
 		}
+
+		// fmt.Println(index, node[index].isLeaf)
 		node = node[index].children
 	}
 
@@ -65,10 +70,13 @@ func (this *WordDictionary) Search(word string) bool {
 
 func (this *WordDictionary) dfs(node []*letterNode, word string) bool {
 	if node == nil {
+
 		return false
 	}
 
+	// fmt.Println(len(word), word[0], node[int(word[0]-'a')], node[int(word[0]-'a')].isLeaf)
 	if len(word) == 1 && (word[0] == '.' || node[int(word[0]-'a')] != nil && node[int(word[0]-'a')].isLeaf) {
+
 		return true
 	}
 
@@ -84,6 +92,7 @@ func (this *WordDictionary) dfs(node []*letterNode, word string) bool {
 		}
 
 		if node[int(word[i]-'a')] == nil {
+
 			return false
 		}
 		if i == len(word)-1 && node[int(word[i]-'a')].isLeaf {
@@ -104,19 +113,25 @@ func (this *WordDictionary) dfs(node []*letterNode, word string) bool {
 
 func main() {
 	wordDictionary := Constructor()
-	wordDictionary.AddWord("bad")
-	wordDictionary.AddWord("dad")
-	wordDictionary.AddWord("mad")
+	// wordDictionary.AddWord("bad")
+	// wordDictionary.AddWord("dad")
+	// wordDictionary.AddWord("mad")
 
-	res := wordDictionary.Search("pad") // 返回 False
-	fmt.Println(res)
+	// res := wordDictionary.Search("pad") // 返回 False
+	// fmt.Println(res)
 
-	res = wordDictionary.Search("bada") // 返回 True
-	fmt.Println(res)
+	// res = wordDictionary.Search("bad") // 返回 True
+	// fmt.Println(res)
 
-	res = wordDictionary.Search(".ad") // 返回 True
-	fmt.Println(res)
+	// res = wordDictionary.Search(".ad") // 返回 True
+	// fmt.Println(res)
 
-	res = wordDictionary.Search("b..") // 返回 True
+	// res = wordDictionary.Search("b..") // 返回 True
+	// fmt.Println(res)
+
+	wordDictionary.AddWord("a")
+	wordDictionary.AddWord("ab")
+
+	res := wordDictionary.Search("a")
 	fmt.Println(res)
 }
