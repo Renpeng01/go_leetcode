@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"strconv"
-	"strings"
 )
 
 func calculate(s string) int {
@@ -63,7 +62,7 @@ func calculate(s string) int {
 
 func calculateItem(n1, n2 int, op string) int {
 
-	fmt.Printf("n1: %+v, op: %+v, n2: %+v\n", n1, op, n2)
+	// fmt.Printf("n1: %+v, op: %+v, n2: %+v\n", n1, op, n2)
 	res := 0
 	switch op {
 	case "-":
@@ -93,30 +92,36 @@ func buildExpression(s string) []string {
 	new2S := ""
 	for i := 0; i < len(newS); i++ {
 
-		if newS[i] == '-' && i != 0 {
-			if newS[i-1] == '(' {
-				new2S += "0"
+		if newS[i] == '-' {
+
+			if i != 0 {
+				if newS[i-1] == '(' {
+					new2S += "0"
+				} else {
+					new2S += "+0"
+				}
 			} else {
-				new2S += "+0"
+				new2S += "0"
 			}
+
 		}
 		new2S += string(newS[i])
 	}
 
-	// fmt.Println("new2S:", new2S)
 	s = new2S
+	fmt.Println("s:", s)
 
 	isNegative := false
 	for i := 0; i < len(s); {
-		if len(strings.TrimSpace(string(s[i]))) == 0 {
-			i++
-			continue
-		}
 
 		if !isNum(s[i]) {
 			if s[i] == '-' && isNum(s[i+1]) {
 				isNegative = true
-				res = append(res, "+")
+
+				if i != 0 {
+					res = append(res, "+")
+				}
+
 			} else {
 				res = append(res, string(s[i]))
 			}
@@ -150,7 +155,8 @@ func isNum(c byte) bool {
 func main() {
 	// s := "(11+(4+5+2)-3)+(6+8)"
 	// s := "(1+(4+5+2)-3)+(6+8)"
-	s := "1-(     -2)"
+	// s := "1-(     -2)"
+	s := "-2+ 1"
 	res := calculate(s)
 	fmt.Println(res)
 
