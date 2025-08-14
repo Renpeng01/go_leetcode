@@ -11,6 +11,8 @@ func calculate(s string) int {
 	nums := make([]int, 0, 16)
 	exps := buildExpression(s)
 
+	fmt.Println("exps:", exps)
+
 	for i := 0; i < len(exps); i++ {
 		if exps[i] == "-" || exps[i] == "+" {
 			ops = append(ops, exps[i])
@@ -53,6 +55,8 @@ func calculate(s string) int {
 }
 
 func calculateItem(n1, n2 int, op string) int {
+
+	fmt.Printf("n1: %+v, op: %+v, n2: %+v\n", n1, op, n2)
 	res := 0
 	switch op {
 	case "-":
