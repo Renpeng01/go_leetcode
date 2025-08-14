@@ -160,6 +160,7 @@ func main() {
 }
 
 // https://www.bilibili.com/video/BV1HyGgzjEf3/?spm_id_from=333.337.search-card.all.click&vd_source=70c464e99440c207e9933663bb2e5166
+// https://www.bilibili.com/video/BV1sE2bYjEqo/?spm_id_from=333.337.search-card.all.click&vd_source=70c464e99440c207e9933663bb2e5166
 func calculate(s string) int {
 
 	s = strings.Replace(s, " ", "", -1)
