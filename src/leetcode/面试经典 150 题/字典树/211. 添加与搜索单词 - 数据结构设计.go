@@ -45,29 +45,6 @@ func (this *WordDictionary) AddWord(word string) {
 
 func (this *WordDictionary) Search(word string) bool {
 	node := this.root
-	// for i := 0; i < len(word); i++ {
-	// 	if word[i] == '.' {
-	// 		for i := 0; i < 26; i++ {
-	// 			if dfs() {
-	// 				return true
-	// 			}
-
-	// 		}
-
-	// 		return false
-	// 	}
-
-	// 	n := node[index]
-	// 	if n == nil {
-	// 		return false
-	// 	}
-
-	// 	if i == len(word)-1 && n.isLeaf {
-	// 		return true
-	// 	}
-
-	// 	node = n.children
-	// }
 	return this.dfs(node, word)
 }
 
@@ -77,7 +54,6 @@ func (this *WordDictionary) dfs(node []*letterNode, word string) bool {
 		return false
 	}
 
-	// fmt.Println(len(word), word[0], node[int(word[0]-'a')], node[int(word[0]-'a')].isLeaf)
 	if len(word) == 1 && (word[0] == '.' || node[int(word[0]-'a')] != nil && node[int(word[0]-'a')].isLeaf) {
 
 		return true
