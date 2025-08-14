@@ -1,18 +1,20 @@
 package main
 
+import "fmt"
+
 type letterNode struct {
 	c        byte
 	isLeaf   bool
-	children [26]*letterNode
+	children []*letterNode
 }
 
 type WordDictionary struct {
-	root [26]*letterNode
+	root []*letterNode
 }
 
 func Constructor() WordDictionary {
 	return WordDictionary{
-		root: [26]*letterNode{},
+		root: make([]*letterNode, 27),
 	}
 }
 
@@ -20,21 +22,30 @@ func (this *WordDictionary) AddWord(word string) {
 
 	node := this.root
 	for i := 0; i < len(word); i++ {
-		node[word[i]-'a'] = &letterNode{
+		index := word[i] - 'a'
+		if word[i] == '.' {
+			index = 26
+		}
+
+		node[index] = &letterNode{
 			c:        word[i],
 			isLeaf:   i == len(word)-1,
-			children: [26]*letterNode{},
+			children: make([]*letterNode, 27),
 		}
-		node = node[word[i]-'a'].children
+		node = node[index].children
 	}
 
 }
 
 func (this *WordDictionary) Search(word string) bool {
-
 	node := this.root
 	for i := 0; i < len(word); i++ {
-		n := node[int(word[i]-'a')]
+		index := word[i] - 'a'
+		if word[i] == '.' {
+			index = 26
+		}
+
+		n := node[index]
 		if n == nil {
 			return false
 		}
@@ -54,3 +65,11 @@ func (this *WordDictionary) Search(word string) bool {
  * obj.AddWord(word);
  * param_2 := obj.Search(word);
  */
+
+func main() {
+
+	a := 'a'
+	b := '.'
+	c := 'z' - 'a'
+	fmt.Println(int(a), int(b), int(c))
+}
