@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -59,5 +60,40 @@ func calculateItem(n1, n2 int, op string) int {
 		res = n1 + n2
 	}
 	return res
+
+}
+
+func buildExpression(s string) []string {
+	if len(s) == 0 {
+		return []string{}
+	}
+
+	res := make([]string, 0, 32)
+	if s[0] == '-' {
+		s = "0" + s
+	}
+
+	for i := 0; i < len(s); {
+		j := i
+		for ; j < len(s); j++ {
+			if !isNum(s[j]) {
+				break
+			}
+		}
+		res = append(res, s[i:j])
+		i = j
+		fmt.Println(i, j)
+	}
+	return res
+}
+
+func isNum(c byte) bool {
+	return c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9'
+}
+
+func main() {
+	s := "(1+(4+5+2)-3)+(6+8)"
+	res := buildExpression(s)
+	fmt.Println(res)
 
 }
