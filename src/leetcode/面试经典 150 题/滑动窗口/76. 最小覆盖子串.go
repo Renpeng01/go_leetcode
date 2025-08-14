@@ -110,28 +110,9 @@ func minWindow1(s string, t string) string {
 	return res
 }
 
-func main() {
-	// s := "ADOBECODEBANC"
-	// t := "ABC"
-
-	s := "aa"
-	t := "aa"
-
-	res := minWindow(s, t)
-	fmt.Println(res)
-}
-
 func minWindow(s string, t string) string {
 	if len(t) == 0 || len(s) < len(t) {
 		return ""
-	}
-
-	letters := make(map[byte]struct{}, len(t))
-	// letterCnt := make(map[byte]int, len(t))
-	for i := 0; i < len(t); i++ {
-		letters[t[i]] = struct{}{}
-		// letterCnt[t[i]]++
-
 	}
 
 	left := -1
@@ -140,43 +121,56 @@ func minWindow(s string, t string) string {
 
 	res := ""
 
-	for len(s)-1-left >= len(t) {
+	for len(s)-1-left+1 >= len(t) {
 		letterCnt := make(map[byte]int, len(t))
 		for i := 0; i < len(t); i++ {
 			letterCnt[t[i]]++
-
 		}
 
 		for i := left + 1; i < len(s); i++ {
-			if _, ok := letters[s[i]]; ok {
+			if _, ok := letterCnt[s[i]]; ok {
 				left = i
 				break
 			}
 		}
 
+		isFinish := false
 		for i := left; i < len(s); i++ {
-			if len(letterCnt) == 0 {
-				right = i
-				break
-			}
-			if _, ok := letters[s[i]]; ok {
+			if _, ok := letterCnt[s[i]]; ok {
 				letterCnt[s[i]]--
 
 				if letterCnt[s[i]] == 0 {
 					delete(letterCnt, s[i])
 				}
 			}
+			if len(letterCnt) == 0 {
+				right = i
+				isFinish = true
+				break
+			}
 		}
 
-		if left >= right {
+		if left > right {
 			break
 		}
+		// fmt.Println("res:", s[left:right+1])
 
-		if right+1-left < minLen {
+		if isFinish && right+1-left < minLen {
 			minLen = right + 1 - left
 			res = s[left : right+1]
 		}
 
 	}
 	return res
+}
+
+func main() {
+	s := "ADOBECODEBANC"
+	t := "ABC"
+
+	// s := "aa"
+	// t := "aa"
+
+	res := minWindow(s, t)
+	fmt.Println(res)
 }
