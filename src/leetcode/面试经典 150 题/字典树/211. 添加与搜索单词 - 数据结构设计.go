@@ -22,13 +22,8 @@ func (this *WordDictionary) AddWord(word string) {
 	node := this.root
 	for i := 0; i < len(word); i++ {
 		index := word[i] - 'a'
-		if word[i] == '.' {
-			continue
-		}
-
 		if node[index] == nil {
 			node[index] = &letterNode{
-				isLeaf:   i == len(word)-1,
 				children: make([]*letterNode, 26),
 			}
 		}
@@ -36,8 +31,6 @@ func (this *WordDictionary) AddWord(word string) {
 		if i == len(word)-1 {
 			node[index].isLeaf = true
 		}
-
-		// fmt.Println(index, node[index].isLeaf)
 		node = node[index].children
 	}
 
@@ -50,37 +43,32 @@ func (this *WordDictionary) Search(word string) bool {
 
 func (this *WordDictionary) dfs(node []*letterNode, word string) bool {
 	if node == nil {
-
 		return false
 	}
 
 	if len(word) == 1 && (word[0] == '.' || node[int(word[0]-'a')] != nil && node[int(word[0]-'a')].isLeaf) {
-
 		return true
 	}
 
-	res := false
 	for i := 0; i < len(word); i++ {
 		if word[i] == '.' {
-			for j := 0; j < 26; j++ {
-				if node[j] != nil {
-					res = res || this.dfs(node[j].children, word[1:])
+			for j := 0; j < len(node); j++ {
+				if node[j] != nil && this.dfs(node[j].children, word[1:]) {
+					return true
 				}
 			}
-			return res
+			return false
 		}
 
 		if node[int(word[i]-'a')] == nil {
-
 			return false
 		}
-		if i == len(word)-1 && node[int(word[i]-'a')].isLeaf {
-			return true
-		}
-		node = node[int(word[i]-'a')].children
+
+		return this.dfs(node[int(word[i]-'a')].children, word[1:])
+
 	}
 
-	return res
+	return false
 }
 
 /**
@@ -114,3 +102,62 @@ func main() {
 	res := wordDictionary.Search("a")
 	fmt.Println(res)
 }
+
+// ["WordDictionary","addWord","addWord","addWord","addWord","search","search","addWord","search","search","search","search","search","search"]
+// [[],["at"],["and"],["an"],["add"],["a"],[".at"],["bat"],[".at"],["an."],["a.d."],["b."],["a.d"],["."]]
+// [null,null,null,null,null,false,false,null,true,false,false,true,false,true]
+// [null,null,null,null,null,false,false,null,true,true,false,false,true,false]
+
+// type TrieNode struct {
+// 	children [26]*TrieNode
+// 	isEnd    bool
+// }
+
+// func (t *TrieNode) Insert(word string) {
+// 	node := t
+// 	for _, ch := range word {
+// 		ch -= 'a'
+// 		if node.children[ch] == nil {
+// 			node.children[ch] = &TrieNode{}
+// 		}
+// 		node = node.children[ch]
+// 	}
+// 	node.isEnd = true
+// }
+
+// type WordDictionary struct {
+// 	trieRoot *TrieNode
+// }
+
+// func Constructor() WordDictionary {
+// 	return WordDictionary{&TrieNode{}}
+// }
+
+// func (d *WordDictionary) AddWord(word string) {
+// 	d.trieRoot.Insert(word)
+// }
+
+// func (d *WordDictionary) Search(word string) bool {
+// 	var dfs func(int, *TrieNode) bool
+// 	dfs = func(index int, node *TrieNode) bool {
+// 		if index == len(word) {
+// 			return node.isEnd
+// 		}
+// 		ch := word[index]
+// 		if ch != '.' {
+// 			child := node.children[ch-'a']
+// 			if child != nil && dfs(index+1, child) {
+// 				return true
+// 			}
+// 		} else {
+// 			for i := range node.children {
+// 				child := node.children[i]
+// 				if child != nil && dfs(index+1, child) {
+// 					return true
+// 				}
+// 			}
+// 		}
+// 		return false
+// 	}
+// 	return dfs(0, d.trieRoot)
+// }
