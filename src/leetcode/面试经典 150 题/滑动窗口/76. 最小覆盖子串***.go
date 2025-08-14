@@ -98,7 +98,7 @@ func minWindow(s string, t string) string {
 	for right < len(s) {
 		if _, ok := tMap[s[right]]; ok {
 			winMap[s[right]]++
-			if winMap[s[right]] == winMap[s[right]] {
+			if winMap[s[right]] == tMap[s[right]] {
 				have++
 			}
 		}
