@@ -6,7 +6,7 @@ import (
 )
 
 // 超时
-func minWindow(s string, t string) string {
+func minWindow1(s string, t string) string {
 	if len(t) == 0 || len(s) < len(t) {
 		return ""
 	}
@@ -75,4 +75,54 @@ func main() {
 
 	res := minWindow(s, t)
 	fmt.Println(res)
+}
+
+// https://www.bilibili.com/video/BV1sJ4m1g727/?spm_id_from=333.337.search-card.all.click&vd_source=70c464e99440c207e9933663bb2e5166
+func minWindow(s string, t string) string {
+	if len(s) == 0 || len(t) == 0 {
+		return ""
+	}
+
+	tMap := make(map[byte]int, len(t))
+	for i := 0; i < len(t); i++ {
+		tMap[t[i]]++
+	}
+	tCnt := len(tMap)
+	have := 0
+	winMap := make(map[byte]int, len(t))
+	left := 0
+	right := 0
+	resLen := math.MaxInt
+	resStart := 0
+
+	for right < len(s) {
+		if _, ok := tMap[s[right]]; ok {
+			winMap[s[right]]++
+			if winMap[s[right]] == winMap[s[right]] {
+				have++
+			}
+		}
+
+		for have == tCnt {
+			if right-left+1 < resLen {
+				resLen = right - left + 1
+				resStart = left
+			}
+			if _, ok := tMap[s[left]]; ok {
+				winMap[s[left]]--
+				if tMap[s[left]] > winMap[s[left]] {
+					have--
+				}
+			}
+			left++
+
+		}
+		right++
+	}
+
+	if resLen == math.MaxInt {
+		return ""
+	}
+
+	return s[resStart : resStart+resLen]
 }
