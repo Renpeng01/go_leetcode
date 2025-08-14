@@ -74,9 +74,30 @@ func buildExpression(s string) []string {
 	}
 
 	res := make([]string, 0, 32)
-	if s[0] == '-' {
-		s = "0" + s
+
+	newS := ""
+	for i := 0; i < len(s); i++ {
+		if s[i] == ' ' {
+			continue
+		}
+		newS += string(s[i])
 	}
+
+	new2S := ""
+	for i := 0; i < len(newS); i++ {
+
+		if newS[i] == '-' && i != 0 {
+			if newS[i-1] == '(' {
+				new2S += "0"
+			} else {
+				new2S += "+0"
+			}
+		}
+		new2S += string(newS[i])
+	}
+
+	// fmt.Println("new2S:", new2S)
+	s = new2S
 
 	isNegative := false
 	for i := 0; i < len(s); {
@@ -86,7 +107,7 @@ func buildExpression(s string) []string {
 		}
 
 		if !isNum(s[i]) {
-			if s[i] == '-' && isNum(s[i+1]) && (i == 0 || len(res) > 0 && res[len(res)-1] != "(") {
+			if s[i] == '-' && isNum(s[i+1]) {
 				isNegative = true
 				res = append(res, "+")
 			} else {
