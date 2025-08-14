@@ -74,15 +74,21 @@ func buildExpression(s string) []string {
 		s = "0" + s
 	}
 
+	isNegative := false
 	for i := 0; i < len(s); {
-
 		if len(strings.TrimSpace(string(s[i]))) == 0 {
 			i++
 			continue
 		}
 
 		if !isNum(s[i]) {
-			res = append(res, string(s[i]))
+			if s[i] == '-' {
+				isNegative = true
+				res = append(res, "+")
+			} else {
+				res = append(res, string(s[i]))
+			}
+
 			i++
 			continue
 		}
@@ -92,7 +98,13 @@ func buildExpression(s string) []string {
 				break
 			}
 		}
-		res = append(res, s[i:j])
+		if isNegative {
+			res = append(res, "-"+s[i:j])
+			isNegative = false
+		} else {
+			res = append(res, s[i:j])
+		}
+
 		i = j
 		// fmt.Println(i, j)
 	}
@@ -105,7 +117,7 @@ func isNum(c byte) bool {
 
 func main() {
 	// s := "(11+(4+5+2)-3)+(6+8)"
-	s := "1 + 1"
+	s := "(1+(4+5+2)-3)+(6+8)"
 	res := buildExpression(s)
 	fmt.Println(res)
 
