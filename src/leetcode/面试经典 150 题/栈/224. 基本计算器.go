@@ -20,7 +20,7 @@ func calculate(s string) int {
 			continue
 		} else {
 			n, _ := strconv.Atoi(string(exps[i]))
-			if len(ops) == 0 {
+			if len(ops) == 0 || (i > 0 && exps[i-1] == "(") {
 				nums = append(nums, n)
 			} else {
 				if len(nums) == 0 {
@@ -32,16 +32,22 @@ func calculate(s string) int {
 					nums = nums[:len(nums)-1]
 					ops = ops[:len(ops)-1]
 					nums = append(nums, calculateItem(n1, n, op))
+					// fmt.Println("nums:", nums)
+					// fmt.Println("ops:", ops)
 				}
 			}
 		}
 	}
 
+	// fmt.Println("****", nums, len(nums))
+
 	if len(nums) == 1 {
 		return nums[0]
 	}
 
-	for len(nums) > 0 {
+	for len(nums) >= 2 {
+
+		// fmt.Println("&&&&&&", nums, len(nums))
 		n1 := nums[len(nums)-2]
 		n2 := nums[len(nums)-1]
 		op := ops[len(ops)-1]
@@ -49,6 +55,7 @@ func calculate(s string) int {
 		nums = nums[:len(nums)-2]
 		ops = ops[:len(ops)-1]
 		nums = append(nums, calculateItem(n1, n2, string(op)))
+
 	}
 	return nums[0]
 
