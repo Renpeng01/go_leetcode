@@ -20,7 +20,7 @@ func calculate(s string) int {
 				nums = append(nums, n)
 			} else {
 				if len(nums) == 0 {
-
+					nums = append(nums, -n)
 				} else {
 					n1 := nums[len(nums)-1]
 					op := ops[len(ops)-1]
@@ -32,6 +32,21 @@ func calculate(s string) int {
 			}
 		}
 	}
+
+	if len(nums) == 1 {
+		return nums[0]
+	}
+
+	for len(nums) > 0 {
+		n1 := nums[len(nums)-2]
+		n2 := nums[len(nums)-1]
+		op := ops[len(ops)-1]
+
+		nums = nums[:len(nums)-2]
+		ops = ops[:len(ops)-1]
+		nums = append(nums, calculateItem(n1, n2, string(op)))
+	}
+	return nums[0]
 
 }
 
