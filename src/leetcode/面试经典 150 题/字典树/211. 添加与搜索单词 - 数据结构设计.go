@@ -67,9 +67,20 @@ func (this *WordDictionary) Search(word string) bool {
  */
 
 func main() {
+	wordDictionary := Constructor()
+	wordDictionary.AddWord("bad")
+	wordDictionary.AddWord("dad")
+	wordDictionary.AddWord("mad")
 
-	a := 'a'
-	b := '.'
-	c := 'z' - 'a'
-	fmt.Println(int(a), int(b), int(c))
+	res := wordDictionary.Search("pad") // 返回 False
+	fmt.Println(res)
+
+	res = wordDictionary.Search("bad") // 返回 True
+	fmt.Println(res)
+
+	res = wordDictionary.Search(".ad") // 返回 True
+	fmt.Println(res)
+
+	res = wordDictionary.Search("b..") // 返回 True
+	fmt.Println(res)
 }
