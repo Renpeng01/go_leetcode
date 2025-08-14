@@ -82,7 +82,7 @@ func buildExpression(s string) []string {
 		}
 
 		if !isNum(s[i]) {
-			if s[i] == '-' {
+			if s[i] == '-' && isNum(s[i+1]) {
 				isNegative = true
 				res = append(res, "+")
 			} else {
@@ -119,7 +119,7 @@ func main() {
 	// s := "(11+(4+5+2)-3)+(6+8)"
 	// s := "(1+(4+5+2)-3)+(6+8)"
 	s := "1-(     -2))"
-	res := buildExpression(s)
+	res := calculate(s)
 	fmt.Println(res)
 
 }
