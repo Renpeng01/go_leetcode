@@ -126,6 +126,7 @@ func minWindow(s string, t string) string {
 		for i := 0; i < len(t); i++ {
 			letterCnt[t[i]]++
 		}
+		fmt.Println(left)
 
 		for i := left + 1; i < len(s); i++ {
 			if _, ok := letterCnt[s[i]]; ok {
@@ -165,11 +166,11 @@ func minWindow(s string, t string) string {
 }
 
 func main() {
-	s := "ADOBECODEBANC"
-	t := "ABC"
+	// s := "ADOBECODEBANC"
+	// t := "ABC"
 
-	// s := "aa"
-	// t := "aa"
+	s := "a"
+	t := "a"
 
 	res := minWindow(s, t)
 	fmt.Println(res)
