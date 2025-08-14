@@ -31,7 +31,10 @@ func (this *WordDictionary) AddWord(word string) {
 				isLeaf:   i == len(word)-1,
 				children: make([]*letterNode, 26),
 			}
+		}
 
+		if i == len(word)-1 {
+			node[index].isLeaf = true
 		}
 
 		// fmt.Println(index, node[index].isLeaf)
