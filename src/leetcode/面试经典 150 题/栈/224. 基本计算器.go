@@ -74,6 +74,12 @@ func buildExpression(s string) []string {
 	}
 
 	for i := 0; i < len(s); {
+
+		if !isNum(s[i]) {
+			res = append(res, string(s[i]))
+			i++
+			continue
+		}
 		j := i
 		for ; j < len(s); j++ {
 			if !isNum(s[j]) {
@@ -92,7 +98,7 @@ func isNum(c byte) bool {
 }
 
 func main() {
-	s := "(1+(4+5+2)-3)+(6+8)"
+	s := "(11+(4+5+2)-3)+(6+8)"
 	res := buildExpression(s)
 	fmt.Println(res)
 
