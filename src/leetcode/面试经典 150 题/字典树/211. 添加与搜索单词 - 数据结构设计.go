@@ -3,7 +3,6 @@ package main
 import "fmt"
 
 type letterNode struct {
-	c        byte
 	isLeaf   bool
 	children []*letterNode
 }
@@ -14,7 +13,7 @@ type WordDictionary struct {
 
 func Constructor() WordDictionary {
 	return WordDictionary{
-		root: make([]*letterNode, 27),
+		root: make([]*letterNode, 26),
 	}
 }
 
@@ -24,13 +23,12 @@ func (this *WordDictionary) AddWord(word string) {
 	for i := 0; i < len(word); i++ {
 		index := word[i] - 'a'
 		if word[i] == '.' {
-			index = 26
+			continue
 		}
 
 		node[index] = &letterNode{
-			c:        word[i],
 			isLeaf:   i == len(word)-1,
-			children: make([]*letterNode, 27),
+			children: make([]*letterNode, 26),
 		}
 		node = node[index].children
 	}
@@ -39,24 +37,62 @@ func (this *WordDictionary) AddWord(word string) {
 
 func (this *WordDictionary) Search(word string) bool {
 	node := this.root
+	// for i := 0; i < len(word); i++ {
+	// 	if word[i] == '.' {
+	// 		for i := 0; i < 26; i++ {
+	// 			if dfs() {
+	// 				return true
+	// 			}
+
+	// 		}
+
+	// 		return false
+	// 	}
+
+	// 	n := node[index]
+	// 	if n == nil {
+	// 		return false
+	// 	}
+
+	// 	if i == len(word)-1 && n.isLeaf {
+	// 		return true
+	// 	}
+
+	// 	node = n.children
+	// }
+	return this.dfs(node, word)
+}
+
+func (this *WordDictionary) dfs(node []*letterNode, word string) bool {
+	if node == nil {
+		return false
+	}
+
+	if len(word) == 1 && (word[0] == '.' || node[int(word[0]-'a')] != nil && node[int(word[0]-'a')].isLeaf) {
+		return true
+	}
+
+	res := false
 	for i := 0; i < len(word); i++ {
-		index := word[i] - 'a'
 		if word[i] == '.' {
-			index = 26
+			for j := 0; j < 26; j++ {
+				if node[j] != nil {
+					res = res || this.dfs(node[j].children, word[1:])
+				}
+			}
+			return res
 		}
 
-		n := node[index]
-		if n == nil {
+		if node[int(word[i]-'a')] == nil {
 			return false
 		}
-
-		if i == len(word)-1 && n.isLeaf {
+		if i == len(word)-1 && node[int(word[i]-'a')].isLeaf {
 			return true
 		}
-
-		node = n.children
+		node = node[int(word[i]-'a')].children
 	}
-	return false
+
+	return res
 }
 
 /**
@@ -75,7 +111,7 @@ func main() {
 	res := wordDictionary.Search("pad") // 返回 False
 	fmt.Println(res)
 
-	res = wordDictionary.Search("bad") // 返回 True
+	res = wordDictionary.Search("bada") // 返回 True
 	fmt.Println(res)
 
 	res = wordDictionary.Search(".ad") // 返回 True
