@@ -7,7 +7,7 @@ var existed map[string]bool
 var visited [][]bool
 
 // dfs 超时
-func findWords(board [][]byte, words []string) []string {
+func findWords1(board [][]byte, words []string) []string {
 	res = make([]string, 0, len(words))
 	existed = make(map[string]bool, 256)
 
@@ -76,4 +76,10 @@ func main() {
 	words := []string{"eaafgdcba", "eaabcdgfa"}
 	res := findWords(board, words)
 	fmt.Println(res)
+}
+
+// https://www.bilibili.com/video/BV1rvWpeDEEn/?spm_id_from=333.337.search-card.all.click&vd_source=70c464e99440c207e9933663bb2e5166
+
+func findWords(board [][]byte, words []string) []string {
+
 }
