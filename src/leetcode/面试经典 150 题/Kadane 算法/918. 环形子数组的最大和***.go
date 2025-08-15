@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func maxSubarraySumCircular(nums []int) int {
+func maxSubarraySumCircular1(nums []int) int {
 	newNums := make([]int, 0, len(nums)*2)
 	dp := make([]int, 0, len(newNums)*2)
 	for i := 0; i < 2; i++ {
@@ -49,6 +49,30 @@ func maxSubarraySumCircular(nums []int) int {
 	return val
 }
 
+// https://www.bilibili.com/video/BV1134y1x73z/?spm_id_from=333.337.search-card.all.click&vd_source=70c464e99440c207e9933663bb2e5166
+
+func maxSubarraySumCircular(nums []int) int {
+	dp := make([]int, len(nums))
+	sum := 0
+	for i := 0; i < len(nums); i++ {
+		dp[i] = nums[i]
+		sum += nums[i]
+	}
+	maxVal := dp[0]
+	for i := 1; i < len(nums); i++ {
+		dp[i] = max(dp[i-1]+nums[i], dp[i])
+		maxVal = max(maxVal, dp[i])
+	}
+
+	minVal := 0
+	for i := 1; i < len(nums)-1; i++ {
+		dp[i] = nums[i] + min(dp[i-1], 0)
+		minVal = min(minVal, dp[i])
+	}
+
+	return max(maxVal, sum-minVal)
+}
+
 func max(a, b int) int {
 	if a > b {
 		return a
@@ -56,9 +80,9 @@ func max(a, b int) int {
 	return b
 }
 
-func main() {
-	nums := []int{-5, 3, 5}
-	res := maxSubarraySumCircular(nums)
-	// fmt.Printlln(res)
-	fmt.Println(res)
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
 }
