@@ -6,6 +6,7 @@ var res []string
 var existed map[string]bool
 var visited [][]bool
 
+// dfs 超时
 func findWords(board [][]byte, words []string) []string {
 	res = make([]string, 0, len(words))
 	existed = make(map[string]bool, 256)
