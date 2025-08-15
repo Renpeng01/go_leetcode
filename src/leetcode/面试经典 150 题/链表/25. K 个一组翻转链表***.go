@@ -13,10 +13,12 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 	groupPre := dummy
 
 	for {
+
+		mk := k
 		cur := groupPre
-		for k > 0 && cur != nil {
+		for mk > 0 && cur != nil {
 			cur = cur.Next
-			k--
+			mk--
 		}
 		if cur == nil {
 			break
@@ -25,7 +27,6 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 
 		pre := groupNext
 		cur = groupPre.Next
-		// var tmp *ListNode
 
 		for cur != groupNext {
 			tmp := cur.Next
