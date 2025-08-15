@@ -23,15 +23,20 @@ func dfs(board [][]byte, word string, i, j, wordIndex int) {
 	if visited[[2]int{i, j}] {
 		return
 	}
+
 	if word[wordIndex] != board[i][j] {
 		return
 	}
 
 	visited[[2]int{i, j}] = true
 
-	if wordIndex == len(word)-1 && !existed[word] {
-		res = append(res, word)
-		existed[word] = true
+	if wordIndex == len(word)-1 {
+
+		if !existed[word] {
+			res = append(res, word)
+			existed[word] = true
+		}
+
 		return
 	}
 
