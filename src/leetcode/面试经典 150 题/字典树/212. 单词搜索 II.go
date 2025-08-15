@@ -29,6 +29,7 @@ func dfs(board [][]byte, word string, i, j, wordIndex int) {
 	if word[wordIndex] != board[i][j] {
 		return
 	}
+	visited[[2]int{i, j}] = true
 
 	if wordIndex == len(word)-1 {
 		if !existed[word] {
@@ -41,20 +42,24 @@ func dfs(board [][]byte, word string, i, j, wordIndex int) {
 	// 上
 	if i > 0 {
 		dfs(board, word, i-1, j, wordIndex+1)
+		visited[[2]int{i - 1, j}] = false
 	}
 
 	// 下
 	if i < len(board)-1 {
 		dfs(board, word, i+1, j, wordIndex+1)
+		visited[[2]int{i + 1, j}] = false
 	}
 
 	// 左
 	if j > 0 {
 		dfs(board, word, i, j-1, wordIndex+1)
+		visited[[2]int{i, j - 1}] = false
 	}
 	// 右
 	if j < len(board[0])-1 {
 		dfs(board, word, i, j+1, wordIndex+1)
+		visited[[2]int{i, j + 1}] = false
 	}
 
 }
@@ -69,5 +74,5 @@ func main() {
 	board := [][]byte{{'a', 'b', 'c'}, {'a', 'e', 'd'}, {'a', 'f', 'g'}}
 	words := []string{"eaafgdcba", "eaabcdgfa"}
 	res := findWords(board, words)
-	fmt.Println(, res)
+	fmt.Println(res)
 }
