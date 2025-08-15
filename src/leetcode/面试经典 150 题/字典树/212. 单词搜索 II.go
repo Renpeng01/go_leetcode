@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 var res []string
 var existed map[string]bool
 var visited map[[2]int]bool
@@ -28,15 +30,11 @@ func dfs(board [][]byte, word string, i, j, wordIndex int) {
 		return
 	}
 
-	visited[[2]int{i, j}] = true
-
 	if wordIndex == len(word)-1 {
-
 		if !existed[word] {
 			res = append(res, word)
 			existed[word] = true
 		}
-
 		return
 	}
 
@@ -59,4 +57,17 @@ func dfs(board [][]byte, word string, i, j, wordIndex int) {
 		dfs(board, word, i, j+1, wordIndex+1)
 	}
 
+}
+
+func main() {
+
+	// {
+	// 	{'a', 'b', 'c'},
+	// 	{'a', 'e', 'd'},
+	// 	{'a', 'f', 'g'}
+	// }
+	board := [][]byte{{'a', 'b', 'c'}, {'a', 'e', 'd'}, {'a', 'f', 'g'}}
+	words := []string{"eaafgdcba", "eaabcdgfa"}
+	res := findWords(board, words)
+	fmt.Println(, res)
 }
