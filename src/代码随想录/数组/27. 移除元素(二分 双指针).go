@@ -5,7 +5,8 @@ import (
 	"sort"
 )
 
-func removeElement(nums []int, val int) int {
+// 二分方法
+func removeElement1(nums []int, val int) int {
 	sort.Slice(nums, func(i, j int) bool {
 		return nums[i] < nums[j]
 	})
@@ -59,4 +60,16 @@ func main() {
 	val := 2
 	res := removeElement(nums, val)
 	fmt.Println("res: ", res)
+}
+
+// 双指针
+func removeElement(nums []int, val int) int {
+	slow := 0
+	for fast := 0; fast < len(nums); fast++ {
+		if nums[fast] != val {
+			nums[slow] = nums[fast]
+			slow++
+		}
+	}
+	return slow
 }
