@@ -18,6 +18,7 @@ func removeElement(nums []int, val int) int {
 		if nums[mid] == val {
 			if mid > 0 && nums[mid-1] == val {
 				right = mid - 1
+				continue
 			}
 			break
 		} else if nums[mid] > val {
@@ -54,7 +55,8 @@ func min(a, b int) int {
 }
 
 func main() {
-	nums := []int{0, 1, 2, 2, 3, 0, 4, 2}
+	// nums := []int{0, 1, 2, 2, 3, 0, 4, 2}
+	nums := []int{2, 2, 2}
 	val := 2
 	res := removeElement(nums, val)
 	fmt.Println("res: ", res)
