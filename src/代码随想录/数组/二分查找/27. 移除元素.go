@@ -10,8 +10,6 @@ func removeElement(nums []int, val int) int {
 		return nums[i] < nums[j]
 	})
 
-	fmt.Println("sorted: ", nums)
-
 	// 找到第一个等于val的位置
 	// 如果没有找到 return 0
 	mid, left, right := -1, 0, len(nums)-1
@@ -21,14 +19,13 @@ func removeElement(nums []int, val int) int {
 			if mid > 0 && nums[mid-1] == val {
 				right = mid - 1
 			}
-			return mid
+			break
 		} else if nums[mid] > val {
 			right = mid - 1
 		} else {
 			left = mid + 1
 		}
 	}
-	fmt.Println("mid: ", mid)
 
 	if mid == -1 {
 		return 0
@@ -41,13 +38,12 @@ func removeElement(nums []int, val int) int {
 		}
 		cnt++
 	}
-	fmt.Println("cnt: ", cnt)
 
-	n := min(cnt, len(nums)-1-cnt)
+	n := min(cnt, len(nums)-1-(cnt+mid))
 	for i := 0; i <= n; i++ {
 		nums[mid+i], nums[mid+i+cnt] = nums[mid+i+cnt], nums[mid+i]
 	}
-	return cnt
+	return len(nums) - cnt
 }
 
 func min(a, b int) int {
