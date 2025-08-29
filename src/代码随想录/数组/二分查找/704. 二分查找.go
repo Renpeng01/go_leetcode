@@ -2,7 +2,7 @@ package main
 
 func search(nums []int, target int) int {
 	left, right := 0, len(nums)-1
-	for left <= right {
+	for left <= right { //  这里是小于还是小于等于，需要模拟总结下
 		mid := left + (right-left)/2
 		if nums[mid] == target {
 			return mid
