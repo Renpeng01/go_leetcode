@@ -40,9 +40,8 @@ func removeElement(nums []int, val int) int {
 		cnt++
 	}
 
-	n := min(cnt, len(nums)-1-(cnt+mid))
-	for i := 0; i <= n; i++ {
-		nums[mid+i], nums[mid+i+cnt] = nums[mid+i+cnt], nums[mid+i]
+	for i := 0; i <= len(nums)-1-mid-cnt; i++ {
+		nums[mid+i] = nums[mid+i+cnt]
 	}
 	return len(nums) - cnt
 }
