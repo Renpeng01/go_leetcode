@@ -1,6 +1,9 @@
 package main
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 func minSubArrayLen(target int, nums []int) int {
 	if len(nums) == 0 {
@@ -37,4 +40,12 @@ func minSubArrayLen(target int, nums []int) int {
 		}
 	}
 	return minLen
+}
+
+func main() {
+	nums := []int{2, 3, 1, 2, 4, 3}
+	target := 7
+	res := minSubArrayLen(target, nums)
+	fmt.Println(res)
+
 }
