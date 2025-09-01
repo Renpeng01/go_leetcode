@@ -26,10 +26,10 @@ func minSubArrayLen(target int, nums []int) int {
 
 			tmpLen := r - l + 1
 			for l < r {
-				sum -= nums[l]
-				if sum < target {
+				if sum-nums[l] < target {
 					break
 				}
+				sum -= nums[l]
 				l++
 				tmpLen--
 			}
