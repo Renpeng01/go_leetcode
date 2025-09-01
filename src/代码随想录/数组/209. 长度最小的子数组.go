@@ -1,17 +1,18 @@
 package main
 
+import "math"
+
 func minSubArrayLen(target int, nums []int) int {
 	if len(nums) == 0 {
 		return 0
 	}
 
 	sum := nums[0]
-	n := 1
 	if sum >= target {
-		return n
+		return 1
 	}
 
-	minLen := 0
+	minLen := math.MaxInt
 	l := 0
 	for r := 1; r <= len(nums)-1; r++ {
 		sum += nums[r]
@@ -21,7 +22,7 @@ func minSubArrayLen(target int, nums []int) int {
 			}
 
 			tmpLen := r - l + 1
-			for l <= r {
+			for l < r {
 				sum -= nums[l]
 				if sum < target {
 					break
