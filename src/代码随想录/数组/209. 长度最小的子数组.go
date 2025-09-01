@@ -39,6 +39,10 @@ func minSubArrayLen(target int, nums []int) int {
 			}
 		}
 	}
+
+	if minLen == math.MaxInt {
+		return 0
+	}
 	return minLen
 }
 
