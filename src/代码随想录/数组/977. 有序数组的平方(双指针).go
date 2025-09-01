@@ -16,7 +16,7 @@ func sortedSquares(nums []int) []int {
 	index := r
 	v1, v2 := 0, 0
 
-	for index >= 0 {
+	for l <= r {
 		v1 = nums[r] * nums[r]
 		v2 = nums[l] * nums[l]
 		if v1 > v2 {
