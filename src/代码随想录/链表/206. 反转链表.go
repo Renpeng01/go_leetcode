@@ -1,5 +1,6 @@
 package main
 
+// 常考
 type ListNode struct {
 	Val  int
 	Next *ListNode
