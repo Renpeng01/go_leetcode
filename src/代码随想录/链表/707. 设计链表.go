@@ -38,13 +38,10 @@ func (this *MyLinkedList) AddAtHead(val int) {
 }
 
 func (this *MyLinkedList) AddAtTail(val int) {
-	this.AddAtIndex(this.n-1, val)
+	this.AddAtIndex(this.n, val)
 }
 
 func (this *MyLinkedList) AddAtIndex(index int, val int) {
-	// if !this.checkIndex(index) {
-	// 	return
-	// }
 
 	if index < 0 || index > this.n {
 		return
@@ -98,15 +95,11 @@ func main() {
 	list := Constructor()
 	list.AddAtHead(1)
 	list.AddAtTail(3)
+
+	PrintList(list.head)
 	list.AddAtIndex(1, 2)
 
 	fmt.Println("print list")
-
-	head := list.head
-	for head.next != nil {
-		fmt.Println(head.next.val)
-		head = head.next
-	}
 
 	get1 := list.Get(1)
 	fmt.Println("get1: ", get1)
@@ -114,11 +107,15 @@ func main() {
 	list.DeleteAtIndex(1)
 	fmt.Println("after delete print list")
 
-	head = list.head
+	get1 = list.Get(1)
+	fmt.Println("get1: ", get1)
+}
+
+func PrintList(node *Node) {
+	head := node
 	for head.next != nil {
 		fmt.Println(head.next.val)
 		head = head.next
 	}
-	get1 = list.Get(1)
-	fmt.Println("get1: ", get1)
+
 }
