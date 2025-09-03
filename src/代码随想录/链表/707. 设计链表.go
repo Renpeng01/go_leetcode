@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type Node struct {
 	val  int
 	next *Node
@@ -40,7 +42,11 @@ func (this *MyLinkedList) AddAtTail(val int) {
 }
 
 func (this *MyLinkedList) AddAtIndex(index int, val int) {
-	if !this.checkIndex(index) {
+	// if !this.checkIndex(index) {
+	// 	return
+	// }
+
+	if index < 0 || index > this.n {
 		return
 	}
 	pre := this.head
@@ -84,3 +90,35 @@ func (this *MyLinkedList) checkIndex(index int) bool {
  * obj.AddAtIndex(index,val);
  * obj.DeleteAtIndex(index);
  */
+
+// ["MyLinkedList","addAtHead","addAtTail","addAtIndex","get","deleteAtIndex","get"]
+// [[],[1],[3],[1,2],[1],[1],[1]]
+func main() {
+
+	list := Constructor()
+	list.AddAtHead(1)
+	list.AddAtTail(3)
+	list.AddAtIndex(1, 2)
+
+	fmt.Println("print list")
+
+	head := list.head
+	for head.next != nil {
+		fmt.Println(head.next.val)
+		head = head.next
+	}
+
+	get1 := list.Get(1)
+	fmt.Println("get1: ", get1)
+
+	list.DeleteAtIndex(1)
+	fmt.Println("after delete print list")
+
+	head = list.head
+	for head.next != nil {
+		fmt.Println(head.next.val)
+		head = head.next
+	}
+	get1 = list.Get(1)
+	fmt.Println("get1: ", get1)
+}
