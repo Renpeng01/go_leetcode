@@ -7,7 +7,7 @@ func fourSum(nums []int, target int) [][]int {
 	res := make([][]int, 0, 8)
 
 	for j := 0; j < len(nums); j++ {
-		if nums[j] > target && nums[j] > 0 {
+		if nums[j] > target && nums[j] >= 0 {
 			return res
 		}
 
@@ -16,8 +16,8 @@ func fourSum(nums []int, target int) [][]int {
 		}
 
 		for i := j + 1; i < len(nums); i++ {
-			if nums[j]+nums[i] > target && nums[j]+nums[i] > 0 {
-				return res
+			if nums[j]+nums[i] > target && nums[j]+nums[i] >= 0 {
+				break
 			}
 			if i > j+1 && nums[i] == nums[i-1] {
 				continue
