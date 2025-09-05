@@ -50,17 +50,11 @@ func threeSum(nums []int) [][]int {
 				left++
 			} else {
 				res = append(res, []int{nums[i], nums[left], nums[right]})
-				for left < right {
-					if nums[right] != nums[right-1] {
-						break
-					}
+				for left < right && nums[right] == nums[right-1] {
 					right--
 
 				}
-				for left < right {
-					if nums[left] != nums[left+1] {
-						break
-					}
+				for left < right && nums[left] != nums[left+1] {
 					left++
 				}
 				left++
@@ -72,7 +66,7 @@ func threeSum(nums []int) [][]int {
 }
 
 func main() {
-	nums := []int{-1, 0, 1, 2, -1, -4}
+	nums := []int{-2, 0, 1, 1, 2}
 	res := threeSum(nums)
 	fmt.Println(res)
 }
