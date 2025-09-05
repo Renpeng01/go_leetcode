@@ -2,8 +2,8 @@ package main
 
 import "sort"
 
-func threeSum(nums []int) [][]int {
-
+// hash表
+func threeSum1(nums []int) [][]int {
 	sort.Ints(nums)
 	m := make(map[int]int, 16)
 	for i, v := range nums {
@@ -25,4 +25,9 @@ func threeSum(nums []int) [][]int {
 		}
 	}
 	return res
+}
+
+// 双指针
+func threeSum(nums []int) [][]int {
+
 }
