@@ -35,7 +35,7 @@ func threeSum(nums []int) [][]int {
 	res := make([][]int, 0, 8)
 	for i := 0; i < len(nums)-2; i++ {
 		if nums[i] > 0 {
-			return res
+			return res // 注意这里不能return nil
 		}
 
 		if i > 0 && nums[i] == nums[i-1] {
@@ -52,9 +52,8 @@ func threeSum(nums []int) [][]int {
 				res = append(res, []int{nums[i], nums[left], nums[right]})
 				for left < right && nums[right] == nums[right-1] {
 					right--
-
 				}
-				for left < right && nums[left] != nums[left+1] {
+				for left < right && nums[left] == nums[left+1] {
 					left++
 				}
 				left++
