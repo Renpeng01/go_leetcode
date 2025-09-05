@@ -20,7 +20,7 @@ func fourSum(nums []int, target int) [][]int {
 				return res // 注意这里不能return nil
 			}
 
-			if i > 0 && nums[i] == nums[i-1] {
+			if i > j+1 && nums[i] == nums[i-1] {
 				continue
 			}
 			left := i + 1
@@ -45,7 +45,5 @@ func fourSum(nums []int, target int) [][]int {
 		}
 
 	}
-
 	return res
-
 }
