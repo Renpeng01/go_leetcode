@@ -9,20 +9,15 @@ func fourSumCount(nums1 []int, nums2 []int, nums3 []int, nums4 []int) int {
 		}
 	}
 
-	m2 := make(map[int]int, 16)
+	res := 0
 	for _, v3 := range nums3 {
 		for _, v4 := range nums4 {
-			m2[v3+v4]++
-		}
-	}
+			if v, ok := m1[0-v3-v4]; ok {
+				res += v
+			}
 
-	res := 0
-	for k1, v1 := range m1 {
-		if v2, ok := m2[0-k1]; ok {
-			res += (v1 * v2)
 		}
 	}
 
 	return res
-
 }
