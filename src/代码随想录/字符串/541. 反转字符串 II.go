@@ -7,16 +7,32 @@ func reverseStr(s string, k int) string {
 	}
 
 	bs := []byte(s)
-	for i := 0; i < len(s); i = i + k - 1 {
-		if (i+1)%k == 0 && ((i+1)/k)%2 == 1 {
-			left := i - (k - 1)
-			right := i
-			for left < right {
-				bs[left], bs[right] = bs[right], bs[left]
-				left++
-				right--
-			}
+
+	n := len(s) / (2 * k)
+
+	for i := 0; i < n; i++ {
+		left := i * k
+		right := i*k + k - 1
+		for left < right {
+			bs[left], bs[right] = bs[right], bs[left]
+			left++
+			right--
 		}
 	}
+
+	if len(s)%(2*k) > 0 {
+		left := (n - 1) * k
+		right := (n-1)*k + k - 1
+		if len(s)%(2*k) <= k {
+			right = len(s) - 1
+		}
+
+		for left < right {
+			bs[left], bs[right] = bs[right], bs[left]
+			left++
+			right--
+		}
+	}
+
 	return string(bs)
 }
