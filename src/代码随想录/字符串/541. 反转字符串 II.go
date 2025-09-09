@@ -11,8 +11,8 @@ func reverseStr(s string, k int) string {
 	n := len(s) / (2 * k)
 
 	for i := 0; i < n; i++ {
-		left := i * k
-		right := i*k + k - 1
+		left := i * (2 * k)
+		right := i*(2*k) + k - 1
 		for left < right {
 			bs[left], bs[right] = bs[right], bs[left]
 			left++
@@ -21,8 +21,8 @@ func reverseStr(s string, k int) string {
 	}
 
 	if len(s)%(2*k) > 0 {
-		left := (n - 1) * k
-		right := (n-1)*k + k - 1
+		left := (n - 1) * (2 * k)
+		right := (n-1)*(2*k) + k - 1
 		if len(s)%(2*k) <= k {
 			right = len(s) - 1
 		}
