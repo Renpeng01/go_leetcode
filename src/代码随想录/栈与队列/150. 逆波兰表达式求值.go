@@ -33,13 +33,11 @@ func evalRPN(tokens []string) int {
 			n, _ := strconv.Atoi(v)
 			nums = append(nums, n)
 		}
-		// fmt.Println(nums)
 	}
 	return nums[0]
 }
 
 func main() {
-	// tokens := []string{"2", "1", "+", "3", "*"}
 	tokens := []string{"4", "13", "5", "/", "+"}
 	res := evalRPN(tokens)
 	fmt.Println(res)
