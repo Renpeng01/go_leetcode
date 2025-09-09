@@ -3,15 +3,15 @@ package main
 func repeatedSubstringPattern(s string) bool {
 
 	n := len(s)
-	for i := 1; i <= n/2; i++ {
-		if n%i != 0 {
+	for step := 1; step <= n/2; step++ {
+		if n%step != 0 {
 			continue
 		}
-		for j := 0; j < len(s); j = j + i {
-			if s[:i] != s[j:j+i] {
+		for j := 0; j < len(s); j = j + step {
+			if s[:step] != s[j:j+step] {
 				break
 			}
-			if j == len(s)-1-i {
+			if j == len(s)-1-step {
 				return true
 			}
 		}
