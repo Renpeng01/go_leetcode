@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func reverseStr(s string, k int) string {
 
 	if k == 1 {
@@ -18,10 +20,11 @@ func reverseStr(s string, k int) string {
 			right--
 		}
 	}
+	// fmt.Println(string(bs), n)
 
 	if len(s)%step > 0 {
-		left := (n - 1) * step
-		right := (n-1)*step + k - 1
+		left := (n) * step
+		right := (n)*step + k - 1
 		if len(s)%step <= k {
 			right = len(s) - 1
 		}
@@ -33,4 +36,10 @@ func reverseStr(s string, k int) string {
 	}
 
 	return string(bs)
+}
+
+func main() {
+	s := "abcdefg"
+	k := 2
+	fmt.Println(reverseStr(s, k))
 }
