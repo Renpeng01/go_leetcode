@@ -9,20 +9,19 @@ type Queue struct {
 }
 
 func (this *Queue) push(v int) {
-	index := -1
-	for i, m := range this.q {
-		if m > v {
-			break
+	newQ := make([]int, 0, len(this.q))
+	for i := 0; i < len(this.q); i++ {
+		if this.q[i] < v {
+			continue
 		}
-		index = i
+		newQ = append(newQ, this.q[i])
 	}
-
-	this.q = append(this.q, v)
-	this.q = this.q[index+1:]
+	newQ = append(newQ, v)
+	this.q = newQ
 }
 
 func (this *Queue) pop(v int) {
-	if v == this.q[0] {
+	if len(this.q) > 0 && v == this.q[0] {
 		this.q = this.q[1:]
 	}
 }
@@ -42,14 +41,14 @@ func maxSlidingWindow(nums []int, k int) []int {
 	res := make([]int, 0, 16)
 	res = append(res, queue.getMax())
 
-	fmt.Println("start q: ", queue.q)
+	// fmt.Println("start q: ", queue.q)
 
 	l, r := 0, k
 	for r < len(nums) {
 		queue.push(nums[r])
-		fmt.Println("after push nums[r]:", nums[r], " q:", queue.q)
+		// fmt.Println("after push nums[r]:", nums[r], " q:", queue.q)
 		queue.pop(nums[l])
-		fmt.Println("after pop nums[r]:", nums[l], " q:", queue.q)
+		// fmt.Println("after pop nums[r]:", nums[l], " q:", queue.q)
 
 		res = append(res, queue.getMax())
 		l++
