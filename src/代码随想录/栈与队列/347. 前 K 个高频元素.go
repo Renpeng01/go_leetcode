@@ -22,7 +22,7 @@ func topKFrequent(nums []int, k int) []int {
 		})
 	}
 
-	// ****** 此处不需要对所有元素排序，可以使用【小】顶堆来优化  ps  小顶堆比大顶队好
+	// ****** 此处不需要对所有元素排序，可以使用【小】顶堆来优化  ps  小顶堆比大顶队好 https://www.bilibili.com/video/BV1Xg41167Lz?vd_source=70c464e99440c207e9933663bb2e5166&spm_id_from=333.788.videopod.sections
 	sort.Slice(l, func(i, j int) bool {
 		return l[i].val > l[j].val
 	})
