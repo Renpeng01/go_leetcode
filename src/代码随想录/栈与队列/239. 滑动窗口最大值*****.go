@@ -12,6 +12,8 @@ func (this *Queue) push(v int) {
 	for len(this.q) > 0 && this.q[len(this.q)-1] < v {
 		this.q = this.q[:len(this.q)-1]
 	}
+	this.q = append(this.q, v)
+
 }
 
 func (this *Queue) pop(v int) {
@@ -35,14 +37,14 @@ func maxSlidingWindow(nums []int, k int) []int {
 	res := make([]int, 0, 16)
 	res = append(res, queue.getMax())
 
-	// fmt.Println("start q: ", queue.q)
+	fmt.Println("start q: ", queue.q)
 
 	l, r := 0, k
 	for r < len(nums) {
 		queue.push(nums[r])
-		// fmt.Println("after push nums[r]:", nums[r], " q:", queue.q)
+		fmt.Println("after push nums[r]:", nums[r], " q:", queue.q)
 		queue.pop(nums[l])
-		// fmt.Println("after pop nums[r]:", nums[l], " q:", queue.q)
+		fmt.Println("after pop nums[r]:", nums[l], " q:", queue.q)
 
 		res = append(res, queue.getMax())
 		l++
