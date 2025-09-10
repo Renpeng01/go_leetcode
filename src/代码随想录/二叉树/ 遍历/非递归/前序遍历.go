@@ -15,8 +15,13 @@ func preorderTraversal(root *TreeNode) []int {
 		node := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
 		res = append(res, node.Val)
-		stack = append(stack, node.Right)
-		stack = append(stack, node.Left)
+
+		if node.Right != nil {
+			stack = append(stack, node.Right)
+		}
+		if node.Left != nil {
+			stack = append(stack, node.Left)
+		}
 	}
 	return res
 }
