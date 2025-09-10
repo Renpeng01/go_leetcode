@@ -9,15 +9,9 @@ type Queue struct {
 }
 
 func (this *Queue) push(v int) {
-	newQ := make([]int, 0, len(this.q))
-	for i := 0; i < len(this.q); i++ {
-		if this.q[i] < v {
-			continue
-		}
-		newQ = append(newQ, this.q[i])
+	for len(this.q) > 0 && this.q[len(this.q)-1] < v {
+		this.q = this.q[:len(this.q)-1]
 	}
-	newQ = append(newQ, v)
-	this.q = newQ
 }
 
 func (this *Queue) pop(v int) {
