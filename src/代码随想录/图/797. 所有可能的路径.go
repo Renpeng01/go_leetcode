@@ -40,11 +40,11 @@ func dfs(cur int, graph [][]int) {
 		return
 	}
 
+	path = append(path, cur)
 	existed[cur] = struct{}{}
 	for _, p := range graph[cur] {
-		path = append(path, p)
 		dfs(p, graph)
-		path = path[:len(path)-1]
 	}
+	path = path[:len(path)-1]
 	delete(existed, cur)
 }
