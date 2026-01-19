@@ -1,50 +1,50 @@
 package main
 
 var res [][]int
+var existed map[int]struct{}
+var path []int
+var N int
 
 func allPathsSourceTarget(graph [][]int) [][]int {
 	res = make([][]int, 0, 16)
-	path := make([]int, 0, 16)
-	dfs(graph, 0, 0, &path)
+	existed = make(map[int]struct{}, 16)
+	path = make([]int, 0, 16)
+
+	// n为目的地
+	N = -1
+	for k, v := range graph {
+		if k > N {
+			N = k
+		}
+		for _, s := range v {
+			if s > N {
+				N = s
+			}
+		}
+	}
+
+	dfs(0, graph)
 	return res
 }
 
-func dfs(graph [][]int, i, j int, path *[]int) {
-	if i > len(graph)-1 || j > len(graph[0])-1 || i < 0 || j < 0 {
+func dfs(cur int, graph [][]int) {
+	if cur == N {
+		path = append(path, cur)
+		res = append(res, path)
+		path = make([]int, 0, 16)
+		return
+
+	}
+	_, ok := existed[cur]
+	if len(graph[cur]) == 0 || ok {
 		return
 	}
 
-	if graph[i][j] == 2 {
-		return
+	existed[cur] = struct{}{}
+	for _, p := range graph[cur] {
+		path = append(path, p)
+		dfs(p, graph)
+		path = path[:len(path)-1]
 	}
-
-	if i == len(graph)-1 && j == len(graph[0]) {
-		res = append(res, *path)
-		return
-	}
-
-	graph[i][j] = 2
-	directions := [][]int{
-		{-1, 0}, // 上
-		{1, 0},  // 下
-		{0, -1}, // 左
-		{0, 1},  // 右边
-	}
-
-	for _, v := range directions {
-		*path = append(*path, []int{i, j}...)
-		dfs(graph, i+v[0], j+v[1], path)
-		*path = (*path)[:len(*path)-1]
-	}
-	graph[i][j] = 1
+	delete(existed, cur)
 }
-
-// func main() {
-// 	a := []int{1, 2, 3}
-// 	test(a)
-// 	fmt.Println(a)
-// }
-
-// func test(a []int) {
-// 	a = append(a, 4)
-// }
