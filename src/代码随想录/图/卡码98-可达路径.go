@@ -20,7 +20,6 @@ func main() {
 	scanner.Scan()
 	arr := strings.Split(scanner.Text(), " ")
 	n, _ := strconv.Atoi(arr[0])
-	// m, _ := strconv.Atoi(arr[1])
 
 	grid := make([][]int, n+1)
 	for i := 0; i <= n; i++ {
@@ -39,35 +38,44 @@ func main() {
 		node1, _ := strconv.Atoi(arr[0])
 		node2, _ := strconv.Atoi(arr[1])
 
-		fmt.Printf("node1: %+v, node2: %+v\n", node1, node2)
 		grid[node1][node2] = 1
-		grid[node2][node1] = 1
 	}
 
-	fmt.Println("grid---------------------")
-	for _, v := range grid {
-		fmt.Println(v)
+	path = append(path, 1)
+	dfs(grid, 1, n)
+
+	if len(resut) == 0 {
+		fmt.Println(-1)
+		return
 	}
 
-	dfs(grid, 0, n)
+	for _, res := range resut {
+		s := ""
+		for i, v := range res {
 
-	fmt.Println("res---------------------")
-	for _, v := range resut {
-		fmt.Println(v)
+			if i == 0 {
+				s += strconv.Itoa(v)
+				continue
+			}
+			s += (" " + strconv.Itoa(v))
+		}
+		fmt.Println(s)
 	}
 
 }
 
 func dfs(grid [][]int, x, target int) {
 	if x == target {
-		resut = append(resut, path)
+		new := make([]int, len(path))
+		copy(new, path)
+		resut = append(resut, new)
 		return
 	}
 
-	for _, v := range grid[x] {
-		if v == 1 {
-			path = append(path, v)
-			dfs(grid, v, target)
+	for i := 1; i <= target; i++ {
+		if grid[x][i] == 1 {
+			path = append(path, i)
+			dfs(grid, i, target)
 			path = path[:len(path)-1]
 		}
 	}
